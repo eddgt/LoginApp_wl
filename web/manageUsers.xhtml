@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"    
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+        
+    xmlns:c="http://java.sun.com/jsp/jstl/core">  
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+    <ui:define name="content" >
+        <h:form id="form">
+        <p:panelGrid id="panel"  style=" display: table-cell;" columns="1" >
+            
+            <p:dataTable id="listaUsuarios" rowKey="#{detalleUsuario.idUsuario}"  emptyMessage="No hay informacion en la tabla" 
+                                    style=" margin-left: auto; margin-right: auto; display: table-cell; float:left" 
+                                    var="detUsuario" value="#{usuarioBean.listaUsuariosApp}" 
+                                     widgetVar="dtdependencia">
+                <!--<p:column selectionMode="multiple" style="width:30px;text-align:center"/>-->
+                 <p:column headerText="ID" width="20%" style="font-size: 11px;text-align: center;"
+                          filterBy="#{detUsuario.idUsuario}" sortBy="#{detUsuario.idUsuario}" filterMatchMode="contains" filterStyle="width:100%">
+                    <p:outputLabel value="#{detUsuario.idUsuario}" />
+                </p:column>
+                
+                <p:column headerText="Usuario" width="20%" style="font-size: 11px;text-align: center;"
+                          filterBy="#{detUsuario.nombreUsuario}" sortBy="#{detUsuario.nombreUsuario}" filterMatchMode="contains" filterStyle="width:100%">
+                    <p:outputLabel value="#{detUsuario.nombreUsuario}" />
+                </p:column>
+               
+            </p:dataTable>           
+        
+        </p:panelGrid>
+        </h:form>
+    </ui:define>            
+    </body>
+</ui:composition>

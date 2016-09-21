@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition
+    template="./template/template.xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns="http://www.w3.org/1999/xhtml"
+    >    
+    <ui:define name="content" >        
+    </ui:define>    
+    <ui:define name="bottom">
+        <h:body>
+        <h:form  styleClass="fondoResetForm">
+            <p:growl id="messages" showDetail="true"/>
+            
+                <div clas="col-xs-12 row" >
+                    <div class="ui-grid ui-grid-responsive">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-12"><br></br></div>
+                        </div>
+                    </div>
+                </div>
+                <div clas="col-xs-12 row" >
+                </div>
+                <div class="">                   
+                            <p:panelGrid styleClass="col-lg-2 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-offset-4  col-xs-12" columns="1">
+                            <p:row>     
+                                <br></br>
+                                <p:outputLabel for="user" value="Indique Usuario Navega+"  style="text-align: left; width: 100%" />
+                                <p:inputText id="user"  value="#{usuarioBean.usuario}"  style="width: 100%;"/>
+                            </p:row>
+                            <p:row>
+                            <div class="">                                        
+                                    <div class="ui-outputlabel">
+                                        <p:outputLabel for="pass" value="Indique Nueva Contraseña" style="text-align: left; width: 100%" styleClass="ui-outputlabel" />
+                                    </div>
+                                    <div class="ui-field-contain">
+                                        <p:inputText id="pass" type="password" value="#{usuarioBean.contrasena}" style="width: 100%;" styleClass="ui-field-contain" />
+                                     </div>                                    
+                            </div>
+                            </p:row>
+                            <p:row>
+                                <div class="">
+                                    <div class="ui-field-contain">
+                                        <br></br>
+                                        <p:commandButton value="Cambiar Contraseña" styleClass="ui-field-contain" style="width: 100% "  update="messages" actionListener="#{usuarioBean.btnClickCambiarNavega}" />
+                                    </div>                                        
+                                    <br></br>
+                                </div>
+                                <br></br>
+                                <br></br>
+                            </p:row>
+                        </p:panelGrid>
+                    </div>
+            
+            </h:form>
+        </h:body>
+    </ui:define>
+</ui:composition>

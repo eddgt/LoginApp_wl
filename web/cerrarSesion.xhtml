@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./template/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                >
+
+    <ui:define name="content"  >
+        <f:metadata>
+            
+            <f:event type="preRenderView" listener="#{cerrarSesion.destroy()}" />
+        </f:metadata>
+        <div clas="col-xs-12 row" >
+            <div class="col-xs-7" >
+
+            </div>
+            <div class="col-xs-4">
+                <img  class="pull-right  btn img-responsive center center-block" onclick="javascript:emergencia()"  src="img/btn-emergencia2.png" />
+            </div>
+        </div>
+
+
+
+    </ui:define>
+    <ui:define name="bottom">
+        <br></br>    <br></br>    <br></br>     <br></br>
+        <div class="row">
+            <div style=" width: 70%; margin: 0 auto;">
+                <img  class="img-responsive imgTituloTigo" style="height: 15%; width:25%; margin: 0 auto" src="img/tituloTigo.png" />
+            </div>
+            <br/>
+            <div style=" width: 70%; margin: 0 auto;">
+                <img  class="img-responsive imgBCM" style="width: 42%; height: 18%; margin: 0 auto" src="img/BCM2.png" />
+            </div>
+            <br/>
+            <div style=" width: 70%; margin: 0 auto;">
+                <img  class="btn img-responsive center center-block" style=" margin: 0 auto" onclick="javascript:reporta()" src="img/reportaAhora2.png" />
+            </div>
+            <br/>
+        </div>       
+    </ui:define>
+
+</ui:composition>

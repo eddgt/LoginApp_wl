@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition
+    template="./template/templateResets.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view>
+    <h:head>
+        <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+        <script language="javascript" src="js/scripts.js"></script>
+        <!--<link rel="stylesheet" href="css/tigo_css/styles.css"/>-->
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" type="text/css" media="all" />
+    </h:head>
+    <h:body>
+        <h:panelGroup id="idOfDialogPlaceHolder" style="display:none">            
+            <h:form prependId="false">
+                <h:outputText value="Plataforma NAF"></h:outputText>
+                <h:outputText value="Indique Usuario: "></h:outputText>
+                <br></br>
+                <h:inputText value="user" ></h:inputText>
+                <br></br>
+                <h:outputText value="Indique nuevo password: "></h:outputText>
+                <br></br>
+                <h:inputText value="password"></h:inputText>
+                <h:commandButton id="okButton" onclick="alert('wow')" style="display:none"></h:commandButton>                
+            </h:form>
+        </h:panelGroup>
+        <h:form prependId="false">
+            <div class="btn-group-vertical">
+            <h1><h:outputText value="Menu Principal"></h:outputText></h1>
+            <br></br>
+            <p:commandButton id="dialogClickBtnNAF" styleClass="btn-info btn btn-lg"
+                value="Reseteo Contraseñas NAF" onclick="initDialogNAF(); return false;">                
+            </p:commandButton>
+            <br></br>
+            <p:commandButton id="dialogClickBtnNavega" styleClass="btn-info btn btn-lg"
+                             value="Reseteo Contraseñas Navega" onclick="initDialogNAvega(); return false;">
+            </p:commandButton>
+            <br></br>
+            <p:commandButton id="dialogClickBtnAmsys" styleClass="btn-info btn btn-lg" 
+                             value="Reseteo Contraseñas Amsys" onclick="initDialogAmsys(); return false;">                                 
+            </p:commandButton>
+            </div>
+        </h:form>
+        <!--<div class="divMenuPrincipal">
+            <button src="/img/button_naf.png"></button>
+            <button src="/img/button_navega.png"></button>
+            <button src="/img/button_amsys.png"></button>
+        </div>-->
+    </h:body>
+</f:view>
+</ui:composition>

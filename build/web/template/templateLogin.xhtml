@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      >
+
+    <h:head >	
+        <meta charset="UTF-8"/>
+        <title>Tigo</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1"></meta>
+        <meta name="description" content=""/>
+        <meta name="keywords" content="" />
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/> 
+        <link href="css/tigo_css/tigo_user.css" rel="stylesheet" type="text/css"/> 
+        <link href="css/tigo_css/tigo_forms.css" rel="stylesheet" type="text/css"/>  
+           <script type="text/javascript" src="js/jquery-1.10.2.js"></script> 
+         <script type="text/javascript" src="js/bootstrap.min.js"></script>      
+        <script type="text/javascript" src="js/tigo_map.js"></script>                               
+    </h:head>
+    <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false" oncopy="return false" oncut="return false" onpaste="return false" >
+    <h:body class="col-xs-11 fondo">        
+        <ui:insert name="top">
+        <!--Menu -->
+        
+        </ui:insert>
+        <div id="contenido"  > 
+           
+            <div  class="col-xs-11" >
+                
+            </div>
+            <div class="one" >
+                <div  id="content" >              
+                    <ui:insert name="content"></ui:insert>
+                </div>
+                <div  id="bottom" >
+                
+                    <ui:insert name="bottom"></ui:insert>
+                </div>
+            </div>
+        </div>
+
+        
+    </h:body>
+</body>
+</html>

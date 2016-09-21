@@ -1,0 +1,1395 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29/07/2015, 12:40:12 PM
+    Author     : Administrador2
+*/
+
+body{ 
+    -webkit-touch-callout: none;
+}
+
+@font-face {
+  font-family: 'CronosPro-Lt';
+  src: url('../../fonts/CronosPro-Lt.eot');
+  src: url('../../fonts/CronosPro-Lt.eot?#iefix') format('embedded-opentype'), 
+       url('../../fonts/CronosPro-Lt.woff2') format('woff2'), 
+       url('../../fonts/CronosPro-Lt.woff') format('woff'), 
+       url('../../fonts/CronosPro-Lt.ttf') format('truetype'), 
+       url('../../fonts/CronosPro-Lt.svg#CronosPro-Lt') format('svg');
+}
+
+@font-face {
+  font-family: 'CronosPro-Regular';
+  src: url('../fonts/CronosPro-Regular.eot');
+  src: url('../../fonts/CronosPro-Regular.eot?#iefix') format('embedded-opentype'), 
+       url('../../fonts/CronosPro-Regular.woff2') format('woff2'), 
+       url('../../fonts/CronosPro-Regular.woff') format('woff'), 
+       url('../../fonts/CronosPro-Regular.ttf') format('truetype'), 
+       url('../../fonts/CronosPro-Regular.svg#CronosPro-Lt') format('svg');
+}
+
+
+.ui-fileupload-files{
+    display:none;
+}
+
+
+
+.ui-fileupload-choose span.ui-button-text:before{
+    color: #fff;
+    content: "\1f4ce";
+    font-size: 14px;
+}
+
+.ui-button-icon-only span.ui-button-text:before{
+    color: #fff;
+    content: "\1f4ce";
+    
+}
+
+.margen-grande-enviarformulario{
+    margin-top: 3px;
+    padding-bottom: 55px;
+}
+
+.margen-grande-enviarformulario span.ui-button-text{
+    padding-bottom: 13.5px;
+}
+
+#archivo_input{
+    margin-top:-35px !important;
+}
+
+.ui-fileupload-buttonbar span.ui-fileupload-choose{
+    padding-bottom:35px;
+}
+
+@media (min-width: 550px) and (max-width:760px){
+    .margen-grande-enviarformulario span.ui-button-text {
+        padding-bottom: 18px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width:1000px){
+    .margen-grande-enviarformulario span.ui-button-text {
+        padding-bottom: 20px !important;
+    }
+}
+
+
+    
+    
+
+.tam-btn-nav{
+    width: 44px; 
+    height: 34px;
+}
+
+.navbar-toggle .icon-bar + .icon-bar{
+        margin-left: 2px;
+}
+
+.navbar-default .navbar-toggle .icon-bar{
+    margin-left:2px;
+}
+
+.styleFooter{
+    font-family: 'CronosPro-Lt' !important;
+}
+
+.ui-fileupload-choose{
+    border-color:transparent !important;
+}
+
+
+.limpiar-responsive{
+    display:none;
+}
+
+
+.btnTam{
+    width: 460px;
+    height: 125px;
+}
+
+
+
+
+.padding{
+    padding: 0px 1px;
+}
+
+
+.nav-color{
+    background-color: white;
+}
+
+
+.navtext-color{
+    color:#44C6F3 !important;
+}
+
+
+
+.ul-centro{
+    white-space: nowrap;
+    -moz-border-radius: 9px;
+    border-radius: 9px;   
+
+}
+
+.quitarCuadro{
+    outline: none !important;
+}
+
+@media(min-width:768px){
+    
+    .margen-normal-progress{
+            margin-top:-60px !important;
+    }
+	
+    .fondoLlenarReclamoComunidades{
+         padding: 35px !important;
+        padding-right: 28.1px !important;
+        padding-left: 25px !important;
+        padding-top: 50px !important;
+        padding-bottom: 70px !important;
+    }
+    
+     .fondoLlenarReportaAqui{
+        padding: 35px !important;
+        padding-right: 28.1px !important;
+        padding-left: 25px !important;
+        padding-top: 57px !important;
+        padding-bottom: 75px !important;
+    }
+    
+      .fondoLlenarServicioSeñal{
+        padding: 30px !important;
+        padding-right: 28.1px !important;
+        padding-left: 25px !important;
+        padding-top: 60px !important;
+        padding-bottom: 70px !important;
+    }
+    
+    
+     .fondoLlenarEmergencia {
+  
+        padding: 38px !important;
+        padding-right: 28.1px !important;
+        padding-left: 25px !important;
+        padding-top: 46px !important;
+        padding-bottom: 65px !important;
+  
+    }
+    .cambiarTamMax{
+        width: 90%;
+    }
+    
+}
+
+@media(min-width:992px){
+    
+    
+	.margen-normal-progress{
+		margin-top:-60px !important;
+	}
+	
+	
+     .fondoLlenarEmergencia {
+        padding: 38px !important;
+        padding-right: 28.1px !important;
+        padding-left: 25px !important;
+        padding-top: 39px !important;
+        padding-bottom: 70px !important;
+  
+    }
+    
+    
+      .fondoLlenarServicioSeñal{
+        padding: 30px !important;
+        padding-right: 28.1px !important;
+        padding-left: 25px !important;
+        padding-top: 54px !important;
+        padding-bottom: 90px !important;
+    }
+    
+    
+    
+      .fondoLlenarReclamoComunidades{
+         padding: 35px !important;
+        padding-right: 28.1px !important;
+        padding-left: 25px !important;
+        padding-top: 55px !important;
+        padding-bottom: 77px !important;
+    }
+    
+    
+    
+     .fondoLlenarReportaAqui{
+        padding: 35px !important;
+        padding-right: 28.1px !important;
+        padding-left: 25px !important;
+        padding-top: 57px !important;
+        padding-bottom: 70px !important;
+    }
+    
+    .cambiarTamMax {
+        width:100%;  
+    }
+    
+    
+    
+    
+    
+    
+}
+
+@media(min-width:1200px){
+    
+    .titulo-emergencia-form{
+        
+        float: none !important;
+        margin-top:  9% !important;
+        left:50%;
+        right: 50%;
+    }
+    
+    .cambiarTamMax {
+        width:70%;  
+    }
+    
+	.margen-normal-progress{
+		margin-top:-60px !important;
+	}
+    .tamReclamo{
+        width: 25%;
+    }
+    .fondoLlenarEmergencia {
+  
+        padding: 38px !important;
+        padding-right: 28.1px !important;
+        padding-left: 25px !important;
+        padding-top: 49px !important;
+        padding-bottom: 100px !important;
+  
+        
+    }
+    
+    .fondoLlenarReportaAqui{
+        padding: 35px !important;
+        padding-right: 28.1px !important;
+        padding-left: 25px !important;
+        padding-top: 55px !important;
+        padding-bottom: 122.5px !important;
+    }
+    
+    .fondoLlenarReclamoComunidades{
+        padding: 35px !important;
+        padding-right: 28.1px !important;
+        padding-left: 25px !important;
+        padding-top: 55px !important;
+        padding-bottom: 120.5px !important;
+    }
+    
+    .fondoLlenarServicioSeñal{
+        padding: 30px !important;
+        padding-right: 28.1px !important;
+        padding-left: 25px !important;
+        padding-top: 54px !important;
+        padding-bottom: 100px !important;
+    }
+    
+    
+    
+}
+
+
+@media all and (max-width: 768px) {
+    .color-cambio {
+        color: white;
+        background-color: transparent;
+        border-top-color: transparent;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+    }
+
+    .color-menu{
+        background-color: white;
+        width: 130%;
+        border: 10px;
+    }
+    
+       
+   
+}
+
+@media(min-width:992px){
+    
+     .tamControlLargo{
+        width: 70% !important;
+        
+    }
+}
+
+.margen-izquierda{
+    margin-left:100px;
+}
+
+.tam-letra{
+    font-size: 30px;
+    font-family: 'CronosPro-Lt' !important;
+}
+
+.fondo2 {
+    background:url(../../img/fondoLlenar.png)  no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    height: auto;
+    max-width: 100%
+}
+
+.sin-width-arriba{
+    width:0%;
+}
+
+
+@media(max-width: 504px){
+    .tam-col-servicio{
+        width:100% !important;
+    }
+    
+    .titulo-emergencia-form {
+        font-size: 24.5px !important;
+        float: none !important;
+        margin-top: 20% !important;
+        left: 50%;
+        right: 50%;
+    }
+    
+}
+
+@media (min-width: 505px) and (max-width:767px){
+    .tam-col-servicio{
+        width:80% !important;
+    }
+    
+    .titulo-emergencia-form {
+        font-size: 24.5px !important;
+        float: none !important;
+        margin-top: 10% !important;
+        left: 50%;
+        right: 50%;
+    }
+}
+
+#progress-bar-div{
+    display:none;
+}
+
+.progress-bar {
+    background-color: #004082;
+}
+
+
+@media(min-width:692px) and (max-width:893px){
+    .cambiarTamMax {
+        width: 100% !important;
+    }
+    
+}
+
+
+@media(max-width:767px){
+    .tamReclamo{
+        width: 0%;
+    }
+    
+   
+    .sin-width{
+        max-width: 1px;
+        height: 1px;
+    }
+       
+    .col-xs-8 {
+        width: 100% !important;
+    }
+    
+    .marge-centrar{
+        width: 90% !important;
+    }
+    
+    .tabla_Modulo{
+        margin-top: -20px;
+    }
+    
+    .img-mapa{
+        height: 90px !important;
+        width: 140px !important;
+        
+ 
+    }
+    .img-ReclamoComunidades{
+        height: 6em !important;
+        width: 100px !important;
+    }
+    
+    .img-ServicioSeñal{
+        margin-top:5% !important;
+        height: 83px !important;
+        width: 90px !important;
+    }
+   
+    .img_Emergencia{
+         height: 90px !important;
+        width: 100px !important;
+       
+    }
+    
+    .titulo-Seguridad{
+/*        font-size: 50px !important;*/
+        font-size: 34.5px !important;
+       
+       
+        left:50%;
+        right: 50%;
+    }
+    
+    .titulo-Reclamo {
+/*        font-size: 30px !important;*/
+        font-size: 34.5px !important;
+        float: none !important;
+       
+        left:50%;
+        right: 50%;
+    }
+    
+    
+     .titulo-Servicio {
+/*        font-size: 30px !important;*/
+        font-size: 34.5px !important;
+        float: none !important;
+        margin-top:10%;
+        left:50%;
+        right: 50%;
+    }
+    
+    .titulo-emergencia-form{
+         font-size: 24.5px !important;
+        float: none !important;
+        left:50%;
+        right: 50%;
+    }
+    
+    .fondoLlenarEmergencia {
+        padding: 35px !important;
+        padding-right: 16.1px !important;
+        padding-left: 16px !important;
+        padding-top: 50px !important;
+        padding-bottom: 140px !important
+  
+    }
+    
+    .fondoLlenarReportaAqui{
+        padding: 35px !important;
+        padding-right: 16px !important;
+        padding-left: 16px !important;
+        /* padding-top: 65px !important; */
+        padding-top: 55px !important;
+        /* padding-bottom: 110px !important; */
+        padding-bottom: 135px !important;
+    }
+    
+    .fondoLlenarReclamoComunidades{
+        padding: 35px !important;
+        padding-right: 16.1px !important;
+        padding-left: 16px !important;
+        /* padding-top: 65px !important; */
+        padding-top: 55px !important;
+        /* padding-bottom: 110px !important; */
+        padding-bottom: 130px !important;
+    }
+    
+    .fondoLlenarServicioSeñal{
+/*        padding: 35px !important;
+        padding-right: 10.1px !important;
+        padding-left: 11px !important;
+        padding-top: 62px !important;
+        padding-bottom: 105px !important;
+        padding-top: 55px !important;
+        padding-bottom: 66px !important;*/
+        
+        padding: 35px !important;
+        padding-right: 16.1px !important;
+        padding-left: 16px !important;
+        padding-top: 55px !important;
+        padding-bottom: 110px !important
+    
+    }
+    
+    
+    .btnTam{
+        width: 430px;
+         height: 85px;
+    }
+    
+    
+    .col-Ancho2{
+          width: 108.5% !important;
+    }
+    
+    .col-Ancho{
+       width: 80% !important;
+        
+      
+    }
+    .col-AnchoBtn3{
+        width: 100% !important;
+        float: right;
+    }
+    
+    .col-AnchoBtn2{
+        width: 100% !important;
+        float: left !important;
+    }
+    .col-AnchoBtn{
+        width: 190% !important;
+        float: left !important;
+    }
+    
+     .imgTituloServicio{
+          left:50% !important;
+        height: 60.5px !important;
+         margin-left: auto !important;
+        margin-right: auto !important;
+        display: table-cell !important;
+        vertical-align: middle !important;
+    }
+    .col-AnchoBtnSeg{
+        width: 100% !important;
+        
+    }
+    
+     .imgTituloMenu{
+        width: 335px !important; 
+        height: 110px !important;
+        float: none !important;
+         margin-left: auto !important;
+        margin-right: auto !important;
+        display: table-cell !important;
+        vertical-align: middle !important;
+    }
+    
+      .imgTitulo{
+        width: 320px !important; 
+        height: 72.6px !important;
+        float: none !important;
+         margin-left: auto !important;
+        margin-right: auto !important;
+        display: table-cell !important;
+        vertical-align: middle !important;
+    }
+    
+    
+    .paddingDevice{
+        padding: 4px 4.5px;
+        height: 78.5px;
+        width: 80px;
+    }
+      .paddingDevice2{
+        padding: 4px 4.5px;
+        height: 78.5px;
+        width: 80px;
+         float: right;
+    }
+    
+    .fondoPadding{
+        padding-top: 60px !important; 
+        padding-bottom: 90px !important;
+    }
+    
+     
+     
+     
+    .ui-button .ui-button-text{
+        font-size: 14px !important;
+       
+    }
+   .cambiarTamMax {
+        width:100%;  
+    }
+    .tamTigo{
+        width: 60px !important; 
+        height: 50px !important;
+    }
+    
+    .tamControl{
+        /*height: 26px !important;*/
+        height: 30px;
+        font-size: 14px;
+    }
+    
+    .tamControlSelect{
+        width: 45% !important;
+        height: 26px !important;
+        font-size: 11px !important;
+    }
+    
+    
+
+
+    
+    .img-thumbnail{
+        line-height: 1.1 !important;
+    }
+   
+    
+    .col-nuevoTam{
+        width: 50%;
+        float:left;
+    }
+    
+    
+    
+    .imgBtnVerMas{
+        width: 150px !important;
+        height: 60px !important;
+    }
+    
+     .imgTituloTigo{
+        width: 95% !important; 
+        height: auto !important;
+    }
+    
+    
+   
+    
+    
+    .imgBCM{
+        width: 450px !important; 
+        height: 80px !important;
+    }
+    
+}
+    
+
+
+
+ .inputBorder{
+    border-top: transparent !important;
+    border-left: transparent !important;
+    border-right: transparent !important;
+    border-bottom-color:  transparent !important;
+    border-radius: 0px !important;
+    word-wrap: break-word;
+ }
+ 
+ .inputBorder2{
+    border-top: white !important;
+    border-left: white !important;
+    border-right: white !important;
+    border-bottom-color: white !important;
+    color: black !important;
+    border-radius: 0px !important;
+ }
+ 
+ 
+ 
+ .lblBorder2{
+    border-color: blue;
+ }
+ 
+ 
+.Inputfondo{
+    color: #203667 !important;
+    background-color: white !important;
+     border: 1.5px solid #4264AE !important;
+     word-wrap: break-word;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label{ 
+    background-color: white  !important;
+    border: 2px solid #203667  !important;
+    border-radius: 3px  !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)  !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)  !important;
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s  !important;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s  !important;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s  !important;
+}
+
+
+.menu .ui-selectonemenu-label { 
+    background-color: white  !important;
+    border: 2px solid #203667  !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)  !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)  !important;
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s  !important;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s  !important;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s  !important;
+}
+.panel .ui-selectonemenu-list { 
+     background-color: transparent  !important;
+    border: 2px solid #203667  !important;
+    border-radius: 3px  !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)  !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)  !important;
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s  !important;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s  !important;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s  !important;
+}
+
+.redondeadoLbl{
+    border: 3.1px solid white !important;
+    border-radius: 8px !important; 
+    height: 40px;
+}
+
+.redondeadoLblArea{
+    border: 3.1px solid white !important;
+    border-radius: 8px !important; 
+    height: auto;
+}
+
+.marcarLinea{
+    border-bottom-color: black !important;
+}
+
+
+
+.ui-selectonemenu .ui-selectonemenu-trigger .ui-icon{
+    margin-top: 11px !important;
+    background-color: transparent  !important;
+    color: white  !important;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger{
+    
+    width: 24px;
+}
+.ui-icon{
+    color: white !important;
+}
+.ui-selectonemenu-panel .ui-selectonemenu-list-item{
+    background-color: white  !important;
+    border: 2px solid black  !important;
+    border-radius: 3px  !important;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list{
+   
+    border: 2px solid black  !important;
+    border-radius: 3px  !important;
+}
+
+
+.ui-button .ui-button-text{
+    border-radius: 8px !important;
+    border-color: transparent !important;
+    background-color: #004082 ;
+    color:white;
+    padding: 13px;
+    font-size: 17.5px;
+}
+
+.btn-enviar-amarillo span.ui-button-text{
+    background-color: #FFCA06 !important;
+    color: #004082 !important;
+}
+
+
+.ui-fileupload-choose span.ui-button-text:before{
+    color: #fff;
+    content: "\1f4ce";
+}
+
+
+
+
+.redondear-form .ui-widget-content{
+    border-radius:20px;
+}
+
+
+
+.ui-button{
+    border-radius: 6px  !important; 
+    border-color: transparent !important;
+    color:white;
+    padding: 0px;
+}
+
+.ui-widget-content{
+    border: 0px solid transparent !important;
+}
+
+
+.fondoLlenar {
+
+    background:url(../../img/font.png)  ;
+    background-size: 100% 100%;
+    height: auto;
+    max-width: 100%;
+    padding: 35px;
+    padding-right: 28.1px;
+    padding-left: 25px;
+    padding-bottom: 53px;
+    alignment-adjust:  middle;
+    position: initial;    
+    
+}
+
+/**Quitar asterisco Formularios**/
+span.ui-outputlabel-rfi{
+    display: none;
+}
+
+
+.ui-grid-responsive .ui-grid-col-1, .ui-grid-responsive .ui-grid-col-2, .ui-grid-responsive .ui-grid-col-3, .ui-grid-responsive .ui-grid-col-4, .ui-grid-responsive .ui-grid-col-5, .ui-grid-responsive .ui-grid-col-6, .ui-grid-responsive .ui-grid-col-7, .ui-grid-responsive .ui-grid-col-8, .ui-grid-responsive .ui-grid-col-9, .ui-grid-responsive .ui-grid-col-10, .ui-grid-responsive .ui-grid-col-11, .ui-grid-responsive .ui-grid-col-12{
+    float: left;
+}
+
+.colorFormulario{
+    color: #203667 !important;
+    word-wrap: break-word;
+}
+
+.colorNegrilla{
+    color: #203667 !important; 
+    font-weight:  600 !important; 
+    word-wrap: normal !important;
+}
+
+.fontFamily{
+    font-family: 'CronosPro-Lt' !important;
+    color:white;
+/*    font-size: 65.5px;
+     font-weight:  600;*/
+    font-size: 34.5px;
+    font-weight:  600;
+}
+
+.fontFamilyReclamo{
+    font-family: 'CronosPro-Lt' !important;
+    color:white;
+    font-size: 60px ; 
+     font-weight:  600;
+}
+
+.fontFamilyBCM{
+      font-family: 'CronosPro-Lt' !important;
+    color:white;
+    font-size: 34.5px;
+     font-weight:  600;
+}
+
+
+
+.btnStatico{
+    z-index: 2;
+    
+}
+
+.quitarCuadro{
+    outline: none !important;
+}
+
+.ui-fileupload-buttonbar span{
+    outline:none !important;
+}
+
+@media (max-width : 767px) {
+}
+
+@media (min-width: 768px) and (max-width : 991px) {
+    .titulo-emergencia-form{
+        
+        float: none !important;
+        margin-top:  5% !important;
+        left:50%;
+        right: 50%;
+    }
+    
+    
+}
+
+@media (min-width: 992px) and (max-width : 1199px){
+      .titulo-emergencia-form{
+        
+        float: none !important;
+        margin-top:  5% !important;
+        left:50%;
+        right: 50%;
+    }
+    
+}
+
+
+.footer_Pos{
+    height: auto;
+    margin: 0 auto;
+    padding: 30px 0;
+    height: 10px !important;
+}
+
+.ui-growl {
+    top:50px;
+    right:50px;    
+}
+
+
+.ui-fileupload-buttonbar .ui-fileupload-choose input {
+    top: 0px;
+    right: 0px;
+    margin: 0px;
+    opacity: 0;
+    font-size: 23px;
+    direction: ltr;
+    cursor: pointer;
+    position: relative;   
+    width: 100% !important;
+}
+
+
+       
+    
+
+.ui-widget-header {
+    border: none !important;
+    background: none !important;
+    color: #333;
+    font-weight: normal !important;
+}
+
+.ui-button-icon-only .ui-icon, .ui-button-text-icon-left .ui-icon, .ui-button-text-icon-right .ui-icon {
+    position: absolute;
+    top: 50%;
+    display: none !important;
+}
+
+
+@media(max-width:388px){
+      .tamControl{
+        /*height: 26px !important;*/
+        height: 26px !important;
+        font-size: 11px !important;
+        
+    }
+    
+    .margen-negativo-fix{
+        margin-top: -3rem;
+      
+    }
+    .tamcontrol-others{
+        font-size: 12px !important
+    }
+}
+
+
+@media(max-width:480px){
+    .img-ReclamoComunidades{
+        margin-top:0em;
+    }
+    
+    .img_Emergencia{
+       
+        margin-left:2em;
+        font-size: 23.5px !important;
+    }
+    .titulo_reportaAccidentes_form{
+        margin-top:1em !important;
+    }
+    
+    .titulo-Servicio{
+        margin-top:1.5em !important;
+
+    }
+}
+
+
+@media (min-width:481px ) and (max-width: 680px){
+    .img-ReclamoComunidades{
+        margin-top:2em;
+    }
+    
+    .titulo_reportaAccidentes_form{
+        margin-top:1.4em !important;
+    }
+}
+
+
+ .limpiar-responsive span.ui-button-text:before{
+        color: #fff;
+       
+ }
+    
+@media (min-width: 505px) and ( max-width:560px){
+    .tamServicio{
+        width: 39%;
+    }
+    
+    .limpiar{
+        display:none !important;
+    }
+    
+    .limpiar-responsive{
+        display:inline;
+    }
+   
+
+    .limpiar-responsive span.ui-button-text:before{
+        color: #fff;
+        content: url(../../img/trash.png)  
+    }
+    
+    .ajustar-media{
+        width: 96% !important;
+        margin-left:5px !important;
+    }
+    
+    .tam-col-servicio{
+        width:100% !important;
+    }
+    
+    .cambiar-width-text{
+        width: 100% !important;
+    }
+    
+     .col-xs-9 {
+        width: 100% !important;
+    }
+    
+    .cambiar-width{
+        width: 58.58% !important;
+    }
+    
+    .debajoFloat{
+        width:60.58% !important;
+        margin-bottom: -1.5rem;
+        float:right !important; 
+    }
+    
+    .margen-lola-negativo{
+        margin-top: -2rem;
+    }
+    
+    .margen-negativo-latitud{
+        margin-top: -3.5rem !important;
+    }
+    
+    .margen-negativo{
+        margin-top: -1.5rem;
+        
+    }
+   
+    .margen-not-change{
+        margin-top: 0.5rem !important;
+    }
+    
+    .margen-positivo{
+        margin-top: 1.5rem;     
+    }
+    
+    
+    .margen-positivo-dbl{
+        margin-top: 2rem !important;
+    }
+    
+    .margen-btn-enviarFormulario{
+        margin-top: -3rem !important;
+    }
+    
+    .margen-ffhl{
+        margin-top: -3rem !important;
+    }
+    
+    .margen-dropdown-area{
+        margin-top: -1rem;
+    }
+    
+    .margenDepartamento{
+        margin-bottom:1rem;
+    }
+   
+    .tamComunidades{
+       padding-left:0px !important;
+       padding-right: 0px !important;
+    }
+}
+
+
+.margen-centro{
+    margin-right: 5rem;
+}
+@media (min-width:400px){
+    .imagen-reclamo{
+        height: 10rem !important;
+        width: 20rem !important;
+        margin-left: 8rem !important;
+    }   
+}
+
+@media(min-width:1210px){
+    .fontFamilyBCMTitle{
+        font-family: 'CronosPro-Lt' !important;
+        font-size: 50.5px !important;
+        font-weight: 400 !important; 
+        color:white;
+        
+    }
+}
+
+.ui-widget, .ui-widget select, .ui-widget, .input{
+    font-family: 'CronosPro-Lt' !important;
+}
+
+
+
+@media(max-width:770px){
+    .fontFamilyBCMTitle{
+        font-family: 'CronosPro-Lt' !important;
+        color: white;
+        font-size: 30px;
+        font-weight: 600;
+       
+    }
+    
+    .titulo-Reclamo {
+        font-size: 30px !important;
+        float: none !important;
+        left: 50%;
+        right: 50%;
+        margin-left: -20px;
+    }
+}
+
+
+@media(max-width:405px){
+    .limpiar-responsive span.ui-button-text:before{    
+        margin:0px !important;
+        margin-left: -7px !important;
+    }
+    
+      .limpiar-responsive{
+        padding-right: 32px !important;
+    }
+}
+
+@media(min-width:406px) and (max-width:504px){
+     .limpiar-responsive span.ui-button-text:before{    
+        margin:0px !important;
+        
+        margin-left: -7px !important;
+    }
+    
+    .limpiar-responsive{
+        padding-right: 32px !important;
+    }
+}
+
+@media (max-width:504px){
+ 
+    .limpiar{
+        display:none !important;
+    }
+    
+    .limpiar-responsive{
+        display:inline;
+    }
+    
+    .limpiar-responsive span.ui-button-text:before{
+        color: #fff;
+        content: url(../../img/trash.png);                 
+    }
+    
+    .fondoLlenar {
+        //background:url(../../img/movil-form.png)  ;
+        background-size:100% 100%;
+        height: auto;
+        max-width: 100%;
+        position:initial;
+     
+    
+    }
+    
+    .ajustar-media{
+        width: 95.5% !important;
+        margin-left:5px !important;
+    }
+    
+    .dimensiones-imagen{
+
+           height: 10rem !important;
+           width: 20rem !important;
+           margin-left: 8rem;          
+    }
+    
+    
+    .img-ServicioSeñal{
+        height:5em !important;
+        width: 10rem !important;
+        margin-left:1rem;
+        margin-top: 6rem !important;
+    }
+    
+    .img-ReclamoComunidades{
+        width: 10rem !important;
+        margin-left:1rem;
+    }  
+    
+    
+    .cambiar-width{
+        width: 58.58% !important;
+    }
+    
+    .restar-margin{
+        margin-right:-2rem !important;
+    }
+    
+    .cambiar-width-text{
+        width: 100% !important;
+    }
+    
+    .debajoFloat{
+        width:80% !important;
+        margin-bottom: -1.5rem;
+        float: none !important;
+        
+    }
+    .margen-depto{
+        margin-top: .5rem !important;
+    }
+    
+    .margen-positivo-dbl{
+        margin-top: 3.5rem !important;
+    }
+    
+     
+    .ui-grid-responsive .ui-grid-col-12{
+        float: right !important;
+       
+    }
+
+    .margen-ffhl{
+        margin-top: -5rem !important;
+    }
+    
+    
+    .margen-positivo{
+        margin-top: 1.5rem !important;
+        
+    }
+    
+ 
+    
+    .margen-negativo{
+        margin-top: -1.5rem;        
+    }
+    
+    .margen-negativo-min{
+        margin-top: -1rem;
+    }
+    
+    
+    .margen-not-change{
+        margin-top: -0.5rem !important;
+    }
+    
+    .margen-negativo-dbl{
+        margin-top:-3rem;
+    }
+    
+    .margen-lola-negativo{
+        margin-top: -2rem;
+    }
+    
+    .margen-negativo-latitud{
+        margin-top: -4.5rem !important;
+    }
+    
+    .margen-btn-enviarFormulario{
+        margin-top: -3rem !important;
+    }
+       
+}
+
+
+
+
+
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    color: #333;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.75);
+    cursor: pointer;
+    background-color: transparent !important;
+    background-image: none !important;
+    background-repeat: repeat-x;
+    border-width: 1px;
+    border-style: solid;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;    
+    border-radius: 4px;
+   box-shadow: none !important;
+}
+
+.ui-fileupload-choose{
+    border-color: transparent !important;
+}
+
+
+.margenTop
+{
+    z-index: 100;
+}
+
+
+
+.controls-search {
+          margin-top: 10px;
+          border: 1px solid transparent;
+          border-radius: 2px 0 0 2px;
+          box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          height: 32px;
+          outline: none;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        #address {
+          background-color: #fff;
+          font-family: Roboto;
+          font-size: 15px;
+          font-weight: 300;
+          margin-left: 12px;
+          padding: 0 11px 0 13px;
+          text-overflow: ellipsis;
+          width: 300px;
+        }
+
+        #address:focus {
+          border-color: #4d90fe;
+        }
+        
+        
+        .control-search-button {
+          border-radius: 8px !important;
+          border-color: transparent !important;
+          background-color: #004082;
+            color: white;
+        padding: 10px;
+        font-size: 17.5px;
+       
+        }
+        
+        
+        

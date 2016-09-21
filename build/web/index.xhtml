@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition    
+    template="./template/templateLogin.xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns="http://www.w3.org/1999/xhtml"
+    >
+
+    <ui:define name="content" >
+
+    </ui:define>
+
+    <ui:define  name="bottom">
+        <h:form>
+            <p:growl id="messages" showDetail="true"/>
+
+            <div class="ui-grid ui-grid-responsive">
+                <div clas="col-xs-12 row" >
+                    <div class="ui-grid ui-grid-responsive">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-12"> <br></br></div>
+                        </div>
+                    </div>
+                </div>                   
+                <div clas="col-xs-12 row" >
+                    <div class="ui-grid ui-grid-responsive">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-12"> <br></br><br></br><br></br></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form_login ui-grid-row"  >
+
+                    <p:panelGrid  styleClass="img-thumbnail2 redondear-login  fondoLlenar2 col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3  col-xs-8" columns="1"  >   
+                        <p:row>
+                            <div class="ui-grid ui-grid-responsive" style="margin-bottom: 4%">
+                                <div class="row" style="text-align: center">
+                                    <img src="img/tigo-logo-azul-2.png" style="height: 120px; width: auto" />
+                                </div>               
+                            </div>
+                            <div class="ui-grid ui-grid-responsive">
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-4">
+                                        <p:outputLabel for="user" value="Usuario"  style="text-align: left; width: 100%" />   
+                                    </div>
+                                    <div class="ui-grid-col-8">                                            
+                                        <p:inputText id="user"  value="#{loginBean.usuario}"  style="width: 100%;" />
+                                    </div> 
+                                </div>
+                            </div>
+                        </p:row>
+                        <p:row>
+                            <div class="ui-grid ui-grid-responsive">
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-4">
+                                        <p:outputLabel for="pass" value="Contraseña"  style="text-align: left; width: 100%" />   
+                                    </div>
+                                    <div class="ui-grid-col-8">
+                                        <p:inputText id="pass" type="password" value="#{loginBean.contrasena}" style="width: 100%;"  />
+
+                                    </div>
+                                </div>
+                            </div>  
+                        </p:row>
+                        <p:row>
+                            <div class="ui-grid ui-grid-responsive">
+                                <div class="ui-grid-row">
+
+                                    <div class="ui-grid-col-12">
+                                        <p:commandButton value="Ingresar" style="width: 100% "  update="messages" actionListener="#{loginBean.logIn()}" styleClass="button quitarCuadro"   />
+                                    </div>   
+
+                                </div>
+                            </div>
+                        </p:row>                            
+                    </p:panelGrid>
+                </div>
+
+
+            </div>
+        </h:form>
+     
+    </ui:define>
+
+</ui:composition>
