@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      >
-
+      xmlns:h="http://java.sun.com/jsf/html"          
+      xmlns:p="http://primefaces.org/ui">
+    
     <h:head >	
         <meta charset="UTF-8"/>
         <title>Tigo</title>
@@ -15,18 +15,17 @@
         <link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/> 
         <link href="../css/tigo_css/tigo_user.css" rel="stylesheet" type="text/css"/>
         <link href="../css/tigo_css/tigo_forms.css" rel="stylesheet" type="text/css"/>
-        <!--<script type="text/javascript" src="../js/jquery-1.10.2.js"></script>-->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script> 
-        <!--<script type="text/javascript" src="../js/bootstrap.min.js"></script>-->
-        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>        
+        <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap.min.js"></script><!-- VERSION 3.3.7-->
+        <!--<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
         <script type="text/javascript" src="../js/tigo_map.js"></script>                               
     </h:head>
+    
     <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false" oncopy="return false" oncut="return false" onpaste="return false" >
     <h:body class="col-xs-12 fondo">        
         <ui:insert name="top">
         <!--Menu -->
-            <div  class="container menuEstatico" >
-                <a href="../../../../../Downloads/web.xml"></a>
+            <div  class="container menuEstatico" >            
             <nav class="navbar navbar-default" role="navigation"  >
                 <div class="container-fluid">
                   <!-- El logotipo y el icono que despliega el menú se agrupan
@@ -42,25 +41,20 @@
                    <!-- Agrupar los enlaces de navegación, los formularios y cualquier
                       otro elemento que se pueda ocultar al minimizar la barra -->
                   <div class="back_navbar container collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav  nav-pills"> 
-                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1"><a title="Ir a inicio" href="cerrarSesion.xhtml">#{templateBean.inicio}</a></li>
-                        <!--<li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu3"><a title="Mi Clave" href="resetNAF.xhtml"># {templateBean.miclave}</a></li>-->
+                    <ul class="nav  nav-pills">
+                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu2"><a title="           "></a></li>
                         <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu3"><a title="Cambiar Navega+" href="resetNavega.xhtml">#{templateBean.navega}</a></li>
                         <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu3"><a title="Cambiar NAF" href="resetNAF.xhtml">#{templateBean.naf}</a></li>
-                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu2"><a title="Cambiar Amsys" href="reseteoAmsys.xhtml">#{templateBean.amsys}</a></li>
-                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 13.0em;" >                         
-                            <a title="Ir a inicio" href="revertir.xhtml" style="display:#{(templateBean.blnActivoRevertir)?'none':'block'}">#{templateBean.init()}</a>
-                        </li>
-                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu2"><a title="Cerrar Sesión" href="cerrarSesion.xhtml">Salir</a></li>
-                    </ul>
-                   </div>
-
+                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu2"><a title="Cambiar Amsys" href="resetAmsys.xhtml">#{templateBean.amsys}</a></li>
+                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu2"><a title="           "></a></li>
+                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu2"><a title="Cerrar Sesión" href="cerrarSesion.xhtml">Cerrar Sesion</a></li>
+                    </ul>                      
+                   </div>                   
                 </div>
-              </nav>
-             
-                
+              </nav>                
             </div>
         </ui:insert>
+        
         <div id="contenido"  > 
             <div  class="col-xs-12" ><br></br><br></br><br></br><br></br></div>
             <div  class="col-xs-12" >
@@ -70,31 +64,25 @@
                 <div class="modal  bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-sm">
                       <div class="modal-content">
-                          <div class="modal-header" style="border-color: transparent"><h4 class="texto-usuario" style="text-align: center"><i class="fa fa-lock"></i></h4></div>
+                        <div class="modal-header" style="border-color: transparent"><h4 class="texto-usuario" style="text-align: center"><i class="fa fa-lock"></i></h4></div>
                         <div class="modal-body" style="border-color: transparent; text-align: center" ><i class="titulo_reclamoComunidades fa fa-question-circle"></i> Estas seguro de querer salir?</div>
                         <div class="modal-footer" style="border-color: transparent">
                             <div class="row">
-                                <div class="col-xs-6">
-                                    <a href="cerrarSesion.xhtml"   class="btnAmarillo-mensaje-logout-si btn center-block quitarCuadro titulo_reclamoComunidades">Sí</a>
-                                </div>
-                                <div class="col-xs-6">
-                                    <a  data-dismiss="modal" class="btnAmarillo-mensaje-logout-no btn center-block quitarCuadro titulo_reclamoComunidades">No</a>
-                                </div>
+                                
                             </div>
                         </div>
                       </div>
                     </div>
                 </div>
                     <ui:insert name="content"></ui:insert>
-                </div>
+                </div>                
                 <div  id="bottom" >
-
+                    <a ><p:outputLabel style="margin-left: 6em;">Bienvenido: #{templateBean.getAtributoSession('usuario')}</p:outputLabel></a>
+                    <!--Forms-->
                     <ui:insert name="bottom"></ui:insert>
-                </div>
-               
+                </div>               
             </div>
         </div>
-
         
     </h:body>
 </body>

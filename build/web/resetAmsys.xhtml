@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition
+<ui:composition    
     template="./template/template.xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:f="http://java.sun.com/jsf/core"
@@ -14,6 +14,7 @@
         <h:body>
         <h:form  styleClass="fondoResetForm">
             <p:growl id="messages" showDetail="true"/>
+            <p:growl id="message" showDetail="true"/>
             
                 <div clas="col-xs-12 row" >
                     <div class="ui-grid ui-grid-responsive">
@@ -28,8 +29,8 @@
                             <p:panelGrid styleClass="col-lg-2 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-offset-4  col-xs-12" columns="1">
                             <p:row>     
                                 <br></br>
-                                <p:outputLabel for="user" value="Indique Usuario Navega+"  style="text-align: left; width: 100%" />
-                                <p:inputText id="user"  value="#{usuarioBean.usuario}"  style="width: 100%;"/>
+                                <p:outputLabel for="user" value="Indique Usuario Amsys"  style="text-align: left; width: 100%" />
+                                <p:inputText id="user"  value="#{usuarioBean.usuarioModif}"  style="width: 100%;"/>
                             </p:row>
                             <p:row>
                             <div class="">                                        
@@ -45,7 +46,8 @@
                                 <div class="">
                                     <div class="ui-field-contain">
                                         <br></br>
-                                        <p:commandButton value="Cambiar Contraseña" styleClass="ui-field-contain" style="width: 100% "  update="messages" actionListener="#{usuarioBean.btnClickCambiarNavega}" onclick="return confirm('¿Cambiar la Contraseña?')"/>
+                                        <p:commandButton value="Cambiar Contraseña" styleClass="ui-field-contain" style="width: 100% "  update="messages" actionListener="#{usuarioBean.btnClickCambiarAmsys}" onclick="return confirm('¿Cambiar la Contraseña?')"/>
+                                        <br></br>                                        
                                     </div>                                        
                                     <br></br>
                                 </div>

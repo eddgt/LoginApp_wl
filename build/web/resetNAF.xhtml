@@ -29,7 +29,7 @@
                             <p:row>     
                                 <br></br>
                                 <p:outputLabel for="user" value="Indique Usuario NAF"  style="text-align: left; width: 100%" />
-                                <p:inputText id="user"  value="#{usuarioBean.usuario}"  style="width: 100%;"/>
+                                <p:inputText id="user"  value="#{usuarioBean.usuarioModif}"  style="width: 100%;"/>
                             </p:row>
                             <p:row>
                             <div class="">                                        
@@ -45,7 +45,7 @@
                                 <div class="">
                                     <div class="ui-field-contain">
                                         <br></br>
-                                        <p:commandButton value="Cambiar Contraseña" styleClass="ui-field-contain" style="width: 100% "  update="messages" actionListener="#{usuarioBean.btnClickCambiarNAF}" />
+                                        <p:commandButton value="Cambiar Contraseña" styleClass="ui-field-contain" style="width: 100% "  update="messages" actionListener="#{usuarioBean.btnClickCambiarNAF}" onclick="return confirm('¿Cambiar la Contraseña?')"/>
                                     </div>                                        
                                     <br></br>
                                 </div>

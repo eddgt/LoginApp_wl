@@ -36,6 +36,7 @@ public class Constantes {
     public final static String DB_FUNCTION_LOGIN_AMSYS = "FNC_VERIFY_USER";
     public final static String DB_FUNCTION_ROL_USUARIO_AMSYS = "FNC_VERIFY_PROFILE";
     public final static String DB_PROCESS_PWD_AMSYS = "pr_Change_PW";
+    public final static String DB_PROCESS_MAIL = "app_Send_Mail";
     public final static String QRY_BUSCAR_USUARIO_AMSYS = "SELECT COUNT(*) FROM DBA_USERS WHERE USERNAME = ";
     
     
@@ -51,7 +52,7 @@ public class Constantes {
     public final static String DB_FUNCTION_LOGIN = "FNC_VERIFICA_USER";
     public final static String DB_FUNCTION_ROL_USUARIO = "FNC_VERIFICA_PERFIL";
     public final static String DB_FUNCTION_DATOS_USUARIO_COORD = "seg_cod_coordinador";
-    public final static String DB_PROCESS_PWD = "pr_Update_Pwd";
+    public final static String DB_PROCESS_PWD_DEV = "pr_Update_Pwd";
         
          /**
      * base de datos SQL Server 
@@ -76,6 +77,7 @@ public class Constantes {
     public final static String DB_FUNCTION_LOGIN_TEST = "FNC_VERIFICA_USER";
     public final static String DB_PROCESS_PWD_TEST = "pr_Change_PW";
     public final static String DB_PROCESS_PWD_TEST_AMSYS = "pr_Change_PW";
+    public final static String DB_PROCESS_MAIL_TEST = "app_Send_Mail";
     
     /**
      * Constantes de valores en sesión

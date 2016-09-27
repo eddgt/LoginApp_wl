@@ -9,6 +9,7 @@ import com.bdg.base.Queries;
 import com.bdg.database.Conexion;
 import com.bdg.database.ConexionLocal;
 import com.bdg.database.ConexionSqlSvr;
+import com.bdg.dto.Mail;
 import com.bdg.dto.Usuario;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -32,8 +33,10 @@ import javax.faces.event.ActionEvent;
 public class UsuarioBean extends BaseSession{
     private String id;
     private String usuario;
+    private String usuarioModif;
     private String contrasena;
     private List<Usuario> listaUsuariosApp;
+    String usuarioLogueado = this.getAtributoSession(Constantes.SS_USUARIO);
     
     
     public UsuarioBean() {
@@ -55,7 +58,14 @@ public class UsuarioBean extends BaseSession{
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
+    
+    public String getUsuarioModif() {
+        return usuarioModif;
+    }
 
+    public void setUsuarioModif(String usuarioModif) {
+        this.usuarioModif = usuarioModif;
+    }
     public String getContrasena() {
         return contrasena;
     }
@@ -81,7 +91,7 @@ public class UsuarioBean extends BaseSession{
             Statement stmt2;
             ResultSet rset;
             if(conn1 != null){
-                String query1 =Constantes.QRY_BUSCAR_USUARIO_AMSYS+"UPPER('"+usuario+"')";
+                String query1 =Constantes.QRY_BUSCAR_USUARIO_AMSYS+"UPPER('"+usuarioModif+"')";
                 stmt1 = conn1.createStatement();
                 rset = stmt1.executeQuery(query1); 
                 rset.next();
@@ -91,17 +101,25 @@ public class UsuarioBean extends BaseSession{
                     try{
                         Connection conn2 = Conexion.getConexionLocal();
                         
-                        String query2 = "CALL " + Constantes.DB_SCHEMA_NAME_TEST+"."+Constantes.DB_ORACLE_PACKAGE_TEST + 
-                        "." + Constantes.DB_PROCESS_PWD +
+                        String query2 = "CALL "+Constantes.DB_SCHEMA_NAME_TEST+"."+Constantes.DB_ORACLE_PACKAGE_TEST+
+                        "." + Constantes.DB_PROCESS_PWD_TEST+
                         "('"+usuario+"','"+contrasena+"')";//NO COLOCAR ; AL FINAL DEL QUERY
-                                                
-                    //System.out.println(query);
+                    
                     stmt2 = conn2.createStatement();
-                    //rset = stmt.executeQuery(query);//especifico para Selects
-                    int executeUpdate = stmt2.executeUpdate(query2); //especifico para Updates
-                    System.out.println("executeUpdate: "+executeUpdate);
-                    System.out.println("getFetchSize: "+stmt2.getFetchSize());                
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("NAF - Se modifico el usuario "+usuario+" exitosamente!"));
+                    
+                        boolean execute = stmt2.execute(query2); //especifico para Updates
+                    System.out.println("CALL execute: "+execute);
+                    
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("NAF - Se modifico el usuario: "+usuarioModif+" exitosamente!"));
+                    Mail ma = new Mail();                    
+                    System.out.println("Enviando mail user..");
+                    
+                    //usuario afectado
+                    ma.Send(usuarioModif+"@tigo.com.gt","NAF", usuarioModif, contrasena, usuarioLogueado);
+                    System.out.println("Enviando mail userApp..");
+                    
+                    //usario realiza cambio
+                    ma.Send(usuarioLogueado+"@tigo.com.gt","NAF", usuarioModif, contrasena, usuarioLogueado);
                     conn1.close();
                     conn2.close();
                     }
@@ -110,7 +128,7 @@ public class UsuarioBean extends BaseSession{
                     }                                   
                 }
                 else{
-                    FacesMessage msg = new FacesMessage("NAF - No se encontro el usuario: "+usuario);
+                    FacesMessage msg = new FacesMessage("NAF - No se encontro el usuario: "+usuarioModif);
                     FacesContext.getCurrentInstance().addMessage(null, msg);
                     }
             }
@@ -123,36 +141,40 @@ public class UsuarioBean extends BaseSession{
     }
 
     public void btnClickCambiarAmsys(ActionEvent actionEvent){
-	//Connection conn1 = null;
+	
         try{
-            Connection conn1  = Conexion.getConexionLocal();
+            Connection conn1  = Conexion.getConexionAmsys();
             
             Statement stmt1;
             Statement stmt2;
             ResultSet rset;
             if(conn1 != null){
-                String query1 ="SELECT COUNT(*) FROM TEST.TEST_USUARIOS WHERE USERNAME ='"+usuario+"'";
+                String query1 =Constantes.QRY_BUSCAR_USUARIO_AMSYS+ "upper('"+usuarioModif+"')";
                 stmt1 = conn1.createStatement();
                 rset = stmt1.executeQuery(query1); 
                 rset.next();
                 int count = rset.getInt(1);
-                //System.out.println("query: "+query1);
-                //System.out.println("rset: "+rset.toString());
+                
                 if (count>0){                    
                     try{
-                        Connection conn2 = Conexion.getConexionLocal();
-                        String query2 = "CALL " + Constantes.DB_SCHEMA_NAME_TEST+"."+Constantes.DB_ORACLE_PACKAGE_TEST + 
-                        "." + Constantes.DB_PROCESS_PWD_TEST +
-                        "('"+usuario+"','"+contrasena+"')";//NO COLOCAR ; AL FINAL DEL QUERY
+                        Connection conn2 = Conexion.getConexionAmsys();
+                        String query2 = "CALL " + Constantes.DB_SCHEMA_NAME_AMSYS+"."+Constantes.DB_ORACLE_PACKAGE_AMSYS + 
+                        "." + Constantes.DB_PROCESS_PWD_AMSYS +                        
+                        "('"+usuarioModif+"','E','"+contrasena+"','"+usuarioLogueado+"')";//NO COLOCAR ; AL FINAL DEL QUERY
                 
-                    //System.out.println(query);
+                    System.out.println(query2);
                     stmt2 = conn2.createStatement();
-                    //rset = stmt.executeQuery(query);//especifico para Selects
-                    int executeUpdate = stmt2.executeUpdate(query2); //especifico para Updates
-                    System.out.println("executeUpdate: "+executeUpdate);
-                    System.out.println("getFetchSize: "+stmt2.getFetchSize());                
-                    FacesMessage msg = new FacesMessage("Amsys - Se cambio la contraseña del usuario: "+usuario);
+                    
+                    int executeUpdate = stmt2.executeUpdate(query2); //especifico para Updates                    
+                    
+                    FacesMessage msg = new FacesMessage("Amsys - Se cambio la contraseña del usuario: "+usuarioModif);
                     FacesContext.getCurrentInstance().addMessage(null, msg);
+                    
+                     //usario realiza cambio
+                    Mail ma = new Mail();                    
+                    System.out.println("Enviando mail Amsys user..");
+                    ma.Send(usuarioLogueado+"@tigo.com.gt","AMSYS", usuarioModif, contrasena, usuarioLogueado);
+                    
                     conn1.close();
                     conn2.close();
                     }
@@ -161,7 +183,7 @@ public class UsuarioBean extends BaseSession{
                     }                                   
                 }
                 else{
-                    FacesMessage msg = new FacesMessage("Amsys - No se encontro el usuario: "+usuario);
+                    FacesMessage msg = new FacesMessage("Amsys - No se encontro el usuario: "+usuarioModif);
                     FacesContext.getCurrentInstance().addMessage(null, msg);
                     }
             }
@@ -229,6 +251,7 @@ public class UsuarioBean extends BaseSession{
             Statement st = conex.createStatement();
             Queries query = new Queries();  
             query.consultaUsuariosApp();
+            System.out.println("query.consultaUsuariosApp() -> "+query.consultaUsuariosApp());
             rs = st.executeQuery(query.getQryUsuariosApp());
             
             while (rs.next())
@@ -237,6 +260,7 @@ public class UsuarioBean extends BaseSession{
                 us.setIdUsuario(Integer.parseInt(rs.getString("ID")));
                 us.setNombreUsuario((rs.getString("USERNAME")));
                 listaUsuariosApp.add(us);
+                System.out.println("us.toString() -> "+us.toString());
             }
             
         }
@@ -251,5 +275,9 @@ public class UsuarioBean extends BaseSession{
             }    
         return listaUsuariosApp;
     }
+     
+    private List<Usuario> filtered;
+    public List<Usuario> getFiltered() { return filtered; }
+    public void setFiltered(List<Usuario> filtered) { this.filtered = filtered; }
     
 }

@@ -37,7 +37,7 @@ public class LoginBean extends BaseSession{
                     this.setAbributoSession(Constantes.SS_ROL, rolRequest);
                     //Redireccionar a home.
                     ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-                    context.redirect(context.getRequestContextPath() + "/faces/welcomePrimefaces.xhtml");                                       
+                    context.redirect(context.getRequestContextPath() + "/faces/home.xhtml");                                       
                 }else{
                     JsfUtil.addErrorMessage(Constantes.MSG_ERORR_LOGIN_NO_ROL);
                 }

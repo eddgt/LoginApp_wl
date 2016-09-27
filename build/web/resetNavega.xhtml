@@ -45,7 +45,7 @@
                                 <div class="">
                                     <div class="ui-field-contain">
                                         <br></br>
-                                        <p:commandButton value="Cambiar Contraseña" styleClass="ui-field-contain" style="width: 100% "  update="messages" actionListener="#{usuarioBean.btnClickCambiarNavega}" />
+                                        <p:commandButton value="Cambiar Contraseña" styleClass="ui-field-contain" style="width: 100% "  update="messages" actionListener="#{usuarioBean.btnClickCambiarNavega}" onclick="return confirm('¿Cambiar la Contraseña?')"/>
                                     </div>                                        
                                     <br></br>
                                 </div>

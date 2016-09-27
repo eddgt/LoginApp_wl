@@ -50,9 +50,9 @@ public class Conexion {
         try{
             Connection conn;
             String driverClassName=Constantes.DB_OJDBC_CLASSNAME;
-            String driverUrl="jdbc:oracle:thin:@"+Constantes.DB_HOST+":"+Constantes.DB_SID;
+            String driverUrl="jdbc:oracle:thin:@"+Constantes.DB_HOST_AMSYS+":"+Constantes.DB_SID_AMSYS;
             Class.forName(driverClassName);
-            conn = DriverManager.getConnection(driverUrl, Constantes.DB_USER, Constantes.DB_PASS);  
+            conn = DriverManager.getConnection(driverUrl, Constantes.DB_USER_AMSYS, Constantes.DB_PASS_AMSYS);
             System.out.println("Amsys conexion exitosa");
             return conn;
         }catch(SQLException e){
