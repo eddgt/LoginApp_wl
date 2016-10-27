@@ -20,28 +20,38 @@ public class Login {
     public String requestLogIn(String usuario, String contrasena){
         Connection conn = null;
         try{
-            //conn  = Conexion.getConexion();
-            conn  = Conexion.getConexionLocal();
+            //conn  = Conexion.getConexion();            
             //conn  = Conexion.getConexionAmsys();
+            //conn  = Conexion.getConexionLocal();//old method 11/10/16
+            //conn = DataSource.getConexionDSLocal();//new method 12/10/16
+            conn = DataSource.getConexionDSAmsys();//new method 12/10/16
+            
             Statement stmt;
             ResultSet rset;
             if(conn != null){
-                //DB TEST
+                
+                //AMBIENTE TEST LOCAL                
+                /*
                 String query = "SELECT " + Constantes.DB_SCHEMA_NAME_TEST+"."+Constantes.DB_ORACLE_PACKAGE_TEST + "." + Constantes.DB_FUNCTION_LOGIN_TEST +
                         "('"+usuario+"','"+contrasena+"') AS "+COL_NAME_LOGIN+" FROM DUAL";
                 
-                //DB AMSYS
-                /*String query = "SELECT " + Constantes.DB_SCHEMA_NAME_AMSYS+"."+Constantes.DB_ORACLE_PACKAGE_AMSYS + "." + Constantes.DB_FUNCTION_LOGIN_AMSYS +
-                        "('"+usuario+"','"+contrasena+"') AS "+COL_NAME_LOGIN+" FROM DUAL";*/
+                */
+                //AMSYS DEV
+                
+                String query = "SELECT " + Constantes.DB_SCHEMA_NAME_AMSYS_DEV+"."+Constantes.DB_ORACLE_PACKAGE_AMSYS_DEV + "." + Constantes.DB_FUNCTION_LOGIN_AMSYS_DEV +
+                        "('"+usuario+"','"+contrasena+"') AS "+COL_NAME_LOGIN+" FROM DUAL";
                 
                 stmt = conn.createStatement();
                 rset = stmt.executeQuery(query);
-                System.out.println("mi query: "+query);
+                //System.out.println("mi query: "+query);
                 while(rset.next()){
                     Object obj = rset.getNString(COL_NAME_LOGIN);
                     return obj.toString();
                     
                 }
+                conn.close();
+                stmt.close();
+                rset.close();
             }else{
                 
             }
@@ -50,7 +60,7 @@ public class Login {
         }finally{
             if(conn!=null){
                 try {
-                    conn.close();
+                    conn.close();                    
                 } catch (SQLException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -61,14 +71,31 @@ public class Login {
     
     public String requestRol(String usuario){
         try{
-            Connection conn  = Conexion.getConexionLocal();
+            
             //Connection conn  = Conexion.getConexionAmsys();
+            //Connection conn  = Conexion.getConexionLocal();//old method 11/10/16
+            //Connection conn  = DataSource.getConexionDSLocal();//old method 11/10/16
+            Connection conn  = DataSource.getConexionDSAmsys();//old method 11/10/16
             Statement stmt;
             ResultSet rset;
             if(conn != null){
+                
+                //Ambiente Dev Local
+                /*
                 String query = "SELECT " + Constantes.DB_SCHEMA_NAME_TEST+"."+Constantes.DB_ORACLE_PACKAGE_TEST + "." + Constantes.DB_FUNCTION_ROL_USUARIO_TEST +
                         "('"+usuario+"') AS "+COL_NAME_ROL+" FROM DUAL";
+                */
                 
+                //Ambiente Dev Remoto
+                String query = "SELECT " + Constantes.DB_SCHEMA_NAME_AMSYS_DEV+"."+Constantes.DB_ORACLE_PACKAGE_AMSYS_DEV + "." + Constantes.DB_FUNCTION_ROL_USUARIO_AMSYS_DEV +
+                        "('"+usuario+"') AS "+COL_NAME_ROL+" FROM DUAL";
+                
+                //Ambiente Produccion 
+                /*String query = "SELECT " + Constantes.DB_SCHEMA_NAME_AMSYS_PRO+"."+Constantes.DB_ORACLE_PACKAGE_AMSYS_PRO + "." + Constantes.DB_FUNCTION_ROL_USUARIO_AMSYS_PRO +
+                        "('"+usuario+"') AS "+COL_NAME_ROL+" FROM DUAL";
+                */
+                        
+                //System.out.println("PKG: "+query);
                 stmt = conn.createStatement();
                 rset = stmt.executeQuery(query);
                 while(rset.next()){
@@ -76,12 +103,16 @@ public class Login {
                     return objResult.toString();
                     
                 }
+                conn.close();
+                stmt.close();
+                rset.close();
             }else{
                 
             }
         }catch(Exception e){
-            System.out.println(e.getMessage().toString());
+            System.out.println(e.getMessage());
         }
+        
         return "";
     }
     

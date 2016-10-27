@@ -12,10 +12,11 @@
     </ui:define>    
     <ui:define name="bottom">
         <h:body>
-        <h:form  styleClass="fondoResetForm">
-            <p:growl id="messages" showDetail="true"/>
-            <p:growl id="message" showDetail="true"/>
-            
+            <h:form id="myform"  styleClass="ResetForm" >
+            <div clas="col-xs-12 row" >
+            <p:growl id="messages" showDetail="false" life="15000" />
+            <p:growl id="dialogMessage" showDetail="false" rendered="true" life="30000" />
+            </div>
                 <div clas="col-xs-12 row" >
                     <div class="ui-grid ui-grid-responsive">
                         <div class="ui-grid-row">
@@ -26,28 +27,42 @@
                 <div clas="col-xs-12 row" >
                 </div>
                 <div class="">                   
-                            <p:panelGrid styleClass="col-lg-2 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-offset-4  col-xs-12" columns="1">
+                            <p:panelGrid id="mypanel" styleClass="col-lg-2 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-offset-4  col-xs-12" columns="1">
                             <p:row>     
                                 <br></br>
-                                <p:outputLabel for="user" value="Indique Usuario Amsys"  style="text-align: left; width: 100%" />
-                                <p:inputText id="user"  value="#{usuarioBean.usuarioModif}"  style="width: 100%;"/>
+                                <b><p:outputLabel for="user" value="Indique Usuario AMSYS"  style="text-align: left; width: 100%" /></b>                                
+                                <p:inputText id="user"  value="#{usuarioBean.usuarioModif}" required="true" style="width: 100%;" placeholder="User"/>
                             </p:row>
                             <p:row>
                             <div class="">                                        
                                     <div class="ui-outputlabel">
-                                        <p:outputLabel for="pass" value="Indique Nueva Contraseña" style="text-align: left; width: 100%" styleClass="ui-outputlabel" />
+                                        <b><p:outputLabel for="pass" value="Indique Nueva Contraseña" style="text-align: left; width: 100%" styleClass="ui-outputlabel" /></b>
                                     </div>
                                     <div class="ui-field-contain">
-                                        <p:inputText id="pass" type="password" value="#{usuarioBean.contrasena}" style="width: 100%;" styleClass="ui-field-contain" />
+                                        <p:inputText id="pass" type="password" value="#{usuarioBean.contrasena}" style="width: 100%;" required="true" placeholder="NewPassword" />
                                      </div>                                    
                             </div>
                             </p:row>
                             <p:row>
                                 <div class="">
                                     <div class="ui-field-contain">
-                                        <br></br>
-                                        <p:commandButton value="Cambiar Contraseña" styleClass="ui-field-contain" style="width: 100% "  update="messages" actionListener="#{usuarioBean.btnClickCambiarAmsys}" onclick="return confirm('¿Cambiar la Contraseña?')"/>
-                                        <br></br>                                        
+                                    <br></br>
+                                    <p:commandButton resetValues="true" id="cambiapwd" actionListener="#{usuarioBean.btnClickCambiarAmsys}" value="Cambiar Contraseña" update="dialogMessage mypanel" >
+                                        <p:confirm header="Confirmation" message="¿Desea realizar el cambio?" icon="ui-icon-alert" />
+                                        <p:resetInput target="mypanel" />                                        
+                                    </p:commandButton>
+                                    <p:confirmDialog appendTo="@(body)" closable="true" global="true"  showEffect="fade" hideEffect="fade" rendered="true"  >
+                                        <p:remoteCommand name="resetPanel" process="@this cambiapwd" update="mypanel">
+                                            <p:resetInput target="mypanel" />
+                                        </p:remoteCommand>
+                                        <p:commandButton id="aceptabtn" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+                                            <p:resetInput target="mypanel" />
+                                        </p:commandButton>
+                                        <p:commandButton id="cancelabtn" value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"  onclick="resetPanel()">
+                                            <p:resetInput target="mypanel" />
+                                        </p:commandButton>
+                                    </p:confirmDialog>
+                                    
                                     </div>                                        
                                     <br></br>
                                 </div>
@@ -55,8 +70,7 @@
                                 <br></br>
                             </p:row>
                         </p:panelGrid>
-                    </div>
-            
+                    </div>            
             </h:form>
         </h:body>
     </ui:define>

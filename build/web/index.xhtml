@@ -50,7 +50,7 @@
                                     </div>
                                     <br></br>
                                     <div class="ui-grid-col-8">                                            
-                                        <p:inputText id="user"  value="#{loginBean.usuario}"  style="width: 100%;" />
+                                        <p:inputText id="user"  value="#{loginBean.usuario}"  style="width: 100%;" placeholder="User" />
                                     </div> 
                                 </div>
                             </div>
@@ -58,12 +58,12 @@
                         <p:row>
                             <div class="ui-grid ui-grid-responsive">
                                 <div class="ui-grid-row">
-                                    <div class="ui-grid-col-4">
-                                        <p:outputLabel for="pass" value="Contraseña:"  style="text-align: left; width: 100%" />   
+                                    <div class="ui-grid-col-4">                                        
+                                        <p:outputLabel for="pass" value="Contraseña:"  style="text-align: left; width: 100%" />
                                     </div>
                                     <br></br>
                                     <div class="ui-grid-col-8">
-                                        <p:inputText id="pass" type="password" value="#{loginBean.contrasena}" style="width: 100%;"  />
+                                        <p:inputText id="pass" type="password" value="#{loginBean.contrasena}" style="width: 100%;" placeholder="Password" />
                                     </div>
                                 </div>
                             </div>  
@@ -71,11 +71,9 @@
                         <p:row>
                             <div class="ui-grid ui-grid-responsive">
                                 <div class="ui-grid-row">
-
-                                    <div class="ui-grid-col-12">
-                                        <p:commandButton value="Ingresar" style="width: 100% "  update="messages" actionListener="#{loginBean.logIn()}" styleClass="button quitarCuadro"   />
+                                    <div class="ui-grid-col-6">
+                                        <p:commandButton value="Ingresar" style="width: 100% "  update="messages" actionListener="#{loginBean.logIn()}"  />
                                     </div>   
-
                                 </div>
                             </div>
                         </p:row>                            

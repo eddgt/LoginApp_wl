@@ -6,15 +6,11 @@
 package com.bdg.dto;
 
 import com.bdg.base.Constantes;
-import com.bdg.database.Conexion;
+import com.bdg.database.DataSource;
 import com.bdg.database.Login;
-import com.bdg.vista.OrderBean;
-import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -107,25 +103,39 @@ public class Mail {
     public String Send(String mUsrTo, String mPlat,String mUsrApp, String mUpw, String mUsrAffected){
         Connection conn = null;
         try{            
-            conn = Conexion.getConexionLocal();            
+            //conn = Conexion.getConexionLocal();//old method 11/10/2016            
+            //conn = DataSource.getConexionDSLocal();//new method 12/10/2016
+            //conn = DataSource.getConexionDSAmsys();//new method 12/10/2016
+            conn = DataSource.getConexionDSAmsys();//new method 12/10/2016
             if(conn != null){
                 
-                //define my pkg
-                String pkgProc = Constantes.DB_SCHEMA_NAME_TEST+"."+Constantes.DB_ORACLE_PACKAGE_TEST + "." + Constantes.DB_PROCESS_MAIL_TEST;                
+                //define my pkg dev local
+                //String pkgProc = Constantes.DB_SCHEMA_NAME_TEST+"."+Constantes.DB_ORACLE_PACKAGE_TEST + "." + Constantes.DB_PROCESS_MAIL_TEST;
+                
+                //define my pkg dev remoto
+                String pkgProc = Constantes.DB_SCHEMA_NAME_AMSYS_DEV+"."+Constantes.DB_ORACLE_PACKAGE_AMSYS_DEV + "." + Constantes.DB_PROCESS_MAIL_AMSYS_DEV;
+                
+                //define my pkg Produccion
+                //String pkgProc = Constantes.DB_SCHEMA_NAME_AMSYS_PRO+"."+Constantes.DB_ORACLE_PACKAGE_AMSYS_PRO + "." + Constantes.DB_PROCESS_MAIL_AMSYS_PRO;
                 
                 String query = ("{CALL "+pkgProc+"('"+mUsrTo+"','"+mPlat+"','"+mUsrApp+"','"+mUpw+"','"+mUsrAffected+"')}");
                 // Prepare to call the stored procedure 
                 Statement stmt = conn.createStatement(); 
                 
                 boolean execute = stmt.execute(query); //especifico para Updates
-                System.out.println("CALL query: "+query);
+                //System.out.println("PKG query: "+query);
+                System.out.println("PKG query executing ");
                 
+                //close connection
+                conn.close();                
                 // Close the statement
                 stmt.close();
                 
+                System.out.println("Mail Conn closed");
+                
             }else{
                 
-            }
+            }            
         }
         catch(Exception e){
             System.out.println("Exception: " + e.getMessage());
@@ -134,7 +144,8 @@ public class Mail {
         finally{
             if(conn!=null){
                 try {
-                    conn.close();                    
+                    conn.close();
+                    System.out.println("Mail Conn closed");
                 } catch (SQLException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -142,6 +153,63 @@ public class Mail {
         }
         return "";
     }
+    
+    public String SendMailNavega(String mUsrTo, String mPlat,String mUsrApp, String mUpw, String mUsrAffected){
+        Connection conn = null;
+        try{            
+            //conn = Conexion.getConexionLocal();//old method 11/10/2016            
+            //conn = DataSource.getConexionDSLocal();//new method 12/10/2016
+            //conn = DataSource.getConexionDSAmsys();//new method 12/10/2016
+            conn = DataSource.getConexionDSAmsys();//new method 12/10/2016
+            if(conn != null){
+                
+                //define my pkg dev local
+                //String pkgProc = Constantes.DB_SCHEMA_NAME_TEST+"."+Constantes.DB_ORACLE_PACKAGE_TEST + "." + Constantes.DB_PROCESS_MAIL_TEST;
+                
+                //define my pkg dev remoto
+                //String pkgProc = Constantes.DB_SCHEMA_NAME_AMSYS_DEV+"."+Constantes.DB_ORACLE_PACKAGE_AMSYS_DEV + "." + Constantes.DB_PROCESS_MAIL_AMSYS_DEV;
+                
+                //define my pkg Produccion
+                //String pkgProc = Constantes.DB_SCHEMA_NAME_AMSYS_PRO+"."+Constantes.DB_ORACLE_PACKAGE_AMSYS_PRO + "." + Constantes.DB_PROCESS_MAIL_AMSYS_PRO;
+                                
+                String query = ("CALL APP_PR_PKG.send_Mail_Html('"+mUsrTo+"',  'AppNoReply@tigo.com.gt','Notificacion_credenciales','',  '<!DOCTYPE html>  <html>  <head><title>Notificacion Modificacion de Credenciales</title></head><body><br></br><p><a>Se ha desbloqueado el usuario: "+mUsrAffected+" Password de acceso para la plataforma: "+mPlat+"  </b> </a></p><p><a><font color=\"blue\">Nuevo password: <b> "+mUpw+" </b></font></a></p> <p><a><font color=\"blue\">Usuario que aplica los cambios: <b> "+mUsrApp+" </b></font></a></p></body> </html>','mail.tigo.com.gt',25)");
+                
+                //System.out.println("PKG query: "+query);
+                System.out.println("PKG query executing ");
+                
+                // Prepare to call the stored procedure 
+                Statement stmt = conn.createStatement(); 
+                
+                boolean execute = stmt.execute(query); //especifico para Updates                
+                
+                //close connection
+                conn.close();                
+                // Close the statement
+                stmt.close();                
+                
+                System.out.println("Mail Conn closed");
+                
+            }else{
+                
+            }            
+        }
+        catch(Exception e){
+            System.out.println("Exception: " + e.getMessage());
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
+        }
+        finally{
+            if(conn!=null){
+                try {
+                    conn.close();
+                    System.out.println("Mail Conn closed");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return "";
+    }
+    
     
     public void onSend(RowEditEvent event) {  
         FacesMessage msg = new FacesMessage("Notification email sent");

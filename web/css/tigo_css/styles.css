@@ -3,7 +3,7 @@ body {
   background:url(../img/fondoLlenar.png)  no-repeat center center fixed;
 }
 
-body, input, button {
+body, input {
   line-height: 1.4;
   font: 13px Helvetica,arial,freesans,clean,sans-serif;
 }
@@ -36,12 +36,12 @@ form .styleGreen {
     font-family: Arial,Helvetica,sans-serif;
 }
 
-.fondoResetForm {
+.ResetForm {
     background:url(../img/fondoLlenar.png)  no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    height: auto;
+    height: 30%;
     max-width: 100%
 }
 

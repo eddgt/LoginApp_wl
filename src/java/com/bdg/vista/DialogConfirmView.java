@@ -10,11 +10,12 @@ import javax.faces.context.FacesContext;
  
 import org.primefaces.event.CloseEvent;
  
-@ManagedBean
+@ManagedBean (name = "dialog")
 public class DialogConfirmView {
  
-    public void destroyWorld() {
-        addMessage("System Error", "Please try again later.");
+    public void confirmNavega() {
+        //addMessage("Informacion", "Intentando hacer el cambio");
+        
     }
      
     public void addMessage(String summary, String detail) {

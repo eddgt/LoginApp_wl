@@ -17,12 +17,11 @@
         <link href="../css/tigo_css/tigo_forms.css" rel="stylesheet" type="text/css"/>
         <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="../js/bootstrap.min.js"></script><!-- VERSION 3.3.7-->
-        <!--<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-        <script type="text/javascript" src="../js/tigo_map.js"></script>                               
-    </h:head>
-    
-    <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false" oncopy="return false" oncut="return false" onpaste="return false" >
-    <h:body class="col-xs-12 fondo">        
+        <script type="text/javascript" src="../js/bootbox.min.js"></script>
+        <script type="text/javascript" src="../js/scripts.js"></script>
+    </h:head>    
+    <body oncontextmenu="return false" onselectstart="return false" oncopy="return false" oncut="return false" onpaste="return false" >
+    <h:body class="col-xs-12 fondo" >        
         <ui:insert name="top">
         <!--Menu -->
             <div  class="container menuEstatico" >            
@@ -40,16 +39,16 @@
                   </div>
                    <!-- Agrupar los enlaces de navegación, los formularios y cualquier
                       otro elemento que se pueda ocultar al minimizar la barra -->
-                  <div class="back_navbar container collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav  nav-pills">
-                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu2"><a title="           "></a></li>
-                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu3"><a title="Cambiar Navega+" href="resetNavega.xhtml">#{templateBean.navega}</a></li>
-                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu3"><a title="Cambiar NAF" href="resetNAF.xhtml">#{templateBean.naf}</a></li>
-                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu2"><a title="Cambiar Amsys" href="resetAmsys.xhtml">#{templateBean.amsys}</a></li>
-                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu2"><a title="           "></a></li>
-                        <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu2"><a title="Cerrar Sesión" href="cerrarSesion.xhtml">Cerrar Sesion</a></li>
+                  <div class="back_navbar container collapse navbar-collapse" id="bs-example-navbar-collapse-1">                  
+                      <ul class="nav  nav-pills"><br></br>
+                        <li class="opcion_bar margin-top-opcion-menu" id="menu2"><a title="       "></a></li>
+                        <li class="opcion_bar margin-top-opcion-menu" id="menu3"><a title="Cambiar Navega+" href="resetNavega.xhtml" >Contraseña Navega Plus</a></li>
+                        <li class="opcion_bar margin-top-opcion-menu" id="menu3"><a title="Cambiar NAF" href="resetNAF.xhtml">Contraseña NAF</a></li>
+                        <li class="opcion_bar margin-top-opcion-menu" id="menu2"><a title="Cambiar Amsys" href="resetAmsys.xhtml">Contraseña AMSYS</a></li>
+                        <li class="opcion_bar margin-top-opcion-menu" id="menu2"><a title="           "></a></li>
+                        <li class="opcion_bar margin-top-opcion-menu" id="menu2"><a title="Cerrar Sesión" href="cerrarSesion.xhtml">Cerrar Sesion</a></li>
                     </ul>                      
-                   </div>                   
+                   </div>
                 </div>
               </nav>                
             </div>
@@ -65,7 +64,7 @@
                     <div class="modal-dialog modal-sm">
                       <div class="modal-content">
                         <div class="modal-header" style="border-color: transparent"><h4 class="texto-usuario" style="text-align: center"><i class="fa fa-lock"></i></h4></div>
-                        <div class="modal-body" style="border-color: transparent; text-align: center" ><i class="titulo_reclamoComunidades fa fa-question-circle"></i> Estas seguro de querer salir?</div>
+                        <div class="modal-body" style="border-color: transparent; text-align: center" ><i class="fa fa-question-circle"></i> Estas seguro de querer salir?</div>
                         <div class="modal-footer" style="border-color: transparent">
                             <div class="row">
                                 
@@ -75,9 +74,17 @@
                     </div>
                 </div>
                     <ui:insert name="content"></ui:insert>
+                    <h4>
+                        <p:outputLabel style="margin-left: 10%; margin-top: 2%">Bienvenido: #{templateBean.getAtributoSession('usuario')}</p:outputLabel>
+                    </h4>
                 </div>                
                 <div  id="bottom" >
-                    <a ><p:outputLabel style="margin-left: 6em;">Bienvenido: #{templateBean.getAtributoSession('usuario')}</p:outputLabel></a>
+                    <!--<br></br>
+                    <br></br>
+                    <h4 class="back_navbar container collapse navbar-collapse">
+                        <br></br>
+                        <p:outputLabel style="margin-left: 8em; width: 15em; ">Bienvenido: # {templateBean.getAtributoSession('usuario')}</p:outputLabel>
+                    </h4>-->
                     <!--Forms-->
                     <ui:insert name="bottom"></ui:insert>
                 </div>               

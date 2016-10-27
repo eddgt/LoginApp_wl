@@ -1502,5 +1502,12 @@ label.bcm_titulo{
     text-decoration: none;
 
 }
-
+/*
+.ui-dialog{
+    
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -100px;
+  }*/
 /*Todo va bien*/

@@ -12,6 +12,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import com.bdg.sesion.BaseSession;
 import com.bdg.utils.JsfUtil;
+import java.io.Serializable;
 
 /**
  *
@@ -19,7 +20,7 @@ import com.bdg.utils.JsfUtil;
  */
 @ManagedBean(name = "loginBean")
 @SessionScoped
-public class LoginBean extends BaseSession{
+public class LoginBean extends BaseSession  implements Serializable{
     private String usuario;
     private String contrasena;
     
@@ -27,14 +28,17 @@ public class LoginBean extends BaseSession{
         try {
             Login login = new Login();
             String alias = usuario.split("@")[0];
-            System.out.print("\nalias: " +alias.toString());
+            System.out.print("\nalias: " +alias);
             String loginRequest = login.requestLogIn(usuario, contrasena);
-            System.out.print("\nloginRequest: " +loginRequest.toString());
+            System.out.print("\nloginRequest: " +loginRequest);
             if(!loginRequest.equals(Constantes.LOGIN_FAIL) && alias.equals(loginRequest)){
                 String rolRequest = login.requestRol(usuario);
+                System.out.println("ss_usuario: "+alias);
+                System.out.println("ss_rol: "+rolRequest);
                 if(!rolRequest.equals(Constantes.ROL_NO_ROL)){
                     this.setAbributoSession(Constantes.SS_USUARIO, alias);
-                    this.setAbributoSession(Constantes.SS_ROL, rolRequest);
+                    this.setAbributoSession(Constantes.SS_ROL, rolRequest);                   
+                    
                     //Redireccionar a home.
                     ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
                     context.redirect(context.getRequestContextPath() + "/faces/home.xhtml");                                       

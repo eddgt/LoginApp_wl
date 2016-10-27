@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="https://172.16.5.19/wsSecurity/wsClaves.asmx" uri="src/conf/xml-resources/web-service-references/wsClaves/wsdl/172.16.5.19/wsSecurity/wsClaves.asmx"/>
+    <system systemId="https://172.16.5.19/wsSecurity/wsClaves.asmx?wsld" uri="src/conf/xml-resources/web-service-references/wsClaves/wsdl/172.16.5.19/wsSecurity/wsClaves.asmx.wsld"/>
+    <system systemId="https://172.16.5.19/wsSecurity/wsClaves.asmx?wsdl" uri="src/conf/xml-resources/web-service-references/wsClaves/wsdl/172.16.5.19/wsSecurity/wsClaves.asmx.wsdl"/>
+</catalog>
