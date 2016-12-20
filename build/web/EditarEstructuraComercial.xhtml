@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+            th {
+                color:white !important;
+            }
+        </style>
+
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">EDITAR ESTRUCTURA COMERCIAL </h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                <p:panel id="panelEs" header="" style="margin-bottom:10px;" >                  
+                    <h:panelGrid columns="4" cellpadding="5">
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Persona :" >
+                            <span>
+                                <h:selectOneMenu value="#{estructuraComercialBean.persona}"  accesskey="true" styleClass="btn btn-info margen-texto tamControl bajar" style="width: 190px"     id="idpersona" required="true"  requiredMessage="Seleccione persona" >
+                                    <f:selectItem itemLabel="Elije una opcion" itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems value="#{estructuraComercialBean.listaPersonasTodo}" var="per" itemValue="#{per.idPersona}" itemLabel="#{estructuraComercialBean.concatenar(per.nompersona, ' -- ', per.idPersona)}"></f:selectItems>
+                                </h:selectOneMenu>
+                            </span>
+                        </p:outputLabel> <br></br>
+
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Tipo Asesor: " >
+                            <span>                        
+                                <h:selectOneMenu value="#{estructuraComercialBean.tipoAsesorSel}"  accesskey="true" styleClass="btn btn-info margen-texto tamControl bajar" style="width: 190px" id="idasesor" required="true"  requiredMessage="Seleccione tipo asesor" >
+                                    <f:selectItem itemLabel="Elije una opcion" itemValue="#{null}" noSelectionOption="true"/>                           
+                                    <f:selectItems value="#{estructuraComercialBean.listaTipoAsesor}" var="asse" itemValue="#{asse.idTipoAsesor}" itemLabel="#{estructuraComercialBean.concatenar(asse.nombreTipoAsesor, ' -- ', asse.idTipoAsesor)}"></f:selectItems>
+                                </h:selectOneMenu>
+                            </span>
+                        </p:outputLabel>
+                        <br></br>  
+
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Supervisor: " >
+                            <span>                                                     
+                                <h:selectOneMenu value="#{estructuraComercialBean.supervisor}" accesskey="true" styleClass="btn btn-info margen-texto tamControl bajar" style="width: 190px"     id="Idsupervisor" required="true" requiredMessage="Seleccione supervisor"  >
+                                    <f:selectItem itemLabel="Elije una opcion" itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems value="#{estructuraComercialBean.listaPersonasSupervisor}" var="per" itemValue="#{per.idPersona}" itemLabel="#{estructuraComercialBean.concatenar(per.nompersona, ' -- ', per.idPersona)}"></f:selectItems>
+                                </h:selectOneMenu>
+                            </span>
+                        </p:outputLabel> <br></br>  
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Gerente: " >
+                            <span>
+                                <h:selectOneMenu value="#{estructuraComercialBean.gerente}" accesskey="true" styleClass="btn btn-info margen-texto tamControl bajar" style="width: 190px"     id="idteammanager" required="true"  requiredMessage="Seleccione gerente" >
+                                    <f:selectItem itemLabel="Elije una opcion" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{estructuraComercialBean.listaPersonasGerentes}" var="per" itemValue="#{per.idPersona}" itemLabel="#{estructuraComercialBean.concatenar(per.nompersona, ' -- ', per.idPersona)}"></f:selectItems>
+                                </h:selectOneMenu>
+                            </span>
+                        </p:outputLabel> <br></br>  
+
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Coordinador: " >
+                            <span>              
+                                <h:selectOneMenu value="#{estructuraComercialBean.coordinador}" accesskey="true" styleClass="btn btn-info margen-texto tamControl bajar" style="width: 190px" id="idcoordinador" required="true" requiredMessage="Seleccione coordinador"  >
+                                    <f:selectItem itemLabel="Elije una opcion" itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems value="#{estructuraComercialBean.listaPersonasCoordinador}" var="per" itemValue="#{per.idPersona}" itemLabel="#{estructuraComercialBean.concatenar(per.nompersona, ' -- ', per.idPersona)}"></f:selectItems>
+                                </h:selectOneMenu> 
+                            </span>
+                        </p:outputLabel><br></br> 
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Código AS400: " >
+                            <span>
+                                <p:inputText id="Cod_as400" maxlength="7" value="#{estructuraComercialBean.codas400}" required="true" requiredMessage="*"  />
+                                <p:message for="Cod_as400" />
+                            </span>
+                        </p:outputLabel><br></br>
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Usuario N+: " >
+                            <span>                                
+                                <p:inputText id="usuarionav" maxlength="75" value="#{estructuraComercialBean.usuarioNav}" required="true" requiredMessage="*"  />
+                                <p:message for="usuarionav" />
+                            </span>
+                        </p:outputLabel><br></br>
+
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Fecha desde: " >
+                            <span>
+                                <p:calendar id="fecdesde" locale="es" navigator="true" pattern="dd/MM/yyyy" value="#{estructuraComercialBean.fechdesde}" required="true" requiredMessage="Ingrese fecha"  ></p:calendar>
+                                <p:message for="fecdesde" />
+                            </span>
+                        </p:outputLabel><br></br>
+
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Fecha hasta: " >
+                            <span>                                
+                                <p:calendar id="fechasta" locale="es" navigator="true" pattern="dd/MM/yyyy" value="#{estructuraComercialBean.fechasta}" required="true" requiredMessage="Ingrese fecha" ></p:calendar>
+                                <p:message for="fechasta" />
+                            </span>
+                        </p:outputLabel><br></br>
+                    </h:panelGrid>
+                    <br></br>
+                    <p:commandButton styleClass="margen-texto" id="btnAgregar" value="Actualizar"  
+                                     actionListener="#{estructuraComercialBean.editarEstructuraComercial()}"  update="messages @form" validateClient="true"
+                                              /> 
+                    <p:commandButton id="btnCancelarEs" value="Cancelar" process="@this"
+                                     actionListener="#{estructuraComercialBean.cancelarOperacion()}" 
+                                     />
+                </p:panel>                                
+            </div>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

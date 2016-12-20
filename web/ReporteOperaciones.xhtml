@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:pm="http://primefaces.org/mobile">  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+            th {
+                color:white !important;
+            }
+        </style>
+            
+        <!--Inicio facet para carga de Data-->
+        <p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">
+            <f:facet name="default">
+                <!--<h:outputText value="Status: StandBy" />-->
+            </f:facet>
+            
+            <f:facet name="start">
+                <!--<p:graphicImage value="/img/ajaxloadingbar.gif" />-->
+            </f:facet>
+            
+            <f:facet name="complete">
+                <!--<h:outputText value="Status: Completed" />-->
+            </f:facet>
+        </p:ajaxStatus>
+        <!--Fin facet para carga de Data-->
+        
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+        
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" header="Generando reporte...">
+            <p:graphicImage value="/img/ajaxloadingbar.gif" />
+        </p:dialog>          
+        
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+                
+            <div class="ui-grid ui-grid-responsive">
+                
+                <div class="ui-grid-row"  >
+                    
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">Ejecutar Proceso por Periodo</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                <p:panel id="panel" header="" style="margin-bottom:10px;" >
+                    
+                    <p:panelGrid id="myPanelGrid" styleClass="img-thumbnail2 fondoLlenar2" columns="1" style="width:90%; margin-left: 40px;" layout="grid">
+                        
+                        <p:outputLabel for="periodo" value="Indique Periodo a Ejecutar: (MMAAAA) " />
+                        <p:inputText id="periodo" value="#{repOperBean.periodo}" maxlength="6" required="true" requiredMessage="Debe indicar un periodo" 
+                                     label="Surname" validatorMessage="Campo Obligatorio" onchange="this.value = this.value.trim()"/>
+                        <p:message for="periodo" />
+                            
+                        <!--============================================================================-->
+                        <!-- BOTONES SUPERIORES -->
+                        <!--============================================================================-->                                
+                        <p:row>
+                        <p:commandButton styleClass="margen-texto" id="btnAgregar" value="Generar Reporte" ajax="true"  
+                                         actionListener="#{repOperBean.crearReporte()}"  update="messages @form"
+                        /> 
+                                         
+                        <p:commandButton id="btnCancelar" value="Cancelar" process="@this" ajax="true"  
+                                         actionListener="#{ventasOperacionBean.cancelarOperacion()}" 
+                        />   
+                        
+                          <p:commandButton id="btnDescargar" value="Descargar" process="@this" ajax="false"  
+                                           actionListener="#{repOperBean.download()}" disabled="#{repOperBean.blnActivo}"
+                        />   
+                        
+                        </p:row>         
+                        
+                    </p:panelGrid>
+                        
+                </p:panel>                                
+            </div>
+        </h:form>
+    </ui:define>
+        
+    <ui:define name="bottom">
+    </ui:define>
+        
+</ui:composition>

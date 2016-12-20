@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+        
+    xmlns:pm="http://primefaces.org/mobile">  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+            th {
+                color:white !important;
+            }
+        </style>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{ventasOperacionBean.cargarCombos()}"/>
+        </f:metadata>
+
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">Nueva Operacion de Venta</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                <p:panel id="panel" header="" style="margin-bottom:15px; margin-left: 50px; margin-right: 50px;" >
+                    
+                    <h:panelGrid columns="4" cellpadding="5">
+                        <pm:field>
+                            <p:outputLabel for="sistema" value="Sistema: " />
+                        </pm:field>
+                        
+                        <pm:field>                            
+                            <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar" 
+                                            disabled="#{ventasOperacionBean.blnActivoOneSelected}"    
+                                            id="sistema"  value="#{ventasOperacionBean.comboSistemaSelected}"  
+                                            requiredMessage="Debe elegir opcion" >
+                                <p:ajax event="change" update="coord"/>
+                                <f:selectItem itemLabel="(Elige opcion)" itemValue="#{sis.sistema}" noSelectionOption="true" />
+                                <f:selectItems value="#{ventasOperacionBean.listaCombosOperacionVista}" var="sis" itemLabel="#{sis.sistema}" itemValue="#{sis.sistema}" />
+                            </h:selectOneMenu>
+                        <p:message for="sistema" />
+                        </pm:field>
+                        
+                        <pm:field>
+                            <p:outputLabel for="tipotran" value="Tipo Transaccion: " />
+                        </pm:field>
+                        
+                        <pm:field>                            
+                            <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar" 
+                                            disabled="#{ventasOperacionBean.blnActivoOneSelected}"    
+                                            id="tipotran"  value="#{ventasOperacionBean.comboTipoTranSelected}"  
+                                            requiredMessage="Debe elegir opcion" >
+                                <p:ajax event="change" update="tipotran"/>
+                                <f:selectItem itemLabel="(Elige opcion)" itemValue="#{tran.tipoTransaccion}" noSelectionOption="true" />
+                                <f:selectItems value="#{ventasOperacionBean.listaCombosTipoTran}" var="tran" itemLabel="#{tran.tipoTransaccion}" itemValue="#{tran.tipoTransaccion}" />
+                            </h:selectOneMenu>
+                        <p:message for="tipotran" />
+                        </pm:field>                   
+                        
+                        <pm:field>
+                            <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Fecha: " />
+                        </pm:field>
+                        <pm:field>                           
+                                <p:calendar id="fecha" pattern="dd/MM/yyyy" value="#{ventasOperacionBean.fecha}" required="true" requiredMessage="Ingrese fecha"  ></p:calendar>
+                                <p:message for="fecha" />                        
+                        </pm:field>                        
+                        
+                        <pm:field>
+                            <p:outputLabel for="codcliente" value="Cod cliente: " />
+                        </pm:field>
+                        <pm:field>
+                            <p:inputText id="codcliente" value="#{ventasOperacionBean.codCliente}" validatorMessage="Campo Obligatorio"  required="true" onchange="this.value = this.value.trim()">
+                            </p:inputText>
+                        <p:message for="codcliente" />
+                        </pm:field>
+                    
+                        <pm:field>
+                            <p:outputLabel for="climic" value="Cliente MIC: " />
+                        </pm:field>
+                        <pm:field>
+                        <h:selectOneMenu disabled="false" styleClass="btn btn-info margen-texto tamControl bajar"    id="climic" 
+                                         value="#{ventasOperacionBean.clienteMic}" >
+                                                            <f:selectItem itemLabel="(Elige opcion)" itemValue="" noSelectionOption="true"/>
+                                                            <f:selectItem itemLabel="SI" itemValue="SI" />
+                                                            <f:selectItem itemLabel="NO" itemValue="NO" />                                                           
+                        </h:selectOneMenu>                                                            
+                         </pm:field>   
+                        
+                        <pm:field>                            
+                        </pm:field>
+               
+                        <!--<pm:field>
+                            <p:outputLabel for="clientew" value="Cliente WS: " />
+                        </pm:field>
+                        <pm:field>
+                            <p:inputText id="clientew" value="# {ventasOperacionBean.clienteWholeSale}" maxlength="2" requiredMessage="Campo obligatorio"  required="true" onchange="this.value = this.value.trim()">
+                            </p:inputText>
+                            <p:message for="clientew" />
+                        </pm:field>-->
+                        
+                        <pm:field>
+                            <p:outputLabel for="nit" value="NIT: " />
+                        </pm:field>
+                        <pm:field>
+                            <p:inputText id="nit" value="#{ventasOperacionBean.nit}" onchange="this.value = this.value.trim()">
+                            </p:inputText>
+                            <p:message for="nit" />
+                        </pm:field>
+                        
+                        <pm:field>
+                            <p:outputLabel for="tel" value="Telefono: " />
+                        </pm:field>
+                        <pm:field>
+                            <p:inputText id="tel" value="#{ventasOperacionBean.telefono}" requiredMessage="Campo obligatorio" required="true" onchange="this.value = this.value.trim()">
+                            </p:inputText>                        
+                            <p:message for="tel" />
+                        </pm:field>
+                        
+                        <pm:field>
+                            <p:outputLabel for="aneins" value="Anexo/Instalacion: " />
+                        </pm:field>
+                        <pm:field>
+                        <p:inputText id="aneins" value="#{ventasOperacionBean.aneIns}" requiredMessage="Campo obligatorio" required="true" onchange="this.value = this.value.trim()">
+                        </p:inputText>
+                        <p:message for="aneins" />
+                        </pm:field>
+                        
+                        <pm:field>
+                            <p:outputLabel for="codventa" value="Cod Venta: " />
+                        </pm:field>                        
+                        <pm:field>                            
+                            <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar" 
+                                            disabled="#{ventasOperacionBean.blnActivoOneSelected}"    
+                                            id="codventa"  value="#{ventasOperacionBean.comboCodVentaSelected}"  
+                                            requiredMessage="Debe elegir opcion" >
+                                <p:ajax event="change" update="codventa"/>
+                                <f:selectItem itemLabel="(Elige opcion)" itemValue="#{ven.codVenta}" noSelectionOption="true" />
+                                <f:selectItems value="#{ventasOperacionBean.listaCombosCodVenta}" var="ven" itemLabel="#{ven.codVenta}" itemValue="#{ven.codVenta}" />
+                            </h:selectOneMenu>
+                        <p:message for="codventa" />
+                        </pm:field> 
+                        
+                        <pm:field>
+                            <p:outputLabel for="nomventa" value="Nombre Venta: " />
+                        </pm:field>                        
+                        <pm:field>                            
+                            <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar" 
+                                            disabled="#{ventasOperacionBean.blnActivoOneSelected}"    
+                                            id="nomventa"  value="#{ventasOperacionBean.comboNombreVentaSelected}"  
+                                            requiredMessage="Debe elegir opcion" >
+                                <p:ajax event="change" update="nomventa"/>
+                                <f:selectItem itemLabel="(Elige opcion)" itemValue="#{nom.nombreVenta}" noSelectionOption="true" />
+                                <f:selectItems value="#{ventasOperacionBean.listaCombosNombreVenta}" var="nom" itemLabel="#{nom.nombreVenta}" itemValue="#{nom.nombreVenta}" />
+                            </h:selectOneMenu>
+                        <p:message for="nomventa" />
+                        </pm:field> 
+                        
+                        <pm:field>
+                        <p:outputLabel for="montov" value="Monto : " />
+                        </pm:field>
+                        <pm:field>
+                        <p:inputText id="montov" value="#{ventasOperacionBean.montoVenta}" requiredMessage="Campo obligatorio" required="true" onchange="this.value = this.value.trim()">
+                        </p:inputText>
+                        <p:message for="montov" />
+                        </pm:field>
+                        
+                        <pm:field>
+                            <p:outputLabel for="anep" value="Anexo Padre: " />
+                        </pm:field>
+                        <pm:field>
+                        <h:selectOneMenu disabled="false" styleClass="btn btn-info margen-texto tamControl bajar"    id="anep" 
+                                         value="#{ventasOperacionBean.anexoPadre}" >
+                                                            <f:selectItem itemLabel="(Elige opcion)" itemValue="" noSelectionOption="true"/>
+                                                            <f:selectItem itemLabel="SI" itemValue="SI" />
+                                                            <f:selectItem itemLabel="NO" itemValue="NO" />                                                           
+                        </h:selectOneMenu>                                                            
+                         </pm:field>   
+                        
+                        <pm:field>
+                        <p:outputLabel for="ejecutivo" value="Ejecutivo: " />
+                        </pm:field>
+                        <pm:field>
+                        <!--<p:inputText id="ejecutivo" value="# {ventasOperacionBean.ejecutivoVenta}" requiredMessage="Campo obligatorio" required="true" onchange="this.value = this.value.trim()">
+                        </p:inputText>-->
+                            <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar" 
+                                            disabled="#{ventasOperacionBean.blnActivoOneSelected}"    
+                                            id="ejecutivo"  value="#{ventasOperacionBean.nombreAsesorSelectedVista}"  
+                                             requiredMessage="Campo obligatorio" required="true" >
+                                <p:ajax event="change" update="coord gerente" listener="#{ventasOperacionBean.oneAsesorOperVistaChange()}" />
+                                <f:selectItem itemLabel="(Elige Ejecutivo)" itemValue="" noSelectionOption="true" />  
+                                <f:selectItems value="#{ventasOperacionBean.listaAsesoresOperacionVista}" var="ase" itemLabel="#{ase.nombre}" itemValue="#{ase.nombre}" />
+                            </h:selectOneMenu>
+                        <p:message for="ejecutivo" />
+                        </pm:field>
+                        
+                        <pm:field>
+                        <p:outputLabel for="codvend" value="Cod Vendedor: " />
+                        </pm:field>
+                        <pm:field>
+                        <p:inputText id="codvend" value="#{ventasOperacionBean.codVendedor}" onchange="this.value = this.value.trim()">
+                        </p:inputText>
+                        <p:message for="codvend" />
+                        </pm:field>
+                        
+                        <pm:field>
+                        <p:outputLabel for="coord" value="Coordinador: " />
+                        </pm:field>
+                        <pm:field>
+                            <!--<p:inputText id="coord" value="# {ventasOperacionBean.nombreCoordinadorOperVistaSelected}">                                
+                            </p:inputText>-->
+                            <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar" 
+                                            disabled="#{ventasOperacionBean.blnActivoOneSelected}"    
+                                            id="coord"  value="#{ventasOperacionBean.nombreCoordinadorOperVistaSelected}"  
+                                            requiredMessage="Campo obligatorio" required="true" >
+                                <p:ajax event="change" oncomplete="#{coordi.nombre}" update="coord"/>
+                                <f:selectItem itemLabel="" itemValue="#{coordi.nombre}" noSelectionOption="false" />
+                                <f:selectItems value="#{ventasOperacionBean.listaCoordinadorOperacionVista}" var="coordi" itemLabel="#{coordi.nombre}" itemValue="#{coordi.nombre}" />
+                            </h:selectOneMenu>
+                        <p:message for="coord" />
+                        </pm:field>
+                        
+                        <pm:field>
+                        <p:outputLabel for="gerente" value="Gerente: " />
+                        </pm:field>
+                        <pm:field>
+                            <!--<p:inputText id="gerente" value="# {coordi.gerente}" requiredMessage="Campo obligatorio" required="true" onchange="this.value = this.value.trim()">
+                        </p:inputText>
+                        <p:message for="gerente" />-->
+                            <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar" 
+                                            disabled="#{ventasOperacionBean.blnActivoOneSelected}"    
+                                            id="gerente"  value="#{ventasOperacionBean.gerente}"  
+                                            requiredMessage="Campo obligatorio" required="true" >
+                                <p:ajax event="change" oncomplete="#{coordi.gerente}" update="coord"/>
+                                <f:selectItem itemLabel="" itemValue="#{coordi.gerente}" noSelectionOption="false" />
+                                <f:selectItems value="#{ventasOperacionBean.listaCoordinadorOperacionVista}" var="coordi" itemLabel="#{coordi.gerente}" itemValue="#{coordi.gerente}" />
+                            </h:selectOneMenu>
+                            <p:message for="gerente" />
+                        </pm:field>
+                       
+                        <pm:field>
+                        <p:outputLabel for="coddist" value="Cod Distribuidor: " />
+                        </pm:field>
+                        <pm:field>
+                        <p:inputText id="coddist" value="#{ventasOperacionBean.codDistribuidor}" onchange="this.value = this.value.trim()">
+                        </p:inputText>
+                        <p:message for="coddist" />
+                        </pm:field>
+                        
+                        <pm:field>
+                            <p:outputLabel for="modelo" value="Modelo: " />
+                        </pm:field>                        
+                        <pm:field>                            
+                            <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar" 
+                                            disabled="#{ventasOperacionBean.blnActivoOneSelected}"    
+                                            id="modelo"  value="#{ventasOperacionBean.comboModeloSelected}"  
+                                            >
+                                <p:ajax event="change" update="modelo"/>
+                                <f:selectItem itemLabel="(Elige opcion)" itemValue="#{mo.modelo}" noSelectionOption="true" />
+                                <f:selectItems value="#{ventasOperacionBean.listaCombosModelo}" var="mo" itemLabel="#{mo.modelo}" itemValue="#{mo.modelo}" />
+                            </h:selectOneMenu>
+                        <p:message for="modelo" />
+                        </pm:field> 
+                        
+                        <pm:field>
+                            <p:outputLabel for="clasimic" value="Clasi MIC: " />
+                        </pm:field>                        
+                        <pm:field>                            
+                            <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar" 
+                                            disabled="#{ventasOperacionBean.blnActivoOneSelected}"
+                                            id="clasimic"  value="#{ventasOperacionBean.comboClasiMicSelected}">
+                                <p:ajax event="change" update="clasimic"/>
+                                <f:selectItem itemLabel="(Elige opcion)" itemValue="#{cm.clasiMic}" noSelectionOption="true" />
+                                <f:selectItems value="#{ventasOperacionBean.listaCombosClasiMic}" var="cm" itemLabel="#{cm.clasiMic}" itemValue="#{cm.clasiMic}" />
+                            </h:selectOneMenu>
+                        <p:message for="clasimic" />
+                        </pm:field> 
+                        
+                        <pm:field>
+                            <p:outputLabel for="prodtb" value="Prod TB: " />
+                        </pm:field>                        
+                        <pm:field>                            
+                            <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar" 
+                                            disabled="#{ventasOperacionBean.blnActivoOneSelected}"
+                                            id="prodtb"  value="#{ventasOperacionBean.comboProdTbSelected}">
+                                <p:ajax event="change" update="prodtb"/>
+                                <f:selectItem itemLabel="(Elige opcion)" itemValue="#{pt.productoTb}" noSelectionOption="true" />
+                                <f:selectItems value="#{ventasOperacionBean.listaCombosProdTb}" var="pt" itemLabel="#{pt.productoTb}" itemValue="#{pt.productoTb}" />
+                            </h:selectOneMenu>
+                        <p:message for="prodtb" />
+                        </pm:field>
+                        
+                        <pm:field>
+                        <p:outputLabel for="codvennp" value="Cod Vendedor NP: " />
+                        </pm:field>
+                        <pm:field>
+                            <p:inputText id="codvennp" value="#{ventasOperacionBean.codVendedorNp}" onchange="this.value = this.value.trim()">
+                        </p:inputText>
+                        <p:message for="codvennp" />
+                        </pm:field>
+                        
+                        <pm:field>
+                        <p:outputLabel for="cliente" value="Cliente: " />
+                        </pm:field>
+                        <pm:field>
+                            <p:inputText id="cliente" value="#{ventasOperacionBean.cliente}" onchange="this.value = this.value.trim()">
+                        </p:inputText>
+                        <p:message for="cliente" />
+                        </pm:field>
+                        
+                        <pm:field>
+                        <p:outputLabel for="vendas400" value="Vendedor AS400: " />
+                        </pm:field>
+                        <pm:field>
+                            <p:inputText id="vendas400" value="#{ventasOperacionBean.vendedorAs400}" onchange="this.value = this.value.trim()">
+                        </p:inputText>
+                        <p:message for="vendas400" />
+                        </pm:field>
+                        
+                        <pm:field>
+                        <p:outputLabel for="disas400" value="Distribuidor AS400: " />
+                        </pm:field>
+                        <pm:field>
+                            <p:inputText id="disas400" value="#{ventasOperacionBean.distribuidorAs400}" onchange="this.value = this.value.trim()">
+                        </p:inputText>
+                        <p:message for="disas400" />
+                        </pm:field>
+                        
+                        <pm:field>
+                            <p:outputLabel for="abventa" value="AB Venta: " />
+                        </pm:field>                        
+                        <pm:field>                            
+                            <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar" 
+                                            disabled="#{ventasOperacionBean.blnActivoOneSelected}"
+                                            id="abventa"  value="#{ventasOperacionBean.comboAbVentaSelected}">
+                                <p:ajax event="change" update="abventa"/>
+                                <f:selectItem itemLabel="(Elige opcion)" itemValue="#{av.abVenta}" noSelectionOption="true" />
+                                <f:selectItems value="#{ventasOperacionBean.listaCombosAbVenta}" var="av" itemLabel="#{av.abVenta}" itemValue="#{av.abVenta}" />
+                            </h:selectOneMenu>
+                        <p:message for="abventa" />
+                        </pm:field>
+                        
+                        <pm:field>
+                        <p:outputLabel for="mesescontrato" value="Meses Contrato: " />
+                        </pm:field>
+                        <pm:field>
+                            <p:inputText id="mesescontrato" value="#{ventasOperacionBean.mesesContrato}" onchange="this.value = this.value.trim()">
+                        </p:inputText>
+                        <p:message for="mesescontrato" />
+                        </pm:field>
+                        
+                        <pm:field>
+                        <p:outputLabel for="tipocambio" value="Tipo Cambio: " />
+                        </pm:field>
+                        <pm:field>
+                            <p:inputText id="tipocambio" value="#{ventasOperacionBean.tipoCambio}" onchange="this.value = this.value.trim()">
+                        </p:inputText>
+                        <p:message for="tipocambio" />
+                        </pm:field>
+                        
+                        <pm:field>
+                            <p:outputLabel for="tipoop" value="Tipo Operacion: " />
+                        </pm:field>                        
+                        <pm:field>                            
+                            <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar" 
+                                            disabled="#{ventasOperacionBean.blnActivoOneSelected}"
+                                            id="tipoop"  value="#{ventasOperacionBean.comboTipoOperacionSelected}"
+                                            requiredMessage="Campo obligatorio" required="true" >
+                                <p:ajax event="change" update="tipoop"/>
+                                <f:selectItem itemLabel="(Elige opcion)" itemValue="#{to.tipoOperacion}" noSelectionOption="true" />
+                                <f:selectItems value="#{ventasOperacionBean.listaCombosTipoOperacion}" var="to" itemLabel="#{to.tipoOperacion}" itemValue="#{to.tipoOperacion}" />
+                            </h:selectOneMenu>
+                        <p:message for="tipoop" />
+                        </pm:field>
+                        
+                        <pm:field>
+                        <p:outputLabel for="prodglobal" value="Producto Global: " />
+                        </pm:field>
+                        <pm:field>
+                            <p:inputText id="prodglobal" value="#{ventasOperacionBean.productoGlobal}" onchange="this.value = this.value.trim()">
+                        </p:inputText>
+                        <p:message for="prodglobal" />
+                        </pm:field>
+                     
+                    </h:panelGrid>
+                        <br></br>
+                        <p:commandButton styleClass="margen-texto" id="btnAgregar" value="Agregar"  
+                                              actionListener="#{ventasOperacionBean.btnAgregarNuevo_click()}"  update="messages @form"
+                                              /> 
+                    
+                    <p:commandButton id="btnCancelar" value="Cancelar" process="@this"   
+                                     actionListener="#{ventasOperacionBean.cancelarOperacion()}" 
+                                     />
+                </p:panel>                                
+            </div>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

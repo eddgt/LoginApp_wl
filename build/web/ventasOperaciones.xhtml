@@ -1,0 +1,483 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"        
+    xmlns:pm="http://primefaces.org/mobile">  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+        </style>
+        
+            <!--Inicio facet para carga de Data-->
+                <p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">
+                                <f:facet name="default">
+                                    <!--<h:outputText value="Status: StandBy" />-->
+                                </f:facet>
+ 
+                                <f:facet name="start">
+                                    <!--<p:graphicImage value="/img/ajaxloadingbar.gif" />-->
+                                </f:facet>
+ 
+                                <f:facet name="complete">
+                                    <!--<h:outputText value="Status: Completed" />-->
+                                </f:facet>
+                </p:ajaxStatus>
+            <!--Fin facet para carga de Data-->
+ 
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+ 
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" header="Cargando...">
+                    <p:graphicImage value="/img/ajaxloadingbar.gif" />
+                </p:dialog>          
+            
+            <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+            <p:growl id="dialogMessage" showDetail="false" rendered="true" life="10000"/><!--Mostrar por 10 segundos-->
+
+            <div class="ui-grid ui-grid-responsive">
+                
+                <div class="ui-grid-row"  >
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center"> Operaciones de Ventas</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                    <div class="ui-grid-row"  >
+                    <div class="ui-grid-col-1"></div>
+                    <div class="ui-grid-col-11">                                                                                                                                                
+                          <br></br>
+                        <p:panelGrid id="myPanelGrid" styleClass="img-thumbnail2 fondoLlenar2" columns="1" style="width:95%; margin-left: 40px;" layout="grid">
+                            <p:row>                                
+                                <pm:field>
+                                <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%; text-align: left;"   value="Periodo:" >
+                                    <span>
+                                        <h:selectOneMenu id="selectPeriodo" styleClass="btn btn-info tamControl bajar"  style="width:  60%; text-align: left;"  
+                                                         value="#{ventasOperacionBean.comboPeriodoSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="ventasOperacionGrid selectAsesor"  />
+                                            <f:selectItem itemLabel="(Elige un periodo)" itemValue="" noSelectionOption="true" />  
+                                            <f:selectItems value="#{ventasOperacionBean.listaCombosPeriodo}" var="peri" itemLabel="#{peri.periodo}" itemValue="#{peri.periodo}" />
+                                        </h:selectOneMenu>
+                                    </span>
+                                </p:outputLabel>
+                                </pm:field>
+                            </p:row>
+                            
+                            <p:row>
+                                
+                                <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%; text-align: left;"   value="Filtro Coordinador" >
+                                    <span>
+                                        <h:selectOneMenu styleClass="btn btn-info tamControl bajar"  style="width:  60%; text-align: left;"  id="selectCoordinador" 
+                                                         disabled="#{ventasOperacionBean.blnActivoOneSelected}" value="#{ventasOperacionBean.nombreCoordinadorOperSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="selectAsesor" listener="#{ventasOperacionBean.oneCoordinadorOperChange()}"  />
+                                            <f:selectItem itemLabel="(Elige un coordinador)" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{ventasOperacionBean.listaCoordinadorOperacion}" var="coordi" itemLabel="#{coordi.nombre}" itemValue="#{coordi.nombre}" />
+                                        </h:selectOneMenu>
+                                    </span>
+                                </p:outputLabel>
+                                
+                                <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%; text-align: left;"   value="Filtro Asesor" >
+                                    <span>
+                                        <h:selectOneMenu id="selectAsesor" styleClass="btn btn-info tamControl bajar"  style="width:  60%; text-align: left;"   value="#{ventasOperacionBean.nombreAsesorSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="ventasOperacionGrid :form:monto1 :form:cantidadElementos1"  listener="#{ventasOperacionBean.oneAsesorOperChange}"  />
+                                            <f:selectItem itemLabel="(Elige un asesor)" itemValue="" noSelectionOption="true" />  
+                                            <f:selectItems value="#{ventasOperacionBean.listaAsesorOperacion}" var="ase" itemLabel="#{ase.nombre}" itemValue="#{ase.nombre}" />
+                                        </h:selectOneMenu>
+                                    </span>
+                                </p:outputLabel>
+                                
+                                <style>
+                                    .out-cuotaBasica{
+                                        font-size:1.1em;
+                                        padding-left: 1em;
+                                    }
+                                    
+                                    .coutaMargenPrincipal{
+                                        margin-left: 4em;                                        
+                                    }
+                                </style>
+                                
+                                <p:commandButton id="btnMostrarGrid" value="Mostrar Ventas Sin Asignar" update="ventasOperacionGrid :form:cantidadElementos1 :form:monto1" actionListener="#{ventasOperacionBean.btnClickMostrarGridOperacion}"> 
+                                </p:commandButton>
+                                <p:commandButton id="btnBorrarAsesor" value="Borrar Asesor Ventas" update="ventasOperacionGrid dialogMessage myPanelGrid" actionListener="#{ventasOperacionBean.btnClickBorrarAsesor}"> 
+                                    <p:confirm header="Confirmation" message="¿Desea borrar el Ejecutivo?" icon="ui-icon-alert" />
+                                </p:commandButton>
+                                
+                                <p:commandButton id="btnAsignarAsesor" value="Asignar Asesor Ventas" update="ventasOperacionGrid dialogMessage myPanelGrid" oncomplete="PF('ventaDialogAsignar').show()">
+                                </p:commandButton>
+                                <p:commandButton id="btnNuevaVenta" value="Agregar Venta Nueva" update="ventasOperacionGrid dialogMessage myPanelGrid" actionListener="#{ventasOperacionBean.redireccionarNuevo}">
+                                </p:commandButton>
+                                
+                                <p:column exportable="true">
+                                    <h:outputText id="cantidadElementos1" class="out-cuotaBasica coutaMargenPrincipal" value="Total Registros: #{ventasOperacionBean.cantidadFilas}">
+                                    </h:outputText>
+                                
+                                    <h:outputText id="monto1" class="out-cuotaBasica" value="Total Monto: $ #{ventasOperacionBean.getSumatoriaMontoVenta()}">
+                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                    </h:outputText>
+                                </p:column>
+                                
+                                                              
+                                <!--<h:commandLink>
+                                            <h:graphicImage class="imgExel" value="/img/Excel2013.png" title="Exportar a Excel"/>
+                                            <p:dataExporter type="xls" target="ventasOperacionGrid" fileName="ventasOperacionFile" postProcessor="# {ventasCoordinadorBean.customXLSProceso}" pageOnly="true"/>
+                                </h:commandLink>-->
+                                
+                                <br></br>                              
+                                <br></br>
+                                <!--============================================================================-->
+                                <!--Mi Data Grid        -->
+                                <!--============================================================================-->                                
+                                <p:dataTable id="ventasOperacionGrid" selection="#{ventasOperacionBean.ventasOperacionSeleccionadas}"  rowKey="#{detalleVentaOperacion.id}"  emptyMessage="No hay datos en la tabla" 
+                                             filteredValue="#{ventasOperacionBean.ventasFiltradas}"
+                                             var="detalleVentaOperacion" value="#{ventasOperacionBean.listaVentasOperacion}" scrollable="true" scrollWidth="100%"  
+                                            widgetVar="dtdependencia"  paginator="true" rows="200" paginatorTemplate="{Exporters}">
+                                    <f:facet name="{Exporters}">
+                                    <!--<h:commandLink>
+                                        <p:graphicImage value="/img/Excel2013.png" class="imgExel" />
+                                        <p:dataExporter type="xls" target="ventasOperacionGrid" fileName="myExportFile" pageOnly="true"/>                                        
+                                    </h:commandLink>
+                                    <h:commandLink>
+                                        <p:graphicImage value="/img/pdf.png" class="imgExel"/>
+                                        <p:dataExporter type="pdf" target="ventasOperacionGrid" fileName="myExportFile" pageOnly="true" />
+                                    </h:commandLink>-->
+ 
+                                        <h:commandLink>
+                                            <h:graphicImage class="imgExel" value="/img/Excel2013.png" title="Exportar a Excel"/>
+                                            <p:dataExporter type="xls" target="ventasOperacionGrid" fileName="ventasOperacionFile" postProcessor="#{ventasOperacionBean.XLSProceso}" pageOnly="true"/>
+                                        </h:commandLink>
+                                    </f:facet>
+                                    
+                                    <p:column exportable="false" selectionMode="multiple" style="width:30px;text-align:center"/>
+                                    <p:ajax event="filter"  update=":form:monto1 :form:cantidadElementos1"  listener="#{ventasOperacionBean.sumarMontoVentaFiltradas}" />
+                                    
+                                    
+                                    <p:column exportable="false" style="width:50px;text-align: center">
+                                          <p:commandButton update=":form:ventaDetail" oncomplete="PF('ventaDialog').show()" class="icono-lupa"   title="Ver-Detalle">
+                                              <f:setPropertyActionListener value="#{detalleVentaOperacion}" target="#{ventasOperacionBean.ventaOperacionSeleccionadaDetalle}" />
+                                         </p:commandButton>
+                                    </p:column>
+                                    
+                                    <p:column headerText="GERENTE" exportable="true" visible="false"  width="300" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.gerente}" filterValue="#{detalleVentaOperacion}" sortBy="#{detalleVentaOperacion.gerente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.gerente}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="COORDINADOR" exportable="true" visible="false" width="250" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.coordinador}" filterValue="#{detalleVentaOperacion}" sortBy="#{detalleVentaOperacion.coordinador}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.coordinador}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="EJECUTIVO" exportable="true" visible="false"  width="250" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.ejecutivoVenta}" filterValue="#{detalleVentaOperacion}" sortBy="#{detalleVentaOperacion.ejecutivoVenta}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.ejecutivoVenta}" />
+                                    </p:column>
+                                    
+                                    
+                                    <p:column headerText="ID" exportable="false"  width="80" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.id}" filterValue="#{detalleVentaOperacion.id}" sortBy="#{detalleVentaOperacion.id}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.id}" />
+                                    </p:column>
+
+                                    <p:column headerText="TELEFONO" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.telefono}" filterValue="#{detalleVentaOperacion.telefono}"  filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.telefono}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="ANEXO" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.aneIns}" filterValue="#{detalleVentaOperacion.aneIns}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.aneIns}" />
+                                    </p:column>
+                                                                       
+                                    
+                                    <p:column headerText="SISTEMA" exportable="true"  width="80" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.sistema}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.sistema}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="FUENTE" exportable="true"  width="80" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.fuente}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.fuente}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="TIPO TRANSACCION" exportable="true"  width="120" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.tipoTransaccion}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.tipoTransaccion}" />
+                                    </p:column>
+                                    
+                                    <p:column id="colfecha" headerText="FECHA" exportable="true"  width="120" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.fecha}" filterValue="#{detalleVentaOperacion.fecha}" sortBy="#{detalleVentaOperacion.fecha}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.fecha}" >
+                                            <f:convertDateTime for="colfecha" type="date" pattern="dd/MM/yyyy" />
+                                        </p:outputLabel>
+                                    </p:column>
+                                    
+                                    <p:column headerText="CODCLIENTE" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.codCliente}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.codCliente}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="CLIENTE MIC" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.clienteMic}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.clienteMic}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="CLIENTE WHOLESALE" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.clienteWholeSale}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.clienteWholeSale}" />
+                                    </p:column>                                   
+                                    
+                                    <p:column headerText="NIT" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.nit}" filterValue="#{detalleVentaOperacion}" sortBy="#{detalleVentaOperacion.nit}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.nit}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="COD VENTA" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.codVenta}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.codVenta}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="NOMBRE VENTA" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.nombreVenta}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.nombreVenta}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="MONTO" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.montoVenta}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.montoVenta}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="ANEXO PADRE" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.anexoPadre}" filterValue="#{detalleVentaOperacion}" sortBy="#{detalleVentaOperacion.anexoPadre}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.anexoPadre}" />
+                                    </p:column>                                    
+                                    
+                                    <p:column headerText="EJECUTIVO" exportable="false"  width="250" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.ejecutivoVenta}" filterValue="#{detalleVentaOperacion}" sortBy="#{detalleVentaOperacion.ejecutivoVenta}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.ejecutivoVenta}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="COORDINADOR" exportable="false"  width="250" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.coordinador}" filterValue="#{detalleVentaOperacion}" sortBy="#{detalleVentaOperacion.coordinador}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.coordinador}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="GERENTE" exportable="false"  width="300" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.gerente}" filterValue="#{detalleVentaOperacion}" sortBy="#{detalleVentaOperacion.gerente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.gerente}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="CODDISTRIBUIDOR" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.codDistribuidor}" filterValue="#{detalleVentaOperacion}" sortBy="#{detalleVentaOperacion.codDistribuidor}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.codDistribuidor}" />
+                                    </p:column>
+
+                                    <p:column headerText="MODELO" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.modelo}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.modelo}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="CLASI MIC" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.clasiMic}" filterValue="#{detalleVentaOperacion}" sortBy="#{detalleVentaOperacion.clasiMic}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.clasiMic}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="PRODUCTO TB" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.productoTb}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.productoTb}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="COD_VENDEDOR_NP" exportable="true"  width="250" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.codVendedorNp}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.codVendedorNp}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="CLIENTE" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.cliente}" filterValue="#{detalleVentaOperacion}" sortBy="#{detalleVentaOperacion.cliente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.cliente}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="VENDEDOR AS400" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.vendedorAs400}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.vendedorAs400}" />
+                                    </p:column>
+                                
+                                    <p:column headerText="DISTRIBUIDOR AS400" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.distribuidorAs400}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.distribuidorAs400}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="AB VENTA" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.abVenta}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.abVenta}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="MESES CONTRATO" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.mesesContrato}" filterValue="#{detalleVentaOperacion.mesesContrato}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.mesesContrato}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="TIPO CAMBIO" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.tipoCambio}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.tipoCambio}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="PRODUCTO GLOBAL" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.productoGlobal}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.productoGlobal}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="PERIODO" exportable="true"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVentaOperacion.periodo}" filterValue="#{detalleVentaOperacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVentaOperacion.periodo}" />
+                                    </p:column>
+                                    
+                                 </p:dataTable>
+                        
+                            </p:row>
+                            
+                            
+                            <p:row>
+                                <p:confirmDialog appendTo="@(body)" closable="true" global="true"  showEffect="fade" hideEffect="fade" rendered="true"  >
+                                        <p:remoteCommand name="confirmPanel" process="@this btnBorrarAsesor" update="myPanelGrid">
+                                            <p:resetInput target="myPanelGrid" />
+                                        </p:remoteCommand>
+                                    <p:commandButton id="aceptabtn" value="Aceptar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+                                            <p:resetInput target="myPanelGrid" />
+                                        </p:commandButton>
+                                        <p:commandButton id="cancelabtn" value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"  
+                                                         onclick="confirmPanel()"><!--llamada a confirmPanel-->
+                                            <p:resetInput target="myPanelGrid" />
+                                        </p:commandButton>
+                                </p:confirmDialog>                                
+                            </p:row>
+                            
+                            <p:row>
+                                <!--============================================================================-->
+                                <!--Dialogo Detalle venta modificar Monto-->
+                                <!--============================================================================-->
+                            <p:dialog header="Venta Seleccionada" widgetVar="ventaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="ventaDetail" style="text-align:left;">
+                                            <p:panelGrid  columns="2" rendered="#{not empty ventasOperacionBean.ventaOperacionSeleccionadaDetalle}" columnClasses="label,value">
+                                                <h:outputText class="detailColor" value="ID VENTA:" />
+                                                <h:outputText class="detalle-tamanoLetra" value="#{ventasOperacionBean.ventaOperacionSeleccionadaDetalle.id}" />
+
+                                                <h:outputText class="detailColor" value="CLIENTE:" />
+                                                <h:outputText class="detalle-tamanoLetra" value="#{ventasOperacionBean.ventaOperacionSeleccionadaDetalle.cliente}" />
+                                                <br></br>
+                                                <h:outputText class="detailColor" value="MONTO VENTA:" />
+                                                <br></br>
+                                                <p:inputText id="valMonto" value="#{ventasOperacionBean.ventaOperacionSeleccionadaDetalle.montoVenta}" 
+                                                             disabled="#{ventasOperacionBean.blnActivoEdicionValMonto}" styleClass="colorNegrilla margen-texto detalle-tamanoLetra" >
+                                                    <p:ajax event="keyup"></p:ajax>
+                                                </p:inputText>                                                
+                                                <h:outputText style="display:#{(ventasOperacionBean.blnActivoOneSelected)?'none':'inline'}" class="detailColor" value="Editar:" />
+                                                <p:selectBooleanCheckbox style="display: #{(ventasOperacionBean.blnActivoOneSelected)?'none':'inline'}" id="comboSe" value="#{ventasOperacionBean.blnActivoSwitchEdicion}">
+                                                    <!--<p:ajax update="valMonto elijMoneda btnGuardarValor" listener="# {ventasOperacionBean.cambiarEstadoEdicion}" />-->
+                                                    <p:ajax update="valMonto btnGuardarValor" listener="#{ventasOperacionBean.cambiarEstadoEdicion}" />
+                                                </p:selectBooleanCheckbox>
+
+                                                <br style="display:#{(ventasOperacionBean.blnActivoOneSelected)?'none':'inline'}"></br>
+                                                <p:commandButton style="display:#{(ventasOperacionBean.blnActivoOneSelected)?'none':'inline'}" onclick="PF('ventaDialog').hide()" 
+                                                                id="btnGuardarValor" update="btnGuardarValor messages ventasOperacionGrid" value="Guardar"
+                                                                disabled="#{ventasOperacionBean.blnActivoEdicion}" actionListener="#{ventasOperacionBean.btnGuardarValorOperacion}">
+                                                </p:commandButton>
+                                                
+                                                <br></br>
+                                                <h:outputText class="detailColor" value=" " />
+                                                <h:outputText class="detailColor" value="Bitacora de cambios: " />
+                                                
+                                                <p:scrollPanel style="width:500px;height:500px">
+                                                    <p:accordionPanel class="letraAcordeon" style="font-zise:0.8em" value="#{ventasOperacionBean.listaComentarioxVenta}" var="bitacora">
+                                                        <p:tab  title="Fecha - #{bitacora.fechaCambio}">
+                                                            <h:panelGrid columns="2" cellpadding="10">
+                                                                <h:outputText value="Justificación: &nbsp;&nbsp;" style="font-weight: bold" />
+                                                                <h:outputText value="#{bitacora.comentario}" />
+
+                                                                <h:outputText value="Usuario modificación: &nbsp;&nbsp;" style="font-weight: bold" />
+                                                                <h:outputText value="#{bitacora.usuario}" />
+                                                            </h:panelGrid>
+                                                        </p:tab>
+                                                    </p:accordionPanel>
+                                                </p:scrollPanel>
+                                            </p:panelGrid>
+                                        </p:outputPanel>
+                                    </p:dialog>                                
+                            </p:row>
+                            
+                            <p:row>
+                                <!--============================================================================-->
+                                <!--Dialogo Detalle venta Asignar Venta-->
+                                <!--============================================================================-->
+                                <p:dialog header="Asignar Ventas a Asesor" widgetVar="ventaDialogAsignar" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        
+                                    <p:outputPanel id="ventaDetailAsignar" style="text-align:left;">
+                                        <p:panelGrid  columns="2" rendered="#{not empty ventasOperacionBean.listaVentasOperacion}" columnClasses="label,value">
+                                    <br></br>
+                                    <p:outputLabel style="width: 70%; text-align: left;font-size: 0.8em;"   value="Coordinador" >                                    
+                                        <h:selectOneMenu styleClass="btn btn-info tamControl bajar"  style="width:  100%; float: right;font-size: 0.6em;"  id="selectCoordinadorAsignar" 
+                                                         disabled="#{ventasOperacionBean.blnActivoOneSelected}" value="#{ventasOperacionBean.nombreCoordinadorOperSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="selectAsesorAsignar btnGuardarAsignar" listener="#{ventasOperacionBean.oneCoordinadorOperChange()}"  />
+                                            <f:selectItem itemLabel="(Elige un coordinador)" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{ventasOperacionBean.listaCoordinadorOperacion}" var="coordi" itemLabel="#{coordi.nombre}" itemValue="#{coordi.nombre}" />
+                                        </h:selectOneMenu>                                    
+                                    </p:outputLabel>                                        
+                                    <br></br>
+                                    <p:outputLabel  style="width: 70%; text-align: left; font-size: 0.8em; "   value="Asesor" >
+                                        <h:selectOneMenu id="selectAsesorAsignar" styleClass="btn btn-info"  style="width:  100%; float: right; font-size: 0.6em;"   
+                                                         value="#{ventasOperacionBean.nombreAsesorSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="ventasOperacionGrid"  listener="#{ventasOperacionBean.nombreAsesorSelected()}"  />
+                                            <f:selectItem itemLabel="(Elige un asesor)" itemValue="" noSelectionOption="true" />  
+                                            <f:selectItems value="#{ventasOperacionBean.listaAsesorOperacion}" var="ase" itemLabel="#{ase.nombre}" itemValue="#{ase.nombre}" />
+                                        </h:selectOneMenu>
+                                    </p:outputLabel>
+                                    
+                                    <br></br>
+                                    <h:outputText class="detailColor" value="COMENTARIOS:" />
+                                    <br></br>
+                                    <p:inputText id="idcomentario" value="#{ventasOperacionBean.comentario}" styleClass="colorNegrilla margen-texto detalle-tamanoLetra" >                                                
+                                    </p:inputText>
+                                    <br></br>
+                                        
+                                                <p:commandButton style="display:#{(ventasOperacionBean.blnActivoAsignarSelected)?'none':'inline'}" onclick="PF('ventaDialogAsignar').hide()"
+                                                                id="btnGuardarAsignar" update="btnGuardarAsignar messages ventasOperacionGrid" value="Guardar"
+                                                                disabled="#{ventasOperacionBean.blnActivoAsignarSelected}" actionListener="#{ventasOperacionBean.btnClickAsignarAsesorOperacion}">
+                                                </p:commandButton>                                        
+                                    
+                                     </p:panelGrid>
+                                    </p:outputPanel>                                    
+                                    </p:dialog>                                
+                            </p:row>
+                            
+                            <p:row>
+                                <div class="ui-grid-row"  >
+                                    <br></br>                               
+                                </div>        
+                            </p:row>
+                        </p:panelGrid>
+                          
+                                
+                    </div>               
+                    <div class="ui-grid-col-1"></div>
+                   
+                </div>                                   
+            </div>
+        </h:form>
+    </ui:define>
+    
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

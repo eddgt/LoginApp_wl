@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+            th {
+                color:white !important;
+            }
+        </style>
+
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">Editar Persona</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                <p:panel id="panel" header="" style="margin-bottom:10px;" >
+                    
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:outputLabel for="nombre" value="Nombre: " />
+                        <p:inputText id="nombre" value="#{personasBean.nombre}" required="true" label="Surname" validatorMessage="Campo Obligatorio" onchange="this.value = this.value.trim()"/>
+                        <p:message for="nombre" />
+
+                        <p:outputLabel for="documento" value="Num. Documento: " />
+                        <p:inputText id="documento" value="#{personasBean.documento}" validatorMessage="Campo Obligatorio" required="true" label="Documento" onchange="this.value = this.value.trim()" />
+                        <p:message for="documento" />
+
+                        <p:outputLabel for="usuario" value="Usuario de dominio: " />
+                        <p:inputText id="usuario" value="#{personasBean.usuario}" validatorMessage="Campo Obligatorio"  required="true" label="Usuario" onchange="this.value = this.value.trim()">                            
+                        </p:inputText>
+                        <p:message for="usuario" />                        
+
+                    </h:panelGrid>
+                    <br></br><p:commandButton styleClass="margen-texto" id="btnAgregar" value="Actualizar"  
+                                              actionListener="#{personasBean.editarPersona()}"  update="messages @form"
+                                              /> 
+                    
+                    <p:commandButton id="btnCancelar" value="Cancelar" process="@this"   
+                                     actionListener="#{personasBean.cancelarOperacion()}" 
+                                     />
+                </p:panel>                                
+            </div>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+        </style>
+            
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">                  
+                <div class="ui-grid-row"  >
+                   
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">Revisión información Re-Asignación Ventas</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                <div class="ui-grid-row"  >
+                    <div class="ui-grid-col-1"></div>
+                    <div class="ui-grid-col-11">
+                                                                                                                      
+                          
+                          <br></br>
+                          <p:panelGrid id="lprueba"  styleClass="img-thumbnail2 fondoLlenar2" columns="1" style="width:95%; margin-left: 40px;" layout="grid">
+                            <p:row>                                
+                                <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Coordinador" >
+                                    <span>
+                                        <h:selectOneMenu disabled="#{ventasCoordinadorBean.blnActivoOneSelected}" styleClass="btn btn-info tamControl bajar"  style="width:  60%; float: right;"  id="selectCoordinador" 
+                                                         value="#{ventaReAsignarBean.nombreCoordinadorSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="selectAsesor" listener="#{ventaReAsignarBean.oneCoordinadorChange()}"  />
+                                            <f:selectItem itemLabel="(Elige un coordinador)" itemValue="" noSelectionOption="true" />  
+                                            <f:selectItems value="#{ventaReAsignarBean.listaCoordinador}" var="coordi" itemLabel="#{coordi.nombre}" itemValue="#{coordi.nombre}" />
+                                        </h:selectOneMenu>
+                                    </span>
+                                </p:outputLabel>                                
+                                
+                                  <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Asesor" >
+                                    <span>
+                                        <h:selectOneMenu styleClass="btn btn-info tamControl bajar"  style="width:  60%; float: right;"  id="selectAsesor" value="#{ventaReAsignarBean.idAsesorSelelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="btnReAsignarSuperior btnReAsignar btnAceptaryFinalizar" listener="#{ventaReAsignarBean.oneAsesorChange()}"  />
+                                            <f:selectItem itemLabel="(Elige un asesor)" itemValue="" noSelectionOption="true" />  
+                                            <f:selectItems value="#{ventaReAsignarBean.listaAsesor.entrySet()}" var="aserr" itemLabel="#{aserr.value}" itemValue="#{aserr.key}" />                                            
+                                        </h:selectOneMenu>
+                                    </span>
+                                </p:outputLabel>   
+                                <br></br>
+                                
+                                <style>
+                                    .out-cuotaBasica{
+                                        font-size:1.1em;
+                                        padding-left: 1em;
+                                    }
+                                    
+                                    .coutaMargenPrincipal{
+                                        margin-left: 10em;                                        
+                                    }
+                                </style>                                                                                                    
+
+                                    <p:commandButton id="btnReAsignarSuperior" value="Re-Asignar" update="btnReAsignarSuperior ReAsignacion messages" disabled="#{ventaReAsignarBean.blnReAsignar}" actionListener="#{ventaReAsignarBean.btnClickReAsignarVentas}"></p:commandButton>             
+                                    <p:commandButton id="btnRegresaSuperior" value="Regresar" update="btnRegresaSuperior" disabled="#{ventaReAsignarBean.blnRegresar}" actionListener="#{ventaReAsignarBean.btnClickRegresar}"></p:commandButton>    
+                                
+                                <br></br>                                
+                                <br></br>
+                                <p:dataTable id="ReAsignacion" selection="#{ventaReAsignarBean.ventasSeleccionadas}" rowKey="#{objetoVentaReasignar.idVenta}"  emptyMessage="No hay ReAsignaciones en la tabla" 
+                                    var="objetoVentaReasignar" value="#{ventaReAsignarBean.listaVentas}"  filteredValue="#{ventaReAsignarBean.ventasFiltradas}"
+                                    widgetVar="dtdependencia" scrollable="true" scrollWidth="100%"  paginator="true"  paginatorTemplate="{Exporters}" >                                    
+                                    
+                                     <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <h:graphicImage class="imgExel" value="/img/Excel2013.png" />                                  
+                                            <p:dataExporter type="xls" target="ReAsignacion" fileName="Detalle: Reasignacion ventas" postProcessor="#{ventaReAsignarBean.customXLSProceso}" pageOnly="true"/>
+                                        </h:commandLink>
+                                    </f:facet>
+                                    
+                                    <p:column selectionMode="multiple" exportable="false" style="width:30px;text-align:center"/>
+                                    <p:ajax event="filter" />                                   
+                                    <p:column headerText="CodCliente"  width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{objetoVentaReasignar.idCliente}" filterValue="#{objetoVentaReasignar.idCliente}" sortBy="#{objetoVentaReasignar.idCliente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{objetoVentaReasignar.idCliente}" />
+                                    </p:column>                
+                                  
+                                    <p:column headerText="NIT"  width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{objetoVentaReasignar.NIT}" filterValue="#{objetoVentaReasignar.NIT}" sortBy="#{objetoVentaReasignar.NIT}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{objetoVentaReasignar.NIT}" />
+                                    </p:column>                
+
+                                    <p:column headerText="Cliente"  width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{objetoVentaReasignar.nombreCliente}" filterValue="#{objetoVentaReasignar.nombreCliente}" sortBy="#{objetoVentaReasignar.nombreCliente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{objetoVentaReasignar.nombreCliente}" />
+                                    </p:column>                
+                                    
+                                    <p:column headerText="Fecha" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{objetoVentaReasignar.fecha}" sortBy="#{objetoVentaReasignar.fecha}" filterValue="#{objetoVentaReasignar}" filterMatchMode="contains" filterStyle="width:100%">
+                                    <p:outputLabel value="#{objetoVentaReasignar.fecha}" />
+                                    </p:column>                
+                                    
+                                     <p:column headerText="No. Instalación" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{objetoVentaReasignar.noInstalacion}" filterValue="#{objetoVentaReasignar}" sortBy="#{objetoVentaReasignar.noInstalacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{objetoVentaReasignar.noInstalacion}" />
+                                    </p:column> 
+                                    
+                                     <p:column headerText="Teléfono" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{objetoVentaReasignar.telefono}" filterValue="#{objetoVentaReasignar}" sortBy="#{objetoVentaReasignar.telefono}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{objetoVentaReasignar.telefono}" />
+                                    </p:column> 
+                                    
+                                    <p:column headerText="No. Anexo" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{objetoVentaReasignar.anexoNum}" filterValue="#{objetoVentaReasignar}" sortBy="#{objetoVentaReasignar.anexoNum}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{objetoVentaReasignar.anexoNum}" />
+                                    </p:column>                
+                                    
+                                    
+                                     <p:column headerText="Tipo Transacción" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{objetoVentaReasignar.tipoTransaccion}" filterValue="#{objetoVentaReasignar}" sortBy="#{objetoVentaReasignar.tipoTransaccion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{objetoVentaReasignar.tipoTransaccion}" />
+                                    </p:column>   
+                                    
+                                    <p:column headerText="Moneda" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{objetoVentaReasignar.moneda}"  filterValue="#{objetoVentaReasignar}" sortBy="#{objetoVentaReasignar.moneda}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{objetoVentaReasignar.moneda}" />
+                                    </p:column> 
+                                    
+                                    <p:column headerText="Plazo" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{objetoVentaReasignar.plazo}" filterValue="#{objetoVentaReasignar}" sortBy="#{objetoVentaReasignar.plazo}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{objetoVentaReasignar.plazo}" />
+                                    </p:column> 
+                                    
+                                     <p:column headerText="Cuota Básica" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{objetoVentaReasignar.cuotaBasica}" filterValue="#{objetoVentaReasignar}" sortBy="#{objetoVentaReasignar.cuotaBasica}" filterMatchMode="contains" filterStyle="width:100%">                                                                                                                                    
+                                        <p:outputLabel  value="#{objetoVentaReasignar.cuotaBasica}" />                                                                                                                      
+                                    </p:column> 
+                                    
+                                     <p:column headerText="Valor del Enlace" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{objetoVentaReasignar.valorEnlace}" filterValue="#{objetoVentaReasignar}" sortBy="#{objetoVentaReasignar.valorEnlace}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{objetoVentaReasignar.valorEnlace}" />
+                                    </p:column>                                   
+                                    
+                                     <p:column headerText="Origen" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{objetoVentaReasignar.origen }" filterValue="#{origen}" sortBy="#{objetoVentaReasignar.origen}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{objetoVentaReasignar.origen}" />
+                                    </p:column>                                   
+                                    
+                                     <p:column headerText="Producto" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{objetoVentaReasignar.producto}" filterValue="#{producto}" sortBy="#{objetoVentaReasignar.producto}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{objetoVentaReasignar.producto}" />
+                                    </p:column>   
+                                    
+                                </p:dataTable> 
+                                
+                                <h:form>
+                                    <p>Escribir comentario para justificación de los registros que serán asignados:</p>                                    
+                                    <p:inputTextarea id="msg" value="#{ventaReAsignarBean.justificacion}" rows="2" cols="100" counter="display" maxlength="150" counterTemplate="{0} caracteres restantes." autoResize="false" />
+                                    <h:outputText id="display" />
+                                </h:form>			                           
+                                <br></br> 
+                                <p:commandButton id="btnReAsignar" value="Re-Asignar" update="btnReAsignarSuperior ReAsignacion messages" disabled="#{ventaReAsignarBean.blnReAsignar}" actionListener="#{ventaReAsignarBean.btnClickReAsignarVentas}"></p:commandButton>             
+                                <p:commandButton id="btnRegresa" value="Regresar" update="ReAsignacion messages" disabled="#{ventaReAsignarBean.blnRegresar}" actionListener="#{ventaReAsignarBean.btnClickRegresar}"></p:commandButton>    
+                                    
+                                <p:commandButton id="btnAceptaryFinalizar" value="Aceptar y Finalizar" disabled="#{ventaReAsignarBean.blnActivoAceptarFinalizar}" actionListener="#{ventaReAsignarBean.btnClickCongelar}" />
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-12">&nbsp;<br></br></div>
+                                </div>
+                            </p:row>
+                            <p:row>
+                                <div class="ui-grid-row"  >
+                                    <br></br>                               
+                                </div>        
+                            </p:row>
+                        </p:panelGrid>
+                          
+                                
+                    </div>               
+                    <div class="ui-grid-col-1"></div>
+                   
+                </div>                                   
+            </div>
+        </h:form>
+    </ui:define>
+    
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+            th {
+                color:white !important;
+            }
+        </style>
+
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">PERSONAS</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>   
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-5">                        
+                        <span>
+                            <p:commandButton style="width: 8em;" id="btnPreVentasRenov" value="Agregar" update="messages"  actionListener="#{personasBean.redireccionarNuevo()}" />
+                        </span>
+                    </div>
+
+                </div>   
+
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-12">
+                        <br></br>
+                        <p:dataTable var="per" value="#{personasBean.personas}">
+                            <p:column headerText="Nombre ">
+                                <h:outputText value="#{per.nompersona}" />
+                            </p:column>                            
+                            <p:column headerText="Num. Documento ">
+                                <h:outputText value="#{per.idnumdocumento}" />
+                            </p:column>                            
+                            <p:column headerText="Usuario de dominio">
+                                <h:outputText value="#{per.obspersona}" />
+                            </p:column>                           
+                            <p:column headerText="">                                   
+                                <p:commandLink action="#{personasBean.urlEditar()}" process="@this" value="Editar" id="acc"  class="ui-button ui-button-text" >                                   
+                                    <f:param name="idPersona" value="#{per.idPersona}"  />
+                                    <f:param name="nombre" value="#{per.nompersona}"/>
+                                    <f:param name="documento" value="#{per.idnumdocumento}"/>
+                                    <f:param name="usuarioDominio" value="#{per.obspersona}"/>
+                                </p:commandLink>
+                            </p:column>
+
+                        </p:dataTable>
+
+
+                    </div>               
+                    <div class="ui-grid-col-1"></div>
+
+                </div>                                   
+            </div>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

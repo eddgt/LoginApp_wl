@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+            th {
+                color:white !important;
+            }
+        </style>
+
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">CREAR VENTA </h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                <p:panel id="panel" header="" style="margin-bottom:10px;" >
+
+                    <h:panelGrid columns="4" cellpadding="5">
+
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Tipo Venta: " >
+                            <span>                                                     
+                                <p:inputText id="tipo_venta" value="#{ventasBean.venta.tipo_venta}" required="true" label="Tipo Venta" validatorMessage="Ingrese un valor"/>
+                                <p:message for="tipo_venta" />
+                            </span>
+                        </p:outputLabel> <br></br>  
+
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Nombre Venta: " >
+                            <span>                                                     
+                                <p:inputText id="nombre_venta" value="#{ventasBean.venta.nombre_venta}" required="true" label="Nombre Venta" validatorMessage="Ingrese un valor"/>
+                                <p:message for="nombre_venta" />
+                            </span>
+                        </p:outputLabel> <br></br>
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Monto Venta: " >
+                            <span>                                                     
+                                <p:inputText id="monto_venta" type="number" value="#{ventasBean.venta.monto_venta}" required="true" label="Monto" validatorMessage="Ingrese un valor"/>
+                                <p:message for="monto_venta" />
+                            </span>
+                        </p:outputLabel> <br></br>
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Moneda Venta: " >
+                            <span>                                                     
+                                <p:inputText id="moneda_venta" maxlength="10" value="#{ventasBean.venta.moneda_venta}" required="true" label="Moneda" validatorMessage="Ingrese un valor"/>
+                                <p:message for="moneda_venta" />
+                            </span>
+                        </p:outputLabel> <br></br>
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Cantidad RGU: " >
+                            <span>                                                     
+                                <p:inputText id="cant_rgu_venta" type="number" value="#{ventasBean.venta.cant_rgu_venta}" required="true" label="RGU" validatorMessage="Ingrese un valor"/>
+                                <p:message for="cant_rgu_venta" />
+                            </span>
+                        </p:outputLabel> <br></br>
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Categoria: " >
+                            <span>                                                     
+                                <p:inputText id="categoria" maxlength="3" value="#{ventasBean.venta.categoria}" required="true" label="Categoria" validatorMessage="Ingrese un valor"/>
+                                <p:message for="categoria" />
+                            </span>
+                        </p:outputLabel> <br></br>
+
+                        <br></br>
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Producto: " >
+                            <span>                                                     
+                                <p:inputText id="producto" maxlength="25" value="#{ventasBean.venta.producto}" required="true" label="Producto" validatorMessage="Ingrese un valor"/>
+                                <p:message for="producto" />
+                            </span>
+                        </p:outputLabel> <br></br>
+
+                        <br></br>
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Activo " >
+                            <span>                                                     
+                                <p:inputText id="activo" maxlength="2" value="#{ventasBean.venta.activo}" required="true" label="Activo" validatorMessage="Ingrese un valor"/>
+                                <p:message for="activo" />
+                            </span>
+                        </p:outputLabel> <br></br>
+                    </h:panelGrid>
+                    <br></br>
+                    <p:commandButton styleClass="margen-texto" id="btnAgregarV" value="Agregar"  
+                                     actionListener="#{ventasBean.crearVenta()}" update="messages @form"
+                                     /> 
+                    <p:commandButton id="btnCancelarV" value="Cancelar" process="@this"   
+                                     actionListener="#{ventasBean.cancelarOperacion()}" 
+                                     />
+                </p:panel>                                
+            </div>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

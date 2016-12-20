@@ -1,0 +1,287 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template_vend.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+        </style>
+            
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">                  
+                <div class="ui-grid-row"  >
+                   
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">Revisión información Renovaciones</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                <div class="ui-grid-row"  >
+                    <div class="ui-grid-col-1"></div>
+                    <div class="ui-grid-col-11">
+                                                                                                                      
+                          
+                          <br></br>
+                          <p:panelGrid id="lprueba"  styleClass="img-thumbnail2 fondoLlenar2" columns="1" style="width:95%; margin-left: 40px;" layout="grid">
+                            <p:row>
+                                
+                               
+                                <br></br>
+                                
+                                <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 10%"   value="Asesor:" >                                    
+                                </p:outputLabel>
+                                
+                                <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 90%"   value="#{renovacionVendedorBean.nombreVendedor}" >                                    
+                                </p:outputLabel>  
+                               
+                                 <br></br>
+                                <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 10%"   value="Usuario:" >                                    
+                                </p:outputLabel>
+                                
+                                <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 90%"   value="#{ventasVendedorBean.usuarioLogueado}" >                                    
+                                </p:outputLabel>  
+                                 
+                                <style>
+                                    .out-cuotaBasica{
+                                        font-size:1.1em;
+                                        padding-left: 1em;
+                                    }
+
+                                    .coutaMargenPrincipal{
+                                        margin-left: 50%;                                       
+                                    }
+                                </style>
+                                                                                                   
+                                                               
+                                
+                                
+                                <h:outputText id="cantidadElementos1" class="out-cuotaBasica coutaMargenPrincipal" value="Elementos: #{renovacionVendedorBean.cantidadElementos}"></h:outputText>
+                                
+                                <h:outputText id="sumatoriaMBF" class="out-cuotaBasica" value="MBF EN US$: #{renovacionVendedorBean.getSumatoriaMBF()}">
+                                    <f:convertNumber type="currency" currencySymbol="$" /></h:outputText>
+                               
+                               
+                                <h:outputText id="sumatoriaUPGRADE" class="out-cuotaBasica" value="UPGRADES EN US$: #{renovacionVendedorBean.getSumatoriaUPGRADE()}">
+                                    <f:convertNumber type="currency" currencySymbol="$" />
+                                </h:outputText>
+                                
+                                
+                                <br></br>                                
+                                <br></br>
+                                <p:dataTable id="renovaciones" selection="#{renovacionVendedorBean.renovacionesSeleccionadas}" rowKey="#{detalleRenovacion.idposventa}"  emptyMessage="No hay renovaciones en la tabla" 
+                                    var="detalleRenovacion" value="#{renovacionVendedorBean.listaRenovaciones}"  filteredValue="#{renovacionVendedorBean.renovacionesFiltradas}"
+                                    widgetVar="dtdependencia" paginator="true"  paginatorTemplate="{Exporters}" scrollable="true" scrollWidth="100%">
+                                    
+                                    <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <h:graphicImage class="imgExel" value="/img/Excel2013.png" />                                  
+                                            <p:dataExporter type="xls" target="renovaciones" fileName="Renovaciones" postProcessor="#{renovacionVendedorBean.customXLSProceso}" pageOnly="true"/>
+                                        </h:commandLink>
+                                    </f:facet>
+                                    
+                                                                    
+                                    <p:column exportable="false" selectionMode="multiple" style="width:30px;text-align:center"/>
+                                    <p:ajax event="filter"  update=":form:sumatoriaMBF :form:sumatoriaUPGRADE :form:cantidadElementos1" listener="#{renovacionVendedorBean.sumarCostosFiltrados}" />                                   
+                                    
+                                     <p:column  exportable="false" style="width:50px;text-align: center">
+                                          <p:commandButton update=":form:renovacionDetail" oncomplete="PF('renovacionDialog').show()" class="icono-lupa"   title="Ver-Detalle">
+                                              <f:setPropertyActionListener value="#{detalleRenovacion}" target="#{renovacionVendedorBean.renovacionSeleccionadaDetalle}" />
+                                         </p:commandButton>
+                                    </p:column>  
+
+                                    <p:column headerText="idRenovación" exportable="false"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleRenovacion.idposventa}" filterValue="#{detalleRenovacion.idposventa}" sortBy="#{detalleRenovacion.idposventa}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.idposventa}" />
+                                    </p:column>                
+
+                                    <p:column headerText="Fecha POS Venta" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.fecha_venta}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.fecha_venta}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.fecha_venta}" />
+                                    </p:column>
+                                    <p:column headerText="Tipo Factura Subsidio" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.tipo_factura_subsidio}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.tipo_factura_subsidio}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.tipo_factura_subsidio}" />
+                                    </p:column>
+                                    <p:column headerText="Tipo Subsidio" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.tipo_subsidio}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.tipo_subsidio}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.tipo_subsidio}" />
+                                    </p:column>
+                                    <p:column headerText="ID Tipo Factura Subsidio" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.id_tipo_factura_subsidio}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.id_tipo_factura_subsidio}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.id_tipo_factura_subsidio}" />
+                                    </p:column>
+                                    <p:column headerText="Anexo" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.anexo}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.anexo}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.anexo}" />
+                                    </p:column>
+                                    <p:column headerText="Telefono Instalación" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.telefono_instalacion}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.telefono_instalacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.telefono_instalacion}" />
+                                    </p:column>
+                                    <p:column headerText="Agencia" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.agencia}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.agencia}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.agencia}" />
+                                    </p:column>
+                                    <p:column headerText="Nombre Agencia" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.nom_agencia}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.nom_agencia}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.nom_agencia}" />
+                                    </p:column>
+                                    <p:column headerText="NIT" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.nit}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.nit}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.nit}" />
+                                    </p:column>
+                                    <p:column headerText="No. Cliente" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.no_cliente}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.no_cliente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.no_cliente}" />
+                                    </p:column>
+                                    <p:column headerText="Nombre Cliente" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.nom_cliente}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.nom_cliente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.nom_cliente}" />
+                                    </p:column>
+                                    <p:column headerText="Promoción" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.promocion}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.promocion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.promocion}" />
+                                    </p:column>
+                                    <p:column headerText="Meses Promoción" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.meses_promocion}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.meses_promocion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.meses_promocion}" />
+                                    </p:column>
+                                    <p:column headerText="MBF en US$" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.mbf_usd}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.mbf_usd}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.mbf_usd}" />
+                                    </p:column>
+                                    <p:column headerText="Upgrades US$" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.upgrades_usd}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.upgrades_usd}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.upgrades_usd}" />
+                                    </p:column>                                  
+                                    <p:column headerText="Tiempo Pendiente" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.tiempo_pendiente}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.tiempo_pendiente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.tiempo_pendiente}" />
+                                    </p:column>
+                                    <p:column headerText="Target" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.target}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.target}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.target}" />
+                                    </p:column>
+                                    <p:column headerText="Sistema" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.sistema}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.sistema}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.sistema}" />
+                                    </p:column>
+                                    <p:column headerText="No. Documento" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.numdocumento}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.numdocumento}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.numdocumento}" />
+                                    </p:column>
+                                    <p:column headerText="ID Tipo Asesor" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.idtipasesor}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.idtipasesor}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.idtipasesor}" />
+                                    </p:column>
+                                    <p:column headerText="Nom. Tipo Asesor" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.nomtipasesor}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.nomtipasesor}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.nomtipasesor}" />
+                                    </p:column>
+                                    <p:column headerText="ID Tipo Telefonia" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.idtiptelefonia}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.idtiptelefonia}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.idtiptelefonia}" />
+                                    </p:column>
+                                    <p:column headerText="Nom. Tipo Telefonia" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.nomtiptelefonia}" filterValue="#{detalleRenovacion}" sortBy="#{detalleRenovacion.nomtiptelefonia}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.nomtiptelefonia}" />
+                                    </p:column>
+                                   
+                                </p:dataTable>
+                                
+                                
+                                 <p:dialog header="Renovacion"  widgetVar="renovacionDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                    <p:outputPanel id="renovacionDetail" style="text-align:center;">
+                                        <p:panelGrid  columns="2" rendered="#{not empty renovacionVendedorBean.renovacionSeleccionadaDetalle}" columnClasses="label,value">
+                                            <h:outputText class="detailColor" value="Id Renovacion:" />
+                                            <h:outputText class="detalle-tamanoLetra" value="#{renovacionVendedorBean.renovacionSeleccionadaDetalle.idposventa}" />
+
+                                            <h:outputText class="detailColor" value="Fecha:" />
+                                            <h:outputText class="detalle-tamanoLetra" value="#{renovacionVendedorBean.renovacionSeleccionadaDetalle.fecha_venta}" />
+
+                                            <h:outputText class="detailColor" value="Promocion:" />
+                                            <h:outputText  class="detalle-tamanoLetra" value="#{renovacionVendedorBean.renovacionSeleccionadaDetalle.promocion}"></h:outputText>
+
+
+                                            
+                                            <h:outputText class="detailColor" value="Upgrades en US$" />
+                                            <h:outputText  class="detalle-tamanoLetra" value="#{renovacionVendedorBean.renovacionSeleccionadaDetalle.upgrades_usd}"></h:outputText>
+                                            
+                                            
+                                            <h:outputText class="detailColor" value="MBF EN US$" />
+                                            
+                                            <p:inputText id="valMBF" value="#{renovacionVendedorBean.renovacionSeleccionadaDetalle.mbf_usd}" disabled="#{renovacionVendedorBean.blnActivoEdicionMBF}" styleClass="colorNegrilla margen-texto detalle-tamanoLetra" >
+                                                <p:ajax event="keyup"></p:ajax>
+                                            </p:inputText>
+
+
+
+                                            <h:outputText style="display:#{(renovacionVendedorBean.disableCordinador)?'none':'inline'}" class="detailColor" value="Editar:" />
+
+
+                                            <p:selectBooleanCheckbox  style="display:#{(renovacionVendedorBean.disableCordinador)?'none':'inline'}" id="comboSe" value="#{renovacionVendedorBean.blnActivoSwitchEdicion}">
+                                                <p:ajax update="valMBF btnGuardarValor" listener="#{renovacionVendedorBean.cambiarEstadoEdicion}" />
+                                            </p:selectBooleanCheckbox>
+
+                                            <br tyle="display:#{(renovacionVendedorBean.disableCordinador)?'none':'inline'}"></br>
+                                            <p:commandButton style="display:#{(renovacionVendedorBean.disableCordinador)?'none':'inline'}" id="btnGuardarValor" update="btnGuardarValor valMBF comboSe messages" value="Guardar"  disabled="#{renovacionVendedorBean.blnActivoEdicion}" actionListener="#{renovacionVendedorBean.btnGuardarValor}"></p:commandButton>    
+
+                                            <h:outputText class="detailColor" value="Movimientos realizados: " />
+
+                                            <p:scrollPanel style="width:500px;height:500px">
+                                                <p:accordionPanel class="letraAcordeon"  value="#{renovacionVendedorBean.listaMovimientoxVenta}" var="movimiento">
+                                                    <p:tab  title="Movimiento - #{movimiento.fechaCambio}">
+                                                        <h:panelGrid columns="2" cellpadding="10">
+                                                            <h:outputText value="Justificación: &nbsp;&nbsp;" style="font-weight: bold" />
+                                                            <h:outputText value="#{movimiento.justificacion}" />
+
+                                                            <h:outputText value="Usuario modificación: &nbsp;&nbsp;" style="font-weight: bold" />
+                                                            <h:outputText value="#{movimiento.usuario}" />
+                                                        </h:panelGrid>
+                                                    </p:tab>
+                                                </p:accordionPanel>
+                                            </p:scrollPanel>
+                                        </p:panelGrid>
+                                    </p:outputPanel>
+                                </p:dialog>
+                                                                                              
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-12">&nbsp;<br></br></div>
+                                </div>
+                            </p:row>
+                            <p:row>
+                                <div class="ui-grid-row"  >
+                                    <br></br>                               
+                                </div>        
+                            </p:row>
+                        </p:panelGrid>
+                          
+                                
+                    </div>               
+                    <div class="ui-grid-col-1"></div>
+                   
+                </div>                                   
+            </div>
+        </h:form>
+    </ui:define>
+    
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

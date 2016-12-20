@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+            th {
+                color:white !important;
+            }
+            .styleFiltroDtTable
+            {
+                color:#FFCB06;
+            }
+
+        </style>
+
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">VENTAS</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>   
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-5">                        
+                        <span>
+                            <p:commandButton style="width: 8em;" id="btnVentas" value="Agregar" update="messages"  actionListener="#{ventasBean.redireccionarNuevo()}" />
+                        </span>
+                    </div>
+                </div>   
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-12">
+                        <br></br>
+                        <p:dataTable var="v" value="#{ventasBean.listaVenta}">
+                            <p:column headerText="Tipo Venta" filterBy="#{v.tipo_venta}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{v.tipo_venta}" />
+                            </p:column>                            
+                            <p:column headerText="Nombre Venta" filterBy="#{v.nombre_venta}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{v.nombre_venta}" />
+                            </p:column>                            
+                            <p:column headerText="Monto Venta" filterBy="#{v.monto_venta}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{v.monto_venta}" />
+                            </p:column>   
+                            <p:column headerText="Moneda Venta" filterBy="#{v.moneda_venta}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{v.moneda_venta}" />
+                            </p:column>   
+                            <p:column headerText="Cantidad RGU" filterBy="#{v.cant_rgu_venta}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{v.cant_rgu_venta}" />
+                            </p:column>   
+                            <p:column headerText="Categoria" filterBy="#{v.categoria}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{v.categoria}" />
+                            </p:column>
+                            <p:column headerText="Producto" filterBy="#{v.producto}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{v.producto}" />
+                            </p:column>
+                            <p:column headerText="Activo" filterBy="#{v.activo}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{v.activo}" />
+                            </p:column>
+
+                            <p:column headerText="">                                   
+                                <p:commandLink action="#{ventasBean.urlEditar()}" process="@this" value="Editar" id="editarV"  class="ui-button ui-button-text" >                                     
+                                    <f:param name="tipo_venta" value="#{v.tipo_venta}"/>
+                                    <f:param name="cod_venta" value="#{v.cod_venta}"/>
+                                    <f:param name="nombre_venta" value="#{v.nombre_venta}"/>
+                                    <f:param name="monto_venta" value="#{v.monto_venta}"/>
+                                    <f:param name="moneda_venta" value="#{v.moneda_venta}"/>                                    
+                                    <f:param name="cant_rgu_venta" value="#{v.cant_rgu_venta}"/>
+                                    <f:param name="categoria" value="#{v.categoria}"/>                                    
+                                    <f:param name="producto" value="#{v.producto}"/>
+                                    <f:param name="activo" value="#{v.activo}"/>                                    
+                                </p:commandLink>
+                            </p:column>
+                             <p:column headerText="">                                   
+                                 <p:commandLink action="#{ventasBean.eliminarVenta(v.cod_venta)}" process="@this" value="Eliminar" id="btnEliminarV"  class="ui-button ui-button-text" >                                                                          
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </div>               
+                    <div class="ui-grid-col-1"></div>
+
+                </div>                                   
+            </div>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

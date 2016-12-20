@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+            th {
+                color:white !important;
+            }
+        </style>
+
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">CREAR CARTERA MANUAL </h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                <p:panel id="panel" header="" style="margin-bottom:10px;" >
+
+                     <h:panelGrid columns="4" cellpadding="5">
+
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Asesor Navega: " >
+                            <span>                                                     
+                                <p:inputText id="asesor_navega" value="#{carteraManualBean.cartera.asesor_navega}" required="true" label="Asesor Navega" validatorMessage="Ingrese un valor"/>
+                                <p:message for="asesor_navega" />
+                            </span>
+                        </p:outputLabel> <br></br>  
+
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Asesor en AS400: " >
+                            <span>                                                     
+                                <p:inputText id="asesor_en_AS400" value="#{carteraManualBean.cartera.asesor_en_AS400}" required="true" label="Asesor" validatorMessage="Ingrese un valor"/>
+                                <p:message for="asesor_en_AS400" />
+                            </span>
+                        </p:outputLabel> <br></br>
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Gerente Nuevo TB: " >
+                            <span>                                                     
+                                <p:inputText id="gerente_nuevo_tb" value="#{carteraManualBean.cartera.gerente_nuevo_tb}" required="true" label="Gerente" validatorMessage="Ingrese un valor"/>
+                                <p:message for="gerente_nuevo_tb" />
+                            </span>
+                        </p:outputLabel> <br></br>
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Coordinador Nuevo TB: " >
+                            <span>                                                     
+                                <p:inputText id="coordinador_nuevo_tb" value="#{carteraManualBean.cartera.coordinador_nuevo_tb}" required="true" label="Coordinador" validatorMessage="Ingrese un valor"/>
+                                <p:message for="coordinador_nuevo_tb" />
+                            </span>
+                        </p:outputLabel> <br></br>
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Ejecutivo nuevo TB: " >
+                            <span>                                                     
+                                <p:inputText id="ejecutivo_nuevo_tb" value="#{carteraManualBean.cartera.ejecutivo_nuevo_tb}" required="true" label="Ejecutivo" validatorMessage="Ingrese un valor"/>
+                                <p:message for="ejecutivo_nuevo_tb" />
+                            </span>
+                        </p:outputLabel> <br></br>
+                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Estado: " >
+                            <span>                                                     
+                                <p:inputText id="estado" value="#{carteraManualBean.cartera.estado}" required="true" label="Estado" validatorMessage="Ingrese un valor"/>
+                                <p:message for="estado" />
+                            </span>
+                        </p:outputLabel> <br></br>
+                    </h:panelGrid>
+                    <br></br><p:commandButton styleClass="margen-texto" id="btnAgregar" value="Agregar"  
+                                              actionListener="#{carteraManualBean.editarCarteraManual()}"  update="messages @form" validateClient="true"
+                                              /> 
+                    <p:commandButton id="btnCancelar" value="Cancelar" process="@this"   
+                                     actionListener="#{carteraManualBean.cancelarOperacion()}" 
+                                     />
+                </p:panel>                                
+            </div>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

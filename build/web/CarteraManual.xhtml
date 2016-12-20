@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+            th {
+                color:white !important;
+            }
+            .styleFiltroDtTable
+            {
+                color:#FFCB06;
+            }
+
+        </style>
+
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">CARTERA MANUAL</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>   
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-5">                        
+                        <span>
+                            <p:commandButton style="width: 8em;" id="btnPreVentasRenov" value="Agregar" update="messages"  actionListener="#{carteraManualBean.redireccionarNuevo()}" />
+                        </span>
+                    </div>
+                </div>   
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-12">
+                        <br></br>
+                        <p:dataTable var="cm" value="#{carteraManualBean.listaCarteraManual}">
+                            <p:column headerText="Asesor Navega" filterBy="#{cm.asesor_navega}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{cm.asesor_navega}" />
+                            </p:column>                            
+                            <p:column headerText="Asesor en AS400" filterBy="#{cm.asesor_en_AS400}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{cm.asesor_en_AS400}" />
+                            </p:column>                            
+                            <p:column headerText="Gerente Nuevo TB" filterBy="#{cm.gerente_nuevo_tb}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{cm.gerente_nuevo_tb}" />
+                            </p:column>   
+                            <p:column headerText="Coordinador Nuevo TB" filterBy="#{cm.coordinador_nuevo_tb}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{cm.coordinador_nuevo_tb}" />
+                            </p:column>   
+                            <p:column headerText="Ejecutivo nuevo TB" filterBy="#{cm.ejecutivo_nuevo_tb}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{cm.ejecutivo_nuevo_tb}" />
+                            </p:column>   
+                            <p:column headerText="Estado" filterBy="#{cm.estado}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{cm.estado}" />
+                            </p:column>
+
+                            <p:column headerText="">                                   
+                                <p:commandLink action="#{carteraManualBean.urlEditar()}" process="@this" value="Editar" id="acc"  class="ui-button ui-button-text" >                                     
+                                    <f:param name="id" value="#{cm.id}"/>
+                                    <f:param name="asesor_navega" value="#{cm.asesor_navega}"/>
+                                    <f:param name="asesor_en_AS400" value="#{cm.asesor_en_AS400}"/>
+                                    <f:param name="gerente_nuevo_tb" value="#{cm.gerente_nuevo_tb}"/>
+                                    <f:param name="coordinador_nuevo_tb" value="#{cm.coordinador_nuevo_tb}"/>                                    
+                                    <f:param name="ejecutivo_nuevo_tb" value="#{cm.ejecutivo_nuevo_tb}"/>
+                                    <f:param name="estado" value="#{cm.estado}"/>                                    
+                                </p:commandLink>
+                            </p:column>
+                             <p:column headerText="">                                   
+                                 <p:commandLink action="#{carteraManualBean.eliminarCarteraManual(cm.id)}" process="@this" value="Eliminar" id="btnEliminar"  class="ui-button ui-button-text" >                                                                          
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </div>               
+                    <div class="ui-grid-col-1"></div>
+
+                </div>                                   
+            </div>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

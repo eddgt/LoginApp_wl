@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+            th {
+                color:white !important;
+            }
+            .styleFiltroDtTable
+            {
+                color:#FFCB06;
+            }
+
+        </style>
+
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">ESTRUCTURA MANUAL</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>   
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-5">                        
+                        <span>
+                            <p:commandButton style="width: 8em;" id="btnPreVentasRenov" value="Agregar" update="messages"  actionListener="#{estructuraComercialBean.redireccionarNuevo()}" />
+                        </span>
+                    </div>
+                </div>   
+
+                <div class="ui-grid-row"  >
+
+                    <div class="ui-grid-col-12">
+                        <br></br>
+                        <p:dataTable var="est" value="#{estructuraComercialBean.listaEstructura}">
+                            <p:column headerText="Tipo Asesor" filterBy="#{est.nombreTipoAsesor}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{est.nombreTipoAsesor}" />
+                            </p:column>                            
+                            <p:column headerText="Persona" filterBy="#{est.nombrePersona}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{est.nombrePersona}" />
+                            </p:column>                            
+                            <p:column headerText="Código As400" filterBy="#{est.codAs400}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{est.codAs400}" />
+                            </p:column>   
+                            <p:column headerText="Usuario N+" filterBy="#{est.usurioNav}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{est.usurioNav}" />
+                            </p:column>   
+                            <p:column headerText="Fecha Desde" filterBy="#{est.fecdesde}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{estructuraComercialBean.formatoFecha(est.fecdesde)}" />
+                            </p:column>   
+                            <p:column headerText="Fecha Hasta" filterBy="#{est.fechasta}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{estructuraComercialBean.formatoFecha(est.fechasta)}" />
+                            </p:column>   
+                            <p:column headerText="Supervisor" filterBy="#{est.nombreSupervisor}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{est.nombreSupervisor}" />
+                            </p:column>   
+                            <p:column headerText="Gerente" filterBy="#{est.nombreManager}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{est.nombreManager}" />
+                            </p:column>   
+                            <p:column headerText="Coordinador" filterBy="#{est.nombreCoordinador}" filterMatchMode="contains" filterStyleClass="styleFiltroDtTable">
+                                <h:outputText value="#{est.nombreCoordinador}" />
+                            </p:column> 
+
+                            <p:column headerText="">                                   
+                                <p:commandLink action="#{estructuraComercialBean.urlEditar()}" process="@this" value="Editar" id="acc"  class="ui-button ui-button-text" >  
+                                   
+                                    <f:param name="idCorrelativo" value="#{est.correlativo}"/>
+                                    <f:param name="idTipoAsesor" value="#{est.idTipoAsesor}"/>
+                                    <f:param name="idPersona" value="#{est.idPersona}"/>
+                                    <f:param name="codAs400" value="#{est.codAs400}"/>
+                                    <f:param name="usurioNav" value="#{est.usurioNav}"/>
+                                    <f:param name="fecdesde" value="#{estructuraComercialBean.formatoFecha(est.fecdesde)}"/>
+                                    <f:param name="fechasta" value="#{estructuraComercialBean.formatoFecha(est.fechasta)}"/>
+                                    <f:param name="idSupervisor" value="#{est.idSupervisor}"/>
+                                    <f:param name="idTeamManager" value="#{est.idTeamManager}"/>
+                                    <f:param name="idCoordinador" value="#{est.idCoordinador}"/>
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </div>               
+                    <div class="ui-grid-col-1"></div>
+
+                </div>                                   
+            </div>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

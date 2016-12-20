@@ -1,0 +1,295 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+        </style>
+            
+            <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">
+                
+                <div class="ui-grid-row"  >
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">Revisión información Ventas</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                    <div class="ui-grid-row"  >
+                    <div class="ui-grid-col-1"></div>
+                    <div class="ui-grid-col-11">                                                                                                                                                
+                    <br></br>
+                        
+                        <p:panelGrid id="lprueba" styleClass="img-thumbnail2 fondoLlenar2" columns="1" style="width:95%; margin-left: 40px;" layout="grid">
+                            <p:row>
+                                
+                                <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Coordinador" >
+                                    <span>
+                                        <h:selectOneMenu styleClass="btn btn-info tamControl bajar"  style="width:  60%; float: right;"  id="selectCoordinador" disabled="#{ventasCoordinadorBean.blnActivoOneSelected}" 
+                                                         value="#{ventasCoordinadorBean.nombreCoordinadorSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="selectAsesor btnAgregar btnAgregarSuperior" listener="#{ventasCoordinadorBean.oneCoordinadorChange()}"  />
+                                            <f:selectItem itemLabel="(Elige un coordinador)" itemValue="" noSelectionOption="true" />                                              
+                                            <f:selectItems value="#{ventasCoordinadorBean.listaCoordinador}" var="coordi" itemLabel="#{coordi.nombre}" itemValue="#{coordi.nombre}" />
+                                        </h:selectOneMenu>
+                                    </span>
+                                </p:outputLabel>
+                                
+                                
+                                <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Asesor" >
+                                    <span>
+                                        <h:selectOneMenu styleClass="btn btn-info tamControl bajar"  style="width:  60%; float: right;"  id="selectAsesor" value="#{ventasCoordinadorBean.idAsesorSelelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="costo1 valorEnlace1 cantidadElementos1 ventasCoordinador btnDesAsignar btnDesAsignarSuperior btnReasignarSuperior btnReasignar btnReasignarSuperior btnAceptaryFinalizar btnAceptaryFinalizarSuperior"  listener="#{ventasCoordinadorBean.oneAsesorChange()}"  />
+                                            <f:selectItem itemLabel="(Elige un asesor)" itemValue="" noSelectionOption="true" />  
+                                            <f:selectItems value="#{ventasCoordinadorBean.listaAsesor.entrySet()}" var="aserr" itemLabel="#{aserr.value}" itemValue="#{aserr.key}" />
+                                    </span>
+                                </p:outputLabel>   
+                                
+                                <style>
+                                    .out-cuotaBasica{
+                                        font-size:1.1em;
+                                        padding-left: 1em;
+                                    }
+                                    
+                                    .coutaMargenPrincipal{
+                                        margin-left: 4em;                                        
+                                    }
+                                </style>
+                                
+                                <p:commandButton id="btnDesAsignarSuperior" value="Des-Asignar" update="ventasCoordinador" disabled="#{ventasCoordinadorBean.blnActivoDesAsignar}" actionListener="#{ventasCoordinadorBean.btnClickDesasignarVentas}"> </p:commandButton>
+                              
+                                <p:commandButton id="btnAgregarSuperior" value="Agregar" update="ventasCoordinador" disabled="#{ventasCoordinadorBean.blnActivoAgregar}" actionListener="#{ventasCoordinadorBean.btnClickAsignarVentas}"></p:commandButton>
+                                    
+                                <p:commandButton id="btnReasignarSuperior" value="Re-Asignar" update="ventasCoordinador messages" disabled="#{ventasCoordinadorBean.blnActivoReAsignar}" actionListener="#{ventasCoordinadorBean.btnClickReAsignarVentas}"></p:commandButton>
+
+                                <p:commandButton id="btnAceptaryFinalizarSuperior" value="Aceptar y Finalizar" disabled="#{ventasCoordinadorBean.blnActivoAceptarFinalizar}" actionListener="#{ventasCoordinadorBean.btnClickCongelar}"></p:commandButton>
+                                
+                                
+                                <h:outputText id="cantidadElementos1" class="out-cuotaBasica coutaMargenPrincipal" value="Elementos: #{ventasCoordinadorBean.cantidadElementos}">
+                                </h:outputText>
+                                
+                                <h:outputText id="costo1" class="out-cuotaBasica" value="Total Cuota Básica: $ #{ventasCoordinadorBean.getSumatoriaCuotaBasica()}">
+                                    <f:convertNumber type="currency" currencySymbol="$" />
+                                </h:outputText>
+                                
+                                
+                                <h:outputText id="valorEnlace1" class="out-cuotaBasica " value="Total Valor Enlace: $ #{ventasCoordinadorBean.getSumatoriaValorEnlace()}">
+                                    <f:convertNumber type="currency" currencySymbol="$" />
+                                </h:outputText>
+                                
+                                <br></br>
+                              
+                                <br></br>
+                                 <p:dataTable id="ventasCoordinador" selection="#{ventasCoordinadorBean.ventasSeleccionadas}"  rowKey="#{detalleVenta.idVenta}"  emptyMessage="No hay ventas en la tabla" 
+                                              filteredValue="#{ventasCoordinadorBean.ventasFiltradas}"  
+                                              var="detalleVenta" value="#{ventasCoordinadorBean.listaVentas}" scrollable="true" scrollWidth="100%"  
+                                     widgetVar="dtdependencia"  paginator="true"  paginatorTemplate="{Exporters}"
+                                     >
+
+                                    <p:column exportable="false" selectionMode="multiple" style="width:30px;text-align:center"/>
+                                    <p:ajax event="filter"  update=":form:costo1 :form:valorEnlace1 :form:cantidadElementos1" listener="#{ventasCoordinadorBean.sumarCuotaBasicaFiltradas}" />
+                                    
+                                     <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <h:graphicImage class="imgExel" value="/img/Excel2013.png" />                                  
+                                            <p:dataExporter type="xls" target="ventasCoordinador" fileName="VentasporCoordinador" postProcessor="#{ventasCoordinadorBean.customXLSProceso}" pageOnly="true"/>
+                                        </h:commandLink>
+                                    </f:facet>
+                               
+                                   
+
+                                    <p:column exportable="false" style="width:50px;text-align: center">
+                                          <p:commandButton update=":form:ventaDetail" oncomplete="PF('ventaDialog').show()" class="icono-lupa"   title="Ver-Detalle">
+                                              <f:setPropertyActionListener value="#{detalleVenta}" target="#{ventasCoordinadorBean.ventaSeleccionadaDetalle}" />
+                                         </p:commandButton>
+                                    </p:column>
+                                    
+                                    <p:column headerText="idVenta" exportable="false"  width="100" style="font-size: 11px;text-align: right;"
+                                              filterBy="#{detalleVenta.idVenta}" filterValue="#{detalleVenta.idVenta}" sortBy="#{detalleVenta.idVenta}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.idVenta}" />
+                                    </p:column>
+
+                                    <p:column headerText="CodCliente"  width="100" style="font-size: 11px;text-align: center;"
+                                        filterBy="#{detalleVenta.idCliente}" filterValue="#{detalleVenta.idCliente}" sortBy="#{detalleVenta.idCliente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.idCliente}" />
+                                    </p:column>
+
+                                    <p:column headerText="NIT"  width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleVenta.NIT}" filterValue="#{detalleVenta.NIT}" sortBy="#{detalleVenta.NIT}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.NIT}" />
+                                    </p:column>
+
+                                    <p:column headerText="Cliente"  width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleVenta.nombreCliente}" filterValue="#{detalleVenta.nombreCliente}" sortBy="#{detalleVenta.nombreCliente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.nombreCliente}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="Fecha" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleVenta.fecha}" sortBy="#{detalleVenta.fecha}" filterValue="#{detalleVenta}" filterMatchMode="contains" filterStyle="width:100%">
+                                    <p:outputLabel value="#{detalleVenta.fecha}" />
+                                    </p:column>
+                                    
+                                     <p:column headerText="No. Instalación" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.noInstalacion}" filterValue="#{detalleVenta}" sortBy="#{detalleVenta.noInstalacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.noInstalacion}" />
+                                    </p:column>
+                                    
+                                     <p:column headerText="Teléfono" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.telefono}" filterValue="#{detalleVenta}" sortBy="#{detalleVenta.telefono}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.telefono}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="No. Anexo" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.anexoNum}" filterValue="#{detalleVenta}" sortBy="#{detalleVenta.anexoNum}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.anexoNum}" />
+                                    </p:column>                                    
+                                    
+                                     <p:column headerText="Tipo Transacción" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.tipoTransaccion}" filterValue="#{detalleVenta}" sortBy="#{detalleVenta.tipoTransaccion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.tipoTransaccion}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="Moneda" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.moneda}"  filterValue="#{detalleVenta}" sortBy="#{detalleVenta.moneda}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.moneda}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="Plazo" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.plazo}" filterValue="#{detalleVenta}" sortBy="#{detalleVenta.plazo}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.plazo}" />
+                                    </p:column>
+                                    
+                                     <p:column headerText="Cuota Básica" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.cuotaBasica}" filterValue="#{detalleVenta}" sortBy="#{detalleVenta.cuotaBasica}" filterMatchMode="contains" filterStyle="width:100%">                                                                                                                                    
+                                        <p:outputLabel  value="#{detalleVenta.cuotaBasica}" />                                                                                                                      
+                                    </p:column>
+                                    
+                                     <p:column headerText="Valor del Enlace" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.valorEnlace}" filterValue="#{detalleVenta}" sortBy="#{detalleVenta.valorEnlace}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.valorEnlace}" />
+                                    </p:column>                                    
+                                    
+                                     <p:column headerText="Moneda" width="100" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.moneda}"  filterValue="#{detalleVenta}" sortBy="#{detalleVenta.moneda}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.moneda}" />
+                                    </p:column>                                    
+                                    
+                                    <p:column headerText="Origen" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleVenta.origen}"  filterValue="#{detalleVenta}" sortBy="#{detalleVenta.origen}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.origen}" />
+                                    </p:column>
+                                    
+                                     <p:column headerText="Producto" width="100" style="font-size: 11px;text-align: center;"
+                                               filterBy="#{detalleVenta.producto}"  filterValue="#{detalleVenta}" sortBy="#{detalleVenta.producto}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.producto}" />
+                                    </p:column>                                   
+                                    
+                                 </p:dataTable>                                
+                                 
+                                  <p:dialog header="Venta"  widgetVar="ventaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                        <p:outputPanel id="ventaDetail" style="text-align:center;">
+                                            <p:panelGrid  columns="2" rendered="#{not empty ventasCoordinadorBean.ventaSeleccionadaDetalle}" columnClasses="label,value">
+                                                <h:outputText class="detailColor" value="Id Venta:" />
+                                                <h:outputText class="detalle-tamanoLetra" value="#{ventasCoordinadorBean.ventaSeleccionadaDetalle.idVenta}" />
+
+                                                <h:outputText class="detailColor" value="Cliente:" />
+                                                <h:outputText class="detalle-tamanoLetra" value="#{ventasCoordinadorBean.ventaSeleccionadaDetalle.nombreCliente}" />
+
+                                                <h:outputText class="detailColor" value="Fecha:" />
+                                                <h:outputText  class="detalle-tamanoLetra" value="#{ventasCoordinadorBean.ventaSeleccionadaDetalle.fecha}"></h:outputText>
+                                                
+                                                <h:outputText class="detailColor" value="Valor Enlace:" />
+                                             
+                                                <p:inputText id="valEnlace" value="#{ventasCoordinadorBean.ventaSeleccionadaDetalle.valorEnlace}" disabled="#{ventasCoordinadorBean.blnActivoEdicionValEnlace}" styleClass="colorNegrilla margen-texto detalle-tamanoLetra" >
+                                                    <p:ajax event="keyup"></p:ajax>
+                                                </p:inputText>
+                                                
+                                                <h:outputText class="detailColor" value="Cuota Básica:" />
+                                                <p:inputText id="valCuotaBasica" value="#{ventasCoordinadorBean.ventaSeleccionadaDetalle.cuotaBasica}" disabled="#{ventasCoordinadorBean.blnActivoEdicionValCuota}" styleClass="colorNegrilla margen-texto detalle-tamanoLetra" >
+                                                    <p:ajax event="keyup"></p:ajax>
+                                                </p:inputText>
+                                                
+                                                 <h:outputText class="detailColor" value="Moneda:" />
+                                                 <h:selectOneMenu styleClass="detailColor btn btn-info margen-texto tamControl bajar"  disabled="#{ventasCoordinadorBean.blnActivoEdicion}"    id="elijMoneda" value="#{ventasCoordinadorBean.idMoneda}" required="true"  requiredMessage="Debe elegir una moneda" >                                                    
+                                                    <f:selectItem itemLabel="$-Dolares" itemValue="USD$" />
+                                                    <f:selectItem itemLabel="Q-Quetzales" itemValue="GTQ" />                                                           
+                                                 </h:selectOneMenu>     
+                                                
+                                                <h:outputText style="display:#{(ventasCoordinadorBean.blnActivoOneSelected)?'none':'inline'}" class="detailColor" value="Editar:" />
+
+                                                <p:selectBooleanCheckbox style="display:#{(ventasCoordinadorBean.blnActivoOneSelected)?'none':'inline'}" id="comboSe" value="#{ventasCoordinadorBean.blnActivoSwitchEdicion}">
+                                                    <p:ajax update="valEnlace valCuotaBasica elijMoneda btnGuardarValor" listener="#{ventasCoordinadorBean.cambiarEstadoEdicion}" />
+                                                </p:selectBooleanCheckbox>
+
+                                                <br style="display:#{(ventasCoordinadorBean.blnActivoOneSelected)?'none':'inline'}"></br>
+                                                <p:commandButton style="display:#{(ventasCoordinadorBean.blnActivoOneSelected)?'none':'inline'}" onclick="PF('ventaDialog').hide()" 
+                                                                 id="btnGuardarValor" update="btnGuardarValor valEnlace valCuotaBasica  comboSe messages ventasCoordinador" 
+                                                                 value="Guardar"  disabled="#{ventasCoordinadorBean.blnActivoEdicion}" actionListener="#{ventasCoordinadorBean.btnGuardarValor}">
+                                                </p:commandButton>
+                                                                                                                                             
+                                                <h:outputText class="detailColor" value="Movimientos realizados: " />
+                                                
+                                                <p:scrollPanel style="width:500px;height:500px">
+                                                    <p:accordionPanel class="letraAcordeon"  value="#{ventasCoordinadorBean.listaMovimientoxVenta}" var="movimiento">
+                                                        <p:tab  title="Movimiento - #{movimiento.fechaCambio}">
+                                                            <h:panelGrid columns="2" cellpadding="10">
+                                                                <h:outputText value="Justificación: &nbsp;&nbsp;" style="font-weight: bold" />
+                                                                <h:outputText value="#{movimiento.justificacion}" />
+
+                                                                <h:outputText value="Usuario modificación: &nbsp;&nbsp;" style="font-weight: bold" />
+                                                                <h:outputText value="#{movimiento.usuario}" />
+                                                            </h:panelGrid>
+                                                        </p:tab>
+                                                    </p:accordionPanel>
+                                                </p:scrollPanel>
+                                            </p:panelGrid>
+                                        </p:outputPanel>
+                                    </p:dialog>
+                                
+                                <p:commandButton id="btnDesAsignar" value="Des-Asignar" update="ventasCoordinador messages" disabled="#{ventasCoordinadorBean.blnActivoDesAsignar}" actionListener="#{ventasCoordinadorBean.btnClickDesasignarVentas}">
+                                </p:commandButton>             
+                              
+                                <p:commandButton id="btnAgregar" value="Agregar" update="ventasCoordinador" disabled="#{ventasCoordinadorBean.blnActivoAgregar}" actionListener="#{ventasCoordinadorBean.btnClickAsignarVentas}"></p:commandButton>    
+                                
+                                <p:commandButton id="btnReasignar" value="Re-Asignar" update="ventasCoordinador messages" disabled="#{ventasCoordinadorBean.blnActivoReAsignar}" actionListener="#{ventasCoordinadorBean.btnClickReAsignarVentas}"></p:commandButton>
+                                    
+                                <p:commandButton id="btnAceptaryFinalizar" value="Aceptar y Finalizar" disabled="#{ventasCoordinadorBean.blnActivoAceptarFinalizar}" actionListener="#{ventasCoordinadorBean.btnClickCongelar}" />
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-12">&nbsp;<br></br></div>
+                                </div>
+                            </p:row>
+                            <p:row>
+                                <div class="ui-grid-row"  >
+                                    <br></br>                               
+                                </div>        
+                            </p:row>
+                        </p:panelGrid>                          
+                                
+                    </div>               
+                    <div class="ui-grid-col-1"></div>
+                   
+                </div>                                   
+            </div>
+        </h:form>
+    </ui:define>
+    
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

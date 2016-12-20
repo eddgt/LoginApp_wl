@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+        </style>
+            
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">
+               
+                <div class="ui-grid-row"  >
+                   
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">Revertir venta</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                <div class="ui-grid-row"  >
+                    <div class="ui-grid-col-1"></div>
+                    <div class="ui-grid-col-11">
+                                                                                                                      
+                          
+                          <br></br>
+                            <p:panelGrid id="lprueba"  styleClass="img-thumbnail2 fondoLlenar2" style=" display: table-cell;" columns="1" layout="grid">
+                            <p:row>
+                                
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-12">                                                                                                                                                          
+                                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"   value="Coordinador" >
+                                             <span>
+                                                 <h:selectOneMenu styleClass="btn btn-info tamControl bajar"  style="width:  60%; float: right;"  id="selectCoordinador" value="#{revertirBean.nombreCoordinadorSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                                     <p:ajax event="change" update="selectAsesor" listener="#{revertirBean.oneCoordinadorChange()}"  />
+                                                     <f:selectItem itemLabel="(Elige un coordinador)" itemValue="" noSelectionOption="true" />                                              
+                                                     <f:selectItems value="#{revertirBean.listaCoordinador}" var="coordi" itemLabel="#{coordi.nombre}" itemValue="#{coordi.nombre}" />
+                                                 </h:selectOneMenu>
+                                             </span>
+                                         </p:outputLabel>
+
+
+                                           <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="margin-left: 2em;"   value="Asesor" >
+                                             <span>
+                                                 <h:selectOneMenu styleClass="btn btn-info tamControl bajar"  style="margin-left:1em; float: right;"  id="selectAsesor" value="#{revertirBean.idAsesorSelelected}"  requiredMessage="Debe elegir un coordinador" >
+                                                     <p:ajax event="change"   listener="#{revertirBean.oneAsesorChange()}"  />
+                                                     <f:selectItem itemLabel="(Elige un asesor)" itemValue="" noSelectionOption="true" />  
+                                                     <f:selectItems value="#{revertirBean.listaAsesor}" var="aserr" itemLabel="#{aserr.nombre}" itemValue="#{aserr.idAsesor}" />
+                                                 </h:selectOneMenu>
+                                             </span>
+                                         </p:outputLabel>  
+                                        
+                                        <p:row>
+                                            <p:column> 
+                                                <span><p:outputLabel>¿Está seguro que desea Aceptar y Finalizar las <strong>ventas y renovaciones</strong> del Asesor indicado?</p:outputLabel></span>
+                                            </p:column>
+                                        </p:row>
+                                        <br></br>
+                                        <p:commandButton style="width: 8em;" id="btnRevertirPLANNINGCORD" value="Revertir" update="selectCoordinador selectAsesor messages" actionListener="#{revertirBean.btnRevertirPLANNINGCORD}" />
+                                    </div>
+                                </div>                                                                                       
+                            </p:row>
+                            <p:row>
+                                <div class="ui-grid-row"  >
+                                    <br></br>                               
+                                </div>        
+                            </p:row>
+                        </p:panelGrid>
+                          
+                                
+                    </div>               
+                    <div class="ui-grid-col-1"></div>
+                   
+                </div>                                   
+            </div>
+        </h:form>
+    </ui:define>
+    
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

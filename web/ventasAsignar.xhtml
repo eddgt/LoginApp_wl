@@ -1,0 +1,208 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+        </style>
+            
+        <h:form id="form">
+            <p:growl id="messages" showDetail="false" />
+
+            <div class="ui-grid ui-grid-responsive">               
+                <div class="ui-grid-row"  >
+                   
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">Asignar asesores a ventas</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                <div class="ui-grid-row"  >
+                    <div class="ui-grid-col-1"></div>
+                    <div class="ui-grid-col-11">
+                                                                                                                      
+                          
+                          <br></br>
+                            <p:panelGrid id="lprueba"  styleClass="img-thumbnail2 fondoLlenar2" style=" display: table-cell;" columns="1" layout="grid">
+                            <p:row>
+                                
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-12">
+                                        <div class="ui-grid-col-5">
+                                            
+                                            <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%"   value="Coordinador" >
+                                                <span>
+                                                    <h:selectOneMenu styleClass="btn btn-info tamControl bajar"  style="width:  100%; float: right;"  id="selectCoordinador" disabled="#{ventasAsignarBean.blnActivoOneSelected}" value="#{ventasAsignarBean.nombreCoordinadorSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                                        <p:ajax event="change" update="selectAsesor" listener="#{ventasAsignarBean.oneCoordinadorChange()}"  />
+                                                        <f:selectItem itemLabel="(Elige un coordinador)" itemValue="" noSelectionOption="true" />                                              
+                                                        <f:selectItems value="#{ventasAsignarBean.listaCoordinador}" var="coordi" itemLabel="#{coordi.nombre}" itemValue="#{coordi.nombre}" />
+                                                    </h:selectOneMenu>
+                                                </span>
+                                            </p:outputLabel>
+                                            
+                                            <!--<p:outputLabel for="name"  styleClass="colorFormulario" value=" Coordinador: "  />
+                                            <p:outputLabel id="name"  style="float: right; margin-right: 5em;"  value="{ventasAsignarBean.nombreCoordinadorSelected}"   styleClass=" inputBorder  colorNegrilla " />-->         
+                                        </div>
+                                        <div class="ui-grid-col-7">                                                                           
+                                            <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"    value="Asesor" >
+                                                <span>
+                                                    <h:selectOneMenu styleClass="btn btn-info tamControl bajar"  style="width: 100%; float: right;margin-right: 3em;"  id="selectAsesor" value="#{ventasAsignarBean.idAsesorSelelected}"  requiredMessage="Debe elegir un coordinador" >
+                                                        <p:ajax event="change" update="ventasCoordinador" listener="#{ventasAsignarBean.oneAsesorChange()}"  />
+                                                        <f:selectItem itemLabel="(Elige un asesor)" itemValue="" noSelectionOption="true" />  
+                                                        <f:selectItems value="#{ventasAsignarBean.listaAsesor}" var="aserr" itemLabel="#{aserr.nombre}" itemValue="#{aserr.idAsesor}" />
+                                                    </h:selectOneMenu>
+                                                </span>
+                                            </p:outputLabel>   
+                                        </div>
+                                    </div>
+                                </div>
+                                <br></br>
+                                 <p:row>
+                                    <p:column>
+                                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea tamcontrol-others"  for="codCliente" value="Cód. Cliente:" style="padding-right: 1.2em;">
+                                            <span style="margin-left: 1em;">
+                                                <p:inputTextarea styleClass="Inputfondo tamControl img-responsive colorNegrilla cambiar-width-text" value="#{ventasAsignarBean.codCliente}"  style="float: right;" rows="1" cols="15" id="codCliente"/>
+                                            </span>
+                                        </p:outputLabel>                                          
+                                          
+                                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea tamcontrol-others"  for="nomCliente" style="padding-right: 1.2em;" value="Nom. Cliente:" >
+                                            <span style="margin-left: 1em;">
+                                                <p:inputTextarea styleClass="Inputfondo tamControl img-responsive colorNegrilla cambiar-width-text" value="#{ventasAsignarBean.nomCliente}"  style="float: right;"  cols="15" rows="1" id="nomCliente"/>
+                                            </span>
+                                        </p:outputLabel> 
+                                        
+                                       <p:outputLabel styleClass="colorFormulario redondeadoLblArea tamcontrol-others"   for="noTelefono" style="padding-right: 1.2em;" value="No. Télefono:" >
+                                            <span style="margin-left: 1em;">
+                                                <p:inputTextarea styleClass="Inputfondo tamControl img-responsive colorNegrilla cambiar-width-text" value="#{ventasAsignarBean.noTelefono}"  style="float: right;  " rows="1"  cols="15"   id="noTelefono"
+                                                  />
+                                            </span>
+                                        </p:outputLabel>   
+                                        
+                                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea tamcontrol-others"  for="anexo" value="Anexo:" style="padding-right: 1.2em;">
+                                            <span style="margin-left: 1em;">
+                                                <p:inputTextarea styleClass="Inputfondo tamControl img-responsive colorNegrilla cambiar-width-text" value="#{ventasAsignarBean.noAnexo}"  style=" float: right; " rows="1" cols="15"   id="anexo"
+                                                   />
+                                            </span>
+                                        </p:outputLabel>  
+                                        
+                                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea tamcontrol-others"  for="noInstalacion" style="padding-right: 1.2em;" value="No. Instalación:" >
+                                            <span style="margin-left: 1em;">
+                                                <p:inputTextarea styleClass="Inputfondo tamControl img-responsive colorNegrilla cambiar-width-text" value="#{ventasAsignarBean.noInstalacion}"  style="float: right; "  cols="15" rows="1"   id="noInstalacion"
+                                                  />
+                                            </span>
+                                        </p:outputLabel> 
+                                    </p:column>
+                                </p:row>
+
+                                <br></br>
+                                <p:commandButton value="Buscar" style="margin-bottom: 1em;width: 8em;" update="ventasCoordinador messages" actionListener="#{ventasAsignarBean.btnClickBuscarVentas}" id="btn-buscarAsesoresVentas" />
+                                
+                                <br></br>
+                                <p:dataTable id="ventasCoordinador" selection="#{ventasAsignarBean.ventasSeleccionadas}" rowKey="#{detalleVenta.idVenta}"  emptyMessage="No hay ventas en la tabla" 
+                                    style=" margin-left: auto; margin-right: auto; display: table-cell; float:left" 
+                                   var="detalleVenta" value="#{ventasAsignarBean.listaVentas}" 
+                                     widgetVar="dtdependencia">
+                                    
+                                                                    
+                                    <p:column selectionMode="multiple" style="width:30px;text-align:center"/>
+                                    <p:ajax event="filter" update="" /> 
+                                    <p:column headerText="Cliente" width="20%" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleVenta.nombreCliente}" sortBy="#{detalleVenta.nombreCliente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.nombreCliente}" />
+                                    </p:column>                
+                                    
+                                    <p:column headerText="Fecha" width="20%" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleVenta.fecha}" sortBy="#{detalleVenta.fecha}" filterMatchMode="contains" filterStyle="width:100%">
+                                    <p:outputLabel value="#{detalleVenta.fecha}" />
+                                    </p:column>                
+                                    
+                                     <p:column headerText="No. Instalación" width="20%" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.noInstalacion}" sortBy="#{detalleVenta.noInstalacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.noInstalacion}" />
+                                    </p:column> 
+                                    
+                                     <p:column headerText="Teléfono" width="20%" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.telefono}" sortBy="#{detalleVenta.telefono}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.telefono}" />
+                                    </p:column> 
+                                    
+                                    <p:column headerText="No. Anexo" width="20%" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.anexoNum}" sortBy="#{detalleVenta.anexoNum}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.anexoNum}" />
+                                    </p:column>                
+                                    
+                                    
+                                     <p:column headerText="Tipo Transacción" width="20%" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.tipoTransaccion}" sortBy="#{detalleVenta.tipoTransaccion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.tipoTransaccion}" />
+                                    </p:column>   
+                                    
+                                    <p:column headerText="Moneda" width="20%" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.moneda}" sortBy="#{detalleVenta.moneda}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.moneda}" />
+                                    </p:column> 
+                                    
+                                      <p:column headerText="Plazo" width="20%" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.plazo}" sortBy="#{detalleVenta.plazo}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.plazo}" />
+                                    </p:column> 
+                                    
+                                     <p:column headerText="Cuota Básica" width="20%" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.cuotaBasica}" sortBy="#{detalleVenta.cuotaBasica}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.cuotaBasica}" />
+                                    </p:column> 
+                                    
+                                     <p:column headerText="Valor del Enlace" width="20%" style="font-size: 11px;text-align: center;"
+                                            filterBy="#{detalleVenta.valorEnlace}" sortBy="#{detalleVenta.valorEnlace}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleVenta.valorEnlace}" />
+                                    </p:column>                                   
+                                </p:dataTable>
+                                <br></br><br></br> 
+                                <h:form>
+                                    <p>Escribir comentario para justificación de los registros que serán asignados:</p>                                    
+                                    <p:inputTextarea id="msg" value="#{ventasAsignarBean.justificacion}" rows="2" cols="100" counter="display" maxlength="150" counterTemplate="{0} caracteres restantes." autoResize="false" />
+                                    <h:outputText id="display" />
+                                </h:form>			                           
+                                <br></br> 
+                                <p:commandButton value="Asignar" update="ventasCoordinador messages" actionListener="#{ventasAsignarBean.btnClickAsignarVentas}" style="width: 8em; padding-top:1em;" id="btn-deaAsignar" />                                                                                                                                  
+                                <p:commandButton value="Regresar" update="ventasCoordinador" actionListener="#{ventasAsignarBean.btnClickRegresar}" style="width: 8em;" id="btn-asignar"/>
+                                  
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-12">&nbsp;<br></br></div>
+                                </div>
+                            </p:row>
+                            <p:row>
+                                <div class="ui-grid-row"  >
+                                    <br></br>                               
+                                </div>        
+                            </p:row>
+                        </p:panelGrid>
+                          
+                                
+                    </div>               
+                    <div class="ui-grid-col-1"></div>
+                   
+                </div>                                   
+            </div>
+        </h:form>
+    </ui:define>
+    
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

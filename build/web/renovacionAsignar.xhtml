@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+        </style>
+            
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="ui-grid ui-grid-responsive">
+                
+                <div class="ui-grid-row"  >
+                   
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">Asignar asesores a renovaciones</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                <div class="ui-grid-row"  >
+                    <div class="ui-grid-col-1"></div>
+                    <div class="ui-grid-col-11">
+                                                                                                                      
+                          
+                          <br></br>
+                            <p:panelGrid id="lprueba"  styleClass="img-thumbnail2 fondoLlenar2" columns="1" style="width:95%; margin-left: 40px;" layout="grid">
+                            <p:row>
+                                
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-12">
+                                        <div class="ui-grid-col-5">
+                                            <p:outputLabel for="name"  styleClass="colorFormulario" value=" Coordinador: "  />
+                                            <p:outputLabel id="name"  style="float: right; margin-right: 5em;"  value="#{renovacionAsignarBean.nombreCoordinadorSelected}"   styleClass=" inputBorder  colorNegrilla " />         
+                                        </div>
+                                        <div class="ui-grid-col-7">                                                                           
+                                            <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"    value="Asesor" >
+                                                <span>
+                                                    <h:selectOneMenu styleClass="btn btn-info tamControl bajar"  style="width: 70%; float: right;margin-right: 3em;"  id="selectAsesor" value="#{renovacionAsignarBean.idAsesorSelelected}"  requiredMessage="Debe elegir un coordinador" >
+                                                        <p:ajax event="change" update="renovaciones btn-deaAsignar btn-deaAsignarSuperior" listener="#{renovacionAsignarBean.oneAsesorChange()}"  />
+                                                        <f:selectItem itemLabel="(Elige un asesor)" itemValue="" noSelectionOption="true" />  
+                                                        <f:selectItems value="#{renovacionAsignarBean.listaAsesor}" var="aserr" itemLabel="#{aserr.nombre}" itemValue="#{aserr.idAsesor}" />
+                                                    </h:selectOneMenu>
+                                                </span>
+                                            </p:outputLabel>   
+                                        </div>
+                                    </div>
+                                </div>
+                                <br></br>
+                                 <p:row>
+                                    <p:column>
+                                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea tamcontrol-others"  for="codCliente" value="Cód. Cliente: " style="padding-right: 1.2em;">
+                                            <span style="margin-left: 1em;">
+                                                <p:inputTextarea styleClass="Inputfondo tamControl img-responsive colorNegrilla cambiar-width-text" value="#{renovacionAsignarBean.codCliente}"  style="float: right;" rows="1" cols="15" id="codCliente"/>
+                                            </span>
+                                        </p:outputLabel>                                          
+                                          
+                                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea tamcontrol-others"  for="nomCliente" style="padding-right: 1.2em;" value="Nom. Cliente: " >
+                                            <span style="margin-left: 1em;">
+                                                <p:inputTextarea styleClass="Inputfondo tamControl img-responsive colorNegrilla cambiar-width-text" value="#{renovacionAsignarBean.nomCliente}"  style="float: right;"  cols="15" rows="1" id="nomCliente"/>
+                                            </span>
+                                        </p:outputLabel> 
+                                      <br></br>
+                                       <p:outputLabel styleClass="colorFormulario redondeadoLblArea tamcontrol-others"   for="noTelefono" value="No. Télefono: " >
+                                            <span>
+                                                <p:inputTextarea styleClass="Inputfondo tamControl img-responsive colorNegrilla cambiar-width-text" value="#{renovacionAsignarBean.noTelefono}"  style="float: right;  " rows="1"   id="noTelefono"
+                                                  />
+                                            </span>
+                                        </p:outputLabel>   
+                                        
+                                        
+                                        <p:outputLabel styleClass="colorFormulario redondeadoLblArea tamcontrol-others"  for="anexo" value="Anexo: " style="">
+                                            <span>
+                                                <p:inputTextarea styleClass="Inputfondo tamControl img-responsive colorNegrilla cambiar-width-text" value="#{renovacionAsignarBean.noAnexo}"  style=" float: right; " rows="1"   id="anexo"
+                                                   />
+                                            </span>
+                                        </p:outputLabel>  
+                                                                              
+                                    </p:column>
+                                </p:row>
+                                <br></br>
+                                <p:commandButton value="Buscar" style="margin-bottom: 1em;width: 8em;" update="renovaciones messages" actionListener="#{renovacionAsignarBean.btnClickBuscarRenovaciones}" id="btn-buscarRenovaciones" />
+                                <br></br>
+                                <p:commandButton value="Asignar" disabled="#{renovacionAsignarBean.assignButtonDisabled}" update="renovaciones" actionListener="#{renovacionAsignarBean.btnClickAsignarRenovaciones}" style="width: 8em;" id="btn-deaAsignarSuperior" />                                                                                                                                  
+                                <p:commandButton value="Regresar" update="renovaciones" actionListener="#{renovacionAsignarBean.btnClickRegresar}" style="width: 8em;" id="btn-asignarRegresar"/>
+                                
+                                <br></br>
+                                <br></br>
+                                <p:dataTable id="renovaciones" selection="#{renovacionAsignarBean.renovacionesSeleccionadas}" rowKey="#{detalleRenovacion.idposventa}"  emptyMessage="No hay renovaciones en la tabla" 
+                                    var="detalleRenovacion" value="#{renovacionAsignarBean.listaRenovaciones}" 
+                                    widgetVar="dtdependencia" scrollable="true" scrollWidth="100%">
+                                    
+                                                                    
+                                    <p:column selectionMode="multiple" style="width:30px;text-align:center"/>
+                                
+                                    <p:column headerText="Fecha POS Venta" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.fecha_venta}" sortBy="#{detalleRenovacion.fecha_venta}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.fecha_venta}" />
+                                    </p:column>
+                                    <p:column headerText="Tipo Factura Subsidio" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.tipo_factura_subsidio}" sortBy="#{detalleRenovacion.tipo_factura_subsidio}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.tipo_factura_subsidio}" />
+                                    </p:column>
+                                    <p:column headerText="Tipo Subsidio" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.tipo_subsidio}" sortBy="#{detalleRenovacion.tipo_subsidio}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.tipo_subsidio}" />
+                                    </p:column>
+                                    <p:column headerText="ID Tipo Factura Subsidio" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.id_tipo_factura_subsidio}" sortBy="#{detalleRenovacion.id_tipo_factura_subsidio}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.id_tipo_factura_subsidio}" />
+                                    </p:column>
+                                    <p:column headerText="Anexo" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.anexo}" sortBy="#{detalleRenovacion.anexo}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.anexo}" />
+                                    </p:column>
+                                    <p:column headerText="Telefono Instalación" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.telefono_instalacion}" sortBy="#{detalleRenovacion.telefono_instalacion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.telefono_instalacion}" />
+                                    </p:column>
+                                    <p:column headerText="Agencia" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.agencia}" sortBy="#{detalleRenovacion.agencia}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.agencia}" />
+                                    </p:column>
+                                    <p:column headerText="Nombre Agencia" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.nom_agencia}" sortBy="#{detalleRenovacion.nom_agencia}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.nom_agencia}" />
+                                    </p:column>
+                                    <p:column headerText="NIT" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.nit}" sortBy="#{detalleRenovacion.nit}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.nit}" />
+                                    </p:column>
+                                    <p:column headerText="No. Cliente" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.no_cliente}" sortBy="#{detalleRenovacion.no_cliente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.no_cliente}" />
+                                    </p:column>
+                                    <p:column headerText="Nombre Cliente" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.nom_cliente}" sortBy="#{detalleRenovacion.nom_cliente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.nom_cliente}" />
+                                    </p:column>
+                                    <p:column headerText="Promoción" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.promocion}" sortBy="#{detalleRenovacion.promocion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.promocion}" />
+                                    </p:column>
+                                    <p:column headerText="Meses Promoción" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.meses_promocion}" sortBy="#{detalleRenovacion.meses_promocion}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.meses_promocion}" />
+                                    </p:column>
+                                    <p:column headerText="MBF en US$" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.mbf_usd}" sortBy="#{detalleRenovacion.mbf_usd}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.mbf_usd}" />
+                                    </p:column>
+                                    <p:column headerText="Upgrades US$" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.upgrades_usd}" sortBy="#{detalleRenovacion.upgrades_usd}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.upgrades_usd}" />
+                                    </p:column>                                  
+                                    <p:column headerText="Tiempo Pendiente" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.tiempo_pendiente}" sortBy="#{detalleRenovacion.tiempo_pendiente}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.tiempo_pendiente}" />
+                                    </p:column>
+                                    <p:column headerText="Target" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.target}" sortBy="#{detalleRenovacion.target}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.target}" />
+                                    </p:column>
+                                    <p:column headerText="Sistema" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.sistema}" sortBy="#{detalleRenovacion.sistema}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.sistema}" />
+                                    </p:column>
+                                    <p:column headerText="No. Documento" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.numdocumento}" sortBy="#{detalleRenovacion.numdocumento}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.numdocumento}" />
+                                    </p:column>
+                                    <p:column headerText="ID Tipo Asesor" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.idtipasesor}" sortBy="#{detalleRenovacion.idtipasesor}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.idtipasesor}" />
+                                    </p:column>
+                                    <p:column headerText="Nom. Tipo Asesor" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.nomtipasesor}" sortBy="#{detalleRenovacion.nomtipasesor}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.nomtipasesor}" />
+                                    </p:column>
+                                    <p:column headerText="ID Tipo Telefonia" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.idtiptelefonia}" sortBy="#{detalleRenovacion.idtiptelefonia}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.idtiptelefonia}" />
+                                    </p:column>
+                                    <p:column headerText="Nom. Tipo Telefonia" width="100" style="font-size: 11px;text-align: center;"
+                                              filterBy="#{detalleRenovacion.nomtiptelefonia}" sortBy="#{detalleRenovacion.nomtiptelefonia}" filterMatchMode="contains" filterStyle="width:100%">
+                                        <p:outputLabel value="#{detalleRenovacion.nomtiptelefonia}" />
+                                    </p:column>
+                                    
+                                </p:dataTable>
+
+                                <h:form>
+                                    <p>Escribir comentario para justificación de los registros que serán asignados:</p>                                    
+                                    <p:inputTextarea id="msg" value="#{renovacionAsignarBean.justificacion}" rows="2" cols="100" counter="display" maxlength="150" counterTemplate="{0} caracteres restantes." autoResize="false" />
+                                    <h:outputText id="display" />
+                                </h:form>			                           
+                                                                 
+                                <br></br> 
+                                <p:commandButton value="Asignar" disabled="#{renovacionAsignarBean.assignButtonDisabled}" update="renovaciones messages" actionListener="#{renovacionAsignarBean.btnClickAsignarRenovaciones}" style="width: 8em;" id="btn-deaAsignar" />                                                                                                                                  
+                                <p:commandButton value="Regresar" update="renovaciones" actionListener="#{renovacionAsignarBean.btnClickRegresar}" style="width: 8em;" id="btn-regresarInf"/>
+                                  
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-12">&nbsp;<br></br></div>
+                                </div>
+                            </p:row>
+                            <p:row>
+                                <div class="ui-grid-row"  >
+                                    <br></br>                               
+                                </div>        
+                            </p:row>
+                        </p:panelGrid>
+                          
+                                
+                    </div>               
+                    <div class="ui-grid-col-1"></div>
+                   
+                </div>                                   
+            </div>
+        </h:form>
+    </ui:define>
+    
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>

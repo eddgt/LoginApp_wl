@@ -1,0 +1,579 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition     
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="./template/template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    >  
+    
+
+    <ui:define name="content" >
+        <style>
+            .ui-widget .ui-widget {
+                font-size: 1.3em;
+            }
+            
+            .tamcontrol-others{
+                font-size:1.3em;                
+            }
+            
+            
+            .margen-texto{                
+                margin-left:.5em;
+            }
+            
+            .mCalendario{                
+                margin-left: .5em;
+            }
+            
+            .controlesMasLargos{
+                width: 60%;
+            }
+            
+            .requeridoColor{
+                color:red !important;
+                font-size: 1.5em;
+            }
+            
+        </style>
+            
+        <h:form id="form">
+            <p:growl id="messages" showDetail="false" />           
+            <div class="ui-grid ui-grid-responsive">                  
+                <div class="ui-grid-row"  >
+                   
+                    <div class="ui-grid-col-3">                        
+                    </div>
+                    <div class="ui-grid-col-6">
+                        <h1 style="color: white; text-align: center">Agregar renovación</h1>
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                    <div class="ui-grid-col-1">                        
+                    </div>
+                </div>     
+                <div class="ui-grid-row"  >
+                    <div class="ui-grid-col-1"></div>
+                    <div class="ui-grid-col-11">
+                                                                                                                      
+                          
+                          <br></br>
+                          <p:panelGrid id="lprueba"  styleClass="img-thumbnail2 fondoLlenar2" columns="1" style="width:95%; margin-left: 40px;" layout="grid">
+                                 <p:row>
+                                  <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="tipoVenta" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Tipo Renovación" />
+                                                          <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="tipoVenta" value="*" />
+                                                          
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                        
+                                                        <h:selectOneMenu disabled="false" styleClass="btn btn-info margen-texto tamControl bajar"  id="tipoVenta" value="#{renovacionNuevaBean.idTipoVenta}"  requiredMessage="Debe elegir un tipo renovación" >
+                                                            <f:selectItem itemLabel="(Elige un tipo de renovación)" itemValue="" noSelectionOption="true" />  
+                                                            <f:selectItems value="#{renovacionNuevaBean.listaTipoVenta}" var="ltipoVenta" itemLabel="#{ltipoVenta.nombreTelenia}" itemValue="#{ltipoVenta.idTipoTelefonia}" />
+                                                            <p:ajax event="change" update="noInstalacion ordenTrabajo teloNum anexO codigoClienteNavegaPLUS codigoAs cmbTipoPlan" listener="#{renovacionNuevaBean.oneTipoChange()}"  />
+                                                            
+                                                        </h:selectOneMenu>
+                                                                                                                                                                                                                                                                                              
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                
+                              </p:row>
+                                <p:row>
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                    <div class="col-sm-4">
+                                                         <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" for="noInstalacion" value="Numero de instalacion" />
+                                                          <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="noInstalacion" value="*" />
+                                                          
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">
+                                                         <p:inputText id="noInstalacion" value="#{renovacionNuevaBean.textoNoInstalacion}" disabled="#{renovacionNuevaBean.blnActivoNoInstalacion}" styleClass="colorNegrilla margen-texto" >
+                                                            <!-- <p:ajax event="keyup" update="messages ordenTrabajo anexO teloNum" listener="{renovacionNuevaBean.key_upTextNoInstalacion}" />-->
+                                                            <p:ajax event="keyup"></p:ajax>
+                                                         </p:inputText>
+                                                     </div>                                                                                                              
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                              
+                                <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                    <div class="col-sm-4">
+                                                         <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" for="ordenTrabajo" value="Orden de trabajo" />
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">
+                                                         <p:inputText value="#{renovacionNuevaBean.textoOrdenTrabajo}" disabled="#{renovacionNuevaBean.blnActivoOrdenTrabajo}" id="ordenTrabajo" styleClass="colorNegrilla margen-texto" >
+                                                             <p:ajax event="keyup"></p:ajax>
+                                                         </p:inputText>
+                                                     </div>                                                                                                              
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                           
+                              
+                               <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                       <div class="col-sm-4">
+                                                         <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" for="teloNum" value="Telefono" />
+                                                        <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="teloNum" value="*" />
+                                                                                                                   
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">
+                                                         <p:inputText id="teloNum" validatorMessage="El numero de telefono debe ser un numero y menor a 10 carácteres" value="#{renovacionNuevaBean.textoTelefono}"  disabled="#{renovacionNuevaBean.blnActivoTelefono}" styleClass="colorNegrilla margen-texto"   >
+                                                              <!--<p:ajax event="keyup" update="messages ordenTrabajo anexO noInstalacion" listener="{renovacionNuevaBean.key_upTextTelefono}" />-->
+                                                               <p:ajax event="keyup"></p:ajax>
+                                                               <f:validateRegex  pattern="[0-9]+(\.[0-9][0-9]?)?" />
+                                                               <f:validateLength  maximum="10" />
+                                                         </p:inputText>
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                               <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                    <div class="col-sm-4">
+                                                         <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" for="anexO" value="Anexo" />
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">
+                                                         <p:inputText id="anexO" value="#{renovacionNuevaBean.textoAnexo}" disabled="#{renovacionNuevaBean.blnActivoAnexo}" styleClass="colorNegrilla margen-texto" validatorMessage="El numero de anexo debe ser un numero y menor a 10 carácteres" >
+                                                               <p:ajax event="keyup"></p:ajax>
+                                                               <f:validateRegex  pattern="[0-9]+(\.[0-9][0-9]?)?" />
+                                                               <f:validateLength  maximum="10" />
+                                                         </p:inputText>
+                                                     </div>                                                                                                              
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                               <p:row>
+                                  <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="elijMoneda" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Moneda" />
+                                                         <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="elijMoneda" value="*" />
+                                                         
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                                                                                      
+                                                         <h:selectOneMenu disabled="false" styleClass="btn btn-info margen-texto tamControl bajar"    id="elijMoneda" value="#{renovacionNuevaBean.idMoneda}" required="true"  requiredMessage="Debe elegir una moneda" >
+                                                            <f:selectItem itemLabel="(Elije una moneda)" itemValue="" noSelectionOption="true"/>
+                                                            <f:selectItem itemLabel="$-Dolares" itemValue="USD" />
+                                                            <f:selectItem itemLabel="Q-Quetzales" itemValue="GTQ" />                                                           
+                                                        </h:selectOneMenu>                                                            
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>                                  
+                              </p:row>
+                              
+                              <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="montoVenta"  styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Monto de Renovación" />
+                                                           <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="montoVenta" value="*" />
+                                                           
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                         <p:inputText id="montoVenta" validatorMessage="Monto de renovación debe ser un numero" value="#{renovacionNuevaBean.txtMonto}" requiredMessage="Monto de renovación es un campo obligatorio" 
+                                                               styleClass="colorNegrilla margen-texto" required="true" converterMessage="Monto de renovación: No es posible convertir el formato a numero"  >
+                                                               <f:validateRegex pattern="[0-9]+(\.[0-9][0-9]?)?" />
+                                                        </p:inputText>
+                                                     </div>                                                             
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                               <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="meseVenta" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Meses" />
+                                                           <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="meseVenta" value="*" />
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                         <p:inputText id="meseVenta" validatorMessage="Meses de renovación debe ser un numero" value="#{renovacionNuevaBean.txtMeses}"  requiredMessage="Meses de renovación es un campo obligatorio" styleClass="colorNegrilla margen-texto"  required="true">
+                                                             <f:validateRegex pattern="^[0-9]+$" />
+                                                        </p:inputText>
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                                            
+                               <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="fecha" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Fecha" />
+                                                         <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="fecha" value="*" />
+                                                         
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">      
+                                                         <p:calendar id="fecha" value="#{renovacionNuevaBean.fechaSelect}" styleClass="button margen-btn-enviarFormulario margen-grande-enviarformulario quitarCuadro limpiar-responsive" class="mCalendario" showOn="button"
+                                                                    readonlyInput="true" requiredMessage="Fecha es un campo obligatorio" required="true" mindate="#{renovacionNuevaBean.fechaPInicial}" maxdate="#{renovacionNuevaBean.fechaPFinal}"
+                                                         ></p:calendar>
+                                                         
+                                                     </div>                                                                                                                                                             
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row> 
+                              
+                               <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="codPlan" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Código de Plan" />
+                                                          <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="codPlan" value="*" />
+                                                          
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                         <p:inputText id="codPlan" value="#{renovacionNuevaBean.txtcodigoPlan}" validatorMessage="Codigo de plan debe ser un numero" styleClass="colorNegrilla margen-texto"   requiredMessage="Codigo de plan es un campo obligatorio"   required="true">                                                             
+                                                            <f:validateRegex pattern="^[0-9]+$" />
+                                                         </p:inputText>
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                               <p:row>
+                                  <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="cmbTipoPlan" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Tipo plan" />
+                                                         <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="cmbTipoPlan" value="*" />
+                                                         
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                                                                                      
+                                                         <h:selectOneMenu disabled="#{renovacionNuevaBean.blnActivoTipoPlan}" styleClass="btn btn-info margen-texto tamControl bajar"    id="cmbTipoPlan" value="#{renovacionNuevaBean.idTipoPlan}"  requiredMessage="Debe elegir un tipo plan" required="true">
+                                                            <f:selectItem itemLabel="(Elije un tipo de plan)" itemValue="" noSelectionOption="true"/>
+                                                            <f:selectItems value="#{renovacionNuevaBean.listaTipoPlan}" var="ltTipoPlan" itemLabel="#{ltTipoPlan.nombre}" itemValue="#{ltTipoPlan.nombre}" />
+                                                        </h:selectOneMenu>                                                            
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>                                  
+                               </p:row>
+                              
+                                <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="descripcionPlan" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Descripción Plan" />
+                                                         <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="descripcionPlan" value="*" />
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                        <p:inputText id="descripcionPlan" styleClass="colorNegrilla margen-texto controlesMasLargos"  required="true" 
+                                                            requiredMessage="Descripcion de plan es un campo obligatorio"  value="#{renovacionNuevaBean.txtDescripcionPlan}">                                                           
+                                                        </p:inputText>
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                             
+                              
+                               <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="codigoAs" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Codigo Cliente AS400" />
+                                                         <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="codigoAs" value="*" />
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                         <p:inputText id="codigoAs" value="#{renovacionNuevaBean.codAS}" disabled="#{renovacionNuevaBean.blnActivoCodAS}" styleClass="colorNegrilla margen-texto" >
+                                                            <!-- <p:ajax event="keyup" update="codigoClienteNavegaPLUS" listener="{renovacionNuevaBean.key_upTextCodigoAS()}" /> -->
+                                                            <p:ajax event="keyup"></p:ajax>
+                                                         </p:inputText>
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                                <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="codigoClienteNavegaPLUS" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Código Cliente Navega Plus" />
+                                                         <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="codigoClienteNavega" value="*" />
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                         <p:inputText id="codigoClienteNavegaPLUS" value="#{renovacionNuevaBean.codNavega}" disabled="#{renovacionNuevaBean.blnActivoCodCliente}" styleClass="colorNegrilla margen-texto">
+                                                            <!-- <p:ajax event="keyup" update="codigoAs" listener="{renovacionNuevaBean.key_upTextCodigoNavega()}" />-->
+                                                            <p:ajax event="keyup"></p:ajax>
+                                                         </p:inputText>
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                               <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="nitCliente" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="NIT Cliente" />
+                                                          <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="nitCliente" value="*" />
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                        <p:inputText id="nitCliente" styleClass="colorNegrilla margen-texto controlesMasLargos"   required="true"
+                                                                     requiredMessage="El NIT del cliente es un campo obligatorio"  value="#{renovacionNuevaBean.txtNitCliente}"       
+                                                                     />
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                              <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="nombreCliente" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Nombre Cliente" />
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                        <p:inputText id="nombreCliente" styleClass="colorNegrilla margen-texto controlesMasLargos"  required="true" 
+                                                            requiredMessage="El nombre del cliente es un campo obligatorio"  value="#{renovacionNuevaBean.txtNombreCliente}"
+                                                        />
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                              <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="direccion" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Dirección" />
+                                                          <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="direccion" value="*" />
+                                                          
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                        <p:inputText id="direccion" styleClass="colorNegrilla margen-texto controlesMasLargos" 
+                                                            requiredMessage="La direccion es un campo obligatorio"  value="#{renovacionNuevaBean.txtDireccionCliente}"         
+                                                            required="true" />
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                              
+                               <p:row>
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="selectCoordinador" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Coordinador" />
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                                                                                      
+                                                        <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar"    id="selectCoordinador"  disabled="#{ventasNuevas.blnActivoOneSelected}"   value="#{renovacionNuevaBean.nombreCoordinadorSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                                            <p:ajax event="change" update="selectAsesor" listener="#{renovacionNuevaBean.oneCoordinadorChange()}"  />
+                                                            <f:selectItem itemLabel="(Elige un coordinador)" itemValue="" noSelectionOption="true" />                                              
+                                                            <f:selectItems value="#{renovacionNuevaBean.listaCoordinador}" var="coordi" itemLabel="#{coordi.nombre}" itemValue="#{coordi.nombre}" />
+                                                        </h:selectOneMenu>                                                                                                                                                                                                                                                                                              
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>
+                              
+                               <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="selectAsesor" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Asesor" />
+                                                          <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="selectAsesor" value="*" />
+                                                          
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                                                                                      
+                                                         <h:selectOneMenu styleClass="btn btn-info margen-texto tamControl bajar"   id="selectAsesor" value="#{renovacionNuevaBean.idAsesorSelelected}"  requiredMessage="Debe elegir un asesor" required="true" >
+                                                                <p:ajax event="change"   listener="#{renovacionNuevaBean.oneAsesorChange()}"  />                                          
+                                                                <f:selectItem itemLabel="(Elige un asesor)" itemValue="" noSelectionOption="true" />  
+                                                                <f:selectItems value="#{renovacionNuevaBean.listaAsesor}" var="aserr" itemLabel="#{aserr.nombre}" itemValue="#{aserr.idAsesor}" />
+                                                            </h:selectOneMenu>                                                                                                                                                                                                                                                                                         
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>                                                                  
+                              </p:row>
+                              
+                              <!--
+                               <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="codigoAsesor" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Código Asesor*" />
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                        <p:inputText id="codigoAsesor" styleClass="colorNegrilla margen-texto"  required="true" 
+                                                                     requiredMessage="El codigo del asesor es un campo obligatorio"  value="#{renovacionNuevaBean.txtCodigoAsesor}"                  
+                                                                     />
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>-->
+                              
+                              <!--
+                              <p:row  >
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="nombreAsesor" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Nombre Asesor*" />
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                        <p:inputText id="nombreAsesor" styleClass="colorNegrilla margen-texto controlesMasLargos"  required="true" 
+                                                                     requiredMessage="El nombre del asesor es un campo obligatorio"  value="#{renovacionNuevaBean.txtNombreAsesor}" 
+                                                        />
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                               </p:row>-->
+                             
+                              
+                               <p:row>
+                                  <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-12">
+                                                <p:column>
+                                                     <div class="col-sm-4">
+                                                         <h:outputLabel for="tipoVenta" styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others"  value="Agencia" />
+                                                            <h:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo requeridoColor" for="tipoVenta" value="*" />
+                                                            
+                                                     </div>                                                    
+                                                     <div class="col-sm-offset-2">                                                                                                              
+                                                        
+                                                         <h:selectOneMenu disabled="false" styleClass="btn btn-info margen-texto tamControl bajar"  id="agencia"   value="#{renovacionNuevaBean.idAgencia}" requiredMessage="Debe elegir una agencia" required="true" >
+                                                             <p:ajax event="change"  listener="#{renovacionNuevaBean.oneAgenciaChange()}"  />    
+                                                             <f:selectItem itemLabel="(Elige una agencia)" itemValue="" noSelectionOption="true" />  
+                                                             <f:selectItems value="#{renovacionNuevaBean.listaAgenciasMap.entrySet()}" var="lAgencia" itemLabel="#{lAgencia.value}" itemValue="#{lAgencia.key}" />
+                                                        </h:selectOneMenu>
+                                                                                                                                                                                                                                                                                              
+                                                     </div>                                                                                                                                                               
+                                                </p:column>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                
+                              </p:row>
+                              
+                           
+                              
+                               <p:row  >
+                                  
+                                    <p:commandButton styleClass="margen-texto" id="btnAgregar" value="Agregar"  
+                                                actionListener="#{renovacionNuevaBean.btnClickGuardar()}"  update="messages @form"
+                                                    />                                                                      
+                                         
+                               
+                                    <p:commandButton id="btnCancelar" value="Cancelar" process="@this"   
+                                                 actionListener="#{renovacionNuevaBean.btnClickRegresarEvento()}" 
+                                                 />
+                                    
+                               </p:row>
+                              
+                          </p:panelGrid>
+                          
+                                
+                    </div>               input
+                    <div class="ui-grid-col-1"></div>
+                   
+                </div>                                   
+            </div>
+        </h:form>
+    </ui:define>
+    
+    <ui:define name="bottom">
+    </ui:define>
+
+</ui:composition>
