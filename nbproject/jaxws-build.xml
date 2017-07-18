@@ -28,7 +28,11 @@
     </target>
     <target name="wsimport-client-wsClaves" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/wsClaves"/>
+<<<<<<< HEAD
         <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/wsClaves" destdir="${build.generated.dir}/jax-wsCache/wsClaves" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/wsClaves/wsdl/172.16.5.19/wsSecurity/wsClaves.asmx.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="https://tigobusiness.tigo.com.gt/wsSecurity/wsClaves.asmx?wsdl" xnocompile="true" xendorsed="true" package="ws">
+=======
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/wsClaves" destdir="${build.generated.dir}/jax-wsCache/wsClaves" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/wsClaves/wsdl/172.16.5.19/wsSecurity/wsClaves.asmx.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="https://172.16.5.19/wsSecurity/wsClaves.asmx?wsdl" xnocompile="true" xendorsed="true" package="ws">
+>>>>>>> parent of 2fcd6f0... Proyecto Ventas Operaciones version Final
             <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/wsClaves/wsdl/172.16.5.19/wsSecurity/wsClaves.asmx.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/wsClaves"/>
         </wsimport>

@@ -23,7 +23,11 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
+<<<<<<< HEAD
           <wsimport-option-value>https://tigobusiness.tigo.com.gt/wsSecurity/wsClaves.asmx?wsdl</wsimport-option-value>
+=======
+          <wsimport-option-value>https://172.16.5.19/wsSecurity/wsClaves.asmx?wsdl</wsimport-option-value>
+>>>>>>> parent of 2fcd6f0... Proyecto Ventas Operaciones version Final
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
