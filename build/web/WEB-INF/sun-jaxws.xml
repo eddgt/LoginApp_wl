@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoints version="2.0" xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
-  <endpoint implementation="org.bdg.cms_vista.ManagedBeanAndWebService" name="ManagedBeanAndWebService" url-pattern="/ManagedBeanAndWebService"/>
+  <endpoint implementation="org.bdg.service.TestWS" name="TestWS" url-pattern="/TestWS"/>  
 </endpoints>

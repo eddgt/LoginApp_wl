@@ -12,7 +12,7 @@ import org.bdg.cms_dto.Asesor;
 import org.bdg.cms_dto.Coordinador;
 import org.bdg.cms_dto.DetalleVenta;
 import org.bdg.cms_conexion.Conexion;
-import org.bdg.cms_buc.Querys_C;
+import org.bdg.cms_buc.Query_C;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -73,8 +73,7 @@ public class CongelarBean extends BaseSession {
     }
     
     public void btnClickRegresar(ActionEvent actionEvent){
-        try{
-          
+        try{          
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/");           
         }catch(Exception e){        
@@ -82,43 +81,48 @@ public class CongelarBean extends BaseSession {
     }
     
     public void btnClickCongelar(ActionEvent actionEvent){
-        String usuarioLogueado = this.getAtributoSession(Constantes.SS_USUARIO);
-        String rolUsuarioLogueado = this.getAtributoSession(Constantes.SS_ROL);
-        String paginaOrigen = this.getAtributoSession(Constantes.SS_PaginaFinalizaVentaRenovacion);
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        try{                
-            Querys_C query = new Querys_C();
-            String q = "";
-            if (rolUsuarioLogueado.equals("COORD")){
-                if (paginaOrigen.equals("VENTAS")){
-                    q = query.generar_Consulta_CoordinadorFinalizarVenta(this.getAsesorSelectedId(),usuarioLogueado);                    
+        try{
+            String usuarioLogueado = this.getAtributoSession(Constantes.SS_USUARIO);
+            String rolUsuarioLogueado = this.getAtributoSession(Constantes.SS_ROL);
+            String paginaOrigen = this.getAtributoSession(Constantes.SS_PaginaFinalizaVentaRenovacion);
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            try{
+                Query_C query = new Query_C();
+                String q = "";
+                if (rolUsuarioLogueado.equals("COORD")){
+                    if (paginaOrigen.equals("VENTAS")){                    
+                        q = query.generar_Consulta_CoordinadorFinalizarVenta(this.getAsesorSelectedId(),usuarioLogueado);
+                    }else{
+                        q = query.generar_Consulta_CoordinadorFinalizarRenovacion(this.getAsesorSelectedId(),usuarioLogueado);
+                    }
                 }else{
-                    q = query.generar_Consulta_CoordinadorFinalizarRenovacion(this.getAsesorSelectedId(),usuarioLogueado);                    
-                }
-            }else{
                     if (paginaOrigen.equals("VENTAS")){
-                        q = query.generar_Consulta_PlanningFinalizarVenta(this.getAsesorSelectedId(),usuarioLogueado);                 
-                    }else{                        
+                        q = query.generar_Consulta_PlanningFinalizarVenta(this.getAsesorSelectedId(),usuarioLogueado);
+                    }else{
                         q = query.generar_Consulta_PlanningFinalizarRenovacion(this.getAsesorSelectedId(),usuarioLogueado);                    
                     }
+                }
+                CallableStatement cstmt = conex.prepareCall(q);
+                cstmt.executeQuery();
+                
+            }catch(Exception e){
+                e.printStackTrace();
+            }finally{
+                try {
+                    conex.close();
+                } catch (SQLException ex) {
+                }
             }
-            CallableStatement cstmt = conex.prepareCall(q);
-            cstmt.executeQuery();                                
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            try {
-                conex.close();
-            } catch (SQLException ex) {
+            try{
+                ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+                context.redirect(context.getRequestContextPath() + "/faces/ventasCoordinador.xhtml");
+            }catch(Exception e){
             }
+            
+        }catch(SQLException ex){
+            Logger.getLogger(CongelarBean.class.getName()).log(Level.SEVERE, null, ex);
         }   
-        try{
-            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            context.redirect(context.getRequestContextPath() + "/faces/ventasCoordinador.xhtml");           
-        }catch(Exception e){
-        }
         
     }
   

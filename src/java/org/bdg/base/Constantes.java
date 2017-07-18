@@ -43,9 +43,17 @@ public class Constantes {
      */
     public final static String DB_SID = "COMISIONES";
     // Desarrollo
-     public final static String DB_HOST = "172.30.13.65:1521";
+     
+     public final static String DB_HOST = "172.30.13.17:1521";
      public final static String DB_PASS = "COMISIONGT1";//Revisar encripcion u ofuscación???
      public final static String DB_USER = "comisiongt";
+    
+     
+     // Desarrollo
+     public final static String DB_HOST2 = "172.30.13.17:1521";
+     public final static String DB_PASS2 = "COMISIONGT1";//Revisar encripcion u ofuscación???
+     public final static String DB_USER2 = "comisiongt";
+     
     // Produccion
     //public final static String DB_USER = "comisiongt";
     //public final static String DB_PASS = "comisiongt$1";//Revisar encripcion u ofuscación???     

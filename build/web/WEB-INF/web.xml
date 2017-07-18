@@ -4,6 +4,14 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+    <!--<filter>        
+        <filter-name>FiltroBase</filter-name>
+        <filter-class>org.bdg.cms_filters.FiltroBase</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FiltroBase</filter-name>
+        <url-pattern>/index.xhtml</url-pattern>        
+    </filter-mapping>-->
     <listener>
         <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
     </listener>
@@ -13,7 +21,7 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>ManagedBeanAndWebService</servlet-name>
+        <servlet-name>TestWS</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -22,9 +30,25 @@
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ManagedBeanAndWebService</servlet-name>
-        <url-pattern>/ManagedBeanAndWebService</url-pattern>
+        <servlet-name>TestWS</servlet-name>
+        <url-pattern>/TestWS</url-pattern>
     </servlet-mapping>
+    
+    <servlet>        
+    <servlet-name>Rest</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+    <init-param>      
+      <param-name>jersey.config.server.provider.packages</param-name>
+      <param-value>org.bdg.service</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>Rest</servlet-name>
+    <url-pattern>/service/*</url-pattern>
+  </servlet-mapping>
+  
     <session-config>
         <session-timeout>
             30
@@ -33,4 +57,17 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <!-- ADDING THE DATA SOURCE CONNECTION -->
+    <resource-ref>
+        <description>Database for CMS_BUC application</description>
+        <res-ref-name>jdbc/DB</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+    <resource-ref>
+        <description>DB Connection</description>
+        <res-ref-name>jdbc/comisiones</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
 </web-app>

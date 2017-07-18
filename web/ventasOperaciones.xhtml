@@ -65,10 +65,10 @@
                                 <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%; text-align: left;"   value="Periodo:" >
                                     <span>
                                         <h:selectOneMenu id="selectPeriodo" styleClass="btn btn-info tamControl bajar"  style="width:  60%; text-align: left;"  
-                                                         value="#{ventasOperacionBean.comboPeriodoSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                                         value="#{ventasOperBean.comboPeriodoSelected}"  requiredMessage="Debe elegir un coordinador" >
                                             <p:ajax event="change" update="ventasOperacionGrid selectAsesor"  />
                                             <f:selectItem itemLabel="(Elige un periodo)" itemValue="" noSelectionOption="true" />  
-                                            <f:selectItems value="#{ventasOperacionBean.listaCombosPeriodo}" var="peri" itemLabel="#{peri.periodo}" itemValue="#{peri.periodo}" />
+                                            <f:selectItems value="#{ventasOperBean.listaCombosPeriodo}" var="peri" itemLabel="#{peri.periodo}" itemValue="#{peri.periodo}" />
                                         </h:selectOneMenu>
                                     </span>
                                 </p:outputLabel>
@@ -80,20 +80,20 @@
                                 <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%; text-align: left;"   value="Filtro Coordinador" >
                                     <span>
                                         <h:selectOneMenu styleClass="btn btn-info tamControl bajar"  style="width:  60%; text-align: left;"  id="selectCoordinador" 
-                                                         disabled="#{ventasOperacionBean.blnActivoOneSelected}" value="#{ventasOperacionBean.nombreCoordinadorOperSelected}"  requiredMessage="Debe elegir un coordinador" >
-                                            <p:ajax event="change" update="selectAsesor" listener="#{ventasOperacionBean.oneCoordinadorOperChange()}"  />
+                                                         disabled="#{ventasOperBean.blnActivoOneSelected}" value="#{ventasOperBean.nombreCoordinadorOperSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="selectAsesor" listener="#{ventasOperBean.oneCoordinadorOperChange()}"  />
                                             <f:selectItem itemLabel="(Elige un coordinador)" itemValue="" noSelectionOption="true" />
-                                            <f:selectItems value="#{ventasOperacionBean.listaCoordinadorOperacion}" var="coordi" itemLabel="#{coordi.nombre}" itemValue="#{coordi.nombre}" />
+                                            <f:selectItems value="#{ventasOperBean.listaCoordinadorOperacion}" var="coordi" itemLabel="#{coordi.nombre}" itemValue="#{coordi.nombre}" />
                                         </h:selectOneMenu>
                                     </span>
                                 </p:outputLabel>
                                 
                                 <p:outputLabel styleClass="colorFormulario redondeadoLblArea margen-negativo tamcontrol-others" style="width: 50%; text-align: left;"   value="Filtro Asesor" >
                                     <span>
-                                        <h:selectOneMenu id="selectAsesor" styleClass="btn btn-info tamControl bajar"  style="width:  60%; text-align: left;"   value="#{ventasOperacionBean.nombreAsesorSelected}"  requiredMessage="Debe elegir un coordinador" >
-                                            <p:ajax event="change" update="ventasOperacionGrid :form:monto1 :form:cantidadElementos1"  listener="#{ventasOperacionBean.oneAsesorOperChange}"  />
+                                        <h:selectOneMenu id="selectAsesor" styleClass="btn btn-info tamControl bajar"  style="width:  60%; text-align: left;"   value="#{ventasOperBean.nombreAsesorSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="ventasOperacionGrid :form:monto1 :form:cantidadElementos1"  listener="#{ventasOperBean.oneAsesorOperChange}"  />
                                             <f:selectItem itemLabel="(Elige un asesor)" itemValue="" noSelectionOption="true" />  
-                                            <f:selectItems value="#{ventasOperacionBean.listaAsesorOperacion}" var="ase" itemLabel="#{ase.nombre}" itemValue="#{ase.nombre}" />
+                                            <f:selectItems value="#{ventasOperBean.listaAsesorOperacion}" var="ase" itemLabel="#{ase.nombre}" itemValue="#{ase.nombre}" />
                                         </h:selectOneMenu>
                                     </span>
                                 </p:outputLabel>
@@ -109,22 +109,22 @@
                                     }
                                 </style>
                                 
-                                <p:commandButton id="btnMostrarGrid" value="Mostrar Ventas Sin Asignar" update="ventasOperacionGrid :form:cantidadElementos1 :form:monto1" actionListener="#{ventasOperacionBean.btnClickMostrarGridOperacion}"> 
+                                <p:commandButton id="btnMostrarGrid" value="Mostrar Ventas Sin Asignar" update="ventasOperacionGrid :form:cantidadElementos1 :form:monto1" actionListener="#{ventasOperBean.btnClickMostrarGridOperacion}"> 
                                 </p:commandButton>
-                                <p:commandButton id="btnBorrarAsesor" value="Borrar Asesor Ventas" update="ventasOperacionGrid dialogMessage myPanelGrid" actionListener="#{ventasOperacionBean.btnClickBorrarAsesor}"> 
+                                <p:commandButton id="btnBorrarAsesor" value="Borrar Asesor Ventas" update="ventasOperacionGrid dialogMessage myPanelGrid" actionListener="#{ventasOperBean.btnClickBorrarAsesor}"> 
                                     <p:confirm header="Confirmation" message="¿Desea borrar el Ejecutivo?" icon="ui-icon-alert" />
                                 </p:commandButton>
                                 
                                 <p:commandButton id="btnAsignarAsesor" value="Asignar Asesor Ventas" update="ventasOperacionGrid dialogMessage myPanelGrid" oncomplete="PF('ventaDialogAsignar').show()">
                                 </p:commandButton>
-                                <p:commandButton id="btnNuevaVenta" value="Agregar Venta Nueva" update="ventasOperacionGrid dialogMessage myPanelGrid" actionListener="#{ventasOperacionBean.redireccionarNuevo}">
+                                <p:commandButton id="btnNuevaVenta" value="Agregar Venta Nueva" update="ventasOperacionGrid dialogMessage myPanelGrid" actionListener="#{ventasOperBean.redireccionarNuevo}">
                                 </p:commandButton>
                                 
                                 <p:column exportable="true">
-                                    <h:outputText id="cantidadElementos1" class="out-cuotaBasica coutaMargenPrincipal" value="Total Registros: #{ventasOperacionBean.cantidadFilas}">
+                                    <h:outputText id="cantidadElementos1" class="out-cuotaBasica coutaMargenPrincipal" value="Total Registros: #{ventasOperBean.cantidadFilas}">
                                     </h:outputText>
                                 
-                                    <h:outputText id="monto1" class="out-cuotaBasica" value="Total Monto: $ #{ventasOperacionBean.getSumatoriaMontoVenta()}">
+                                    <h:outputText id="monto1" class="out-cuotaBasica" value="Total Monto: $ #{ventasOperBean.getSumatoriaMontoVenta()}">
                                         <f:convertNumber type="currency" currencySymbol="$" />
                                     </h:outputText>
                                 </p:column>
@@ -140,9 +140,9 @@
                                 <!--============================================================================-->
                                 <!--Mi Data Grid        -->
                                 <!--============================================================================-->                                
-                                <p:dataTable id="ventasOperacionGrid" selection="#{ventasOperacionBean.ventasOperacionSeleccionadas}"  rowKey="#{detalleVentaOperacion.id}"  emptyMessage="No hay datos en la tabla" 
-                                             filteredValue="#{ventasOperacionBean.ventasFiltradas}"
-                                             var="detalleVentaOperacion" value="#{ventasOperacionBean.listaVentasOperacion}" scrollable="true" scrollWidth="100%"  
+                                <p:dataTable id="ventasOperacionGrid" selection="#{ventasOperBean.ventasOperacionSeleccionadas}"  rowKey="#{detalleVentaOperacion.id}"  emptyMessage="No hay datos en la tabla" 
+                                             filteredValue="#{ventasOperBean.ventasFiltradas}"
+                                             var="detalleVentaOperacion" value="#{ventasOperBean.listaVentasOperacion}" scrollable="true" scrollWidth="100%"  
                                             widgetVar="dtdependencia"  paginator="true" rows="200" paginatorTemplate="{Exporters}">
                                     <f:facet name="{Exporters}">
                                     <!--<h:commandLink>
@@ -156,17 +156,17 @@
  
                                         <h:commandLink>
                                             <h:graphicImage class="imgExel" value="/img/Excel2013.png" title="Exportar a Excel"/>
-                                            <p:dataExporter type="xls" target="ventasOperacionGrid" fileName="ventasOperacionFile" postProcessor="#{ventasOperacionBean.XLSProceso}" pageOnly="true"/>
+                                            <p:dataExporter type="xls" target="ventasOperacionGrid" fileName="ventasOperacionFile" postProcessor="#{ventasOperBean.XLSProceso}" pageOnly="true"/>
                                         </h:commandLink>
                                     </f:facet>
                                     
                                     <p:column exportable="false" selectionMode="multiple" style="width:30px;text-align:center"/>
-                                    <p:ajax event="filter"  update=":form:monto1 :form:cantidadElementos1"  listener="#{ventasOperacionBean.sumarMontoVentaFiltradas}" />
+                                    <p:ajax event="filter"  update=":form:monto1 :form:cantidadElementos1"  listener="#{ventasOperBean.sumarMontoVentaFiltradas}" />
                                     
                                     
                                     <p:column exportable="false" style="width:50px;text-align: center">
                                           <p:commandButton update=":form:ventaDetail" oncomplete="PF('ventaDialog').show()" class="icono-lupa"   title="Ver-Detalle">
-                                              <f:setPropertyActionListener value="#{detalleVentaOperacion}" target="#{ventasOperacionBean.ventaOperacionSeleccionadaDetalle}" />
+                                              <f:setPropertyActionListener value="#{detalleVentaOperacion}" target="#{ventasOperBean.ventaOperacionSeleccionadaDetalle}" />
                                          </p:commandButton>
                                     </p:column>
                                     
@@ -370,29 +370,29 @@
                                 <!--============================================================================-->
                             <p:dialog header="Venta Seleccionada" widgetVar="ventaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                         <p:outputPanel id="ventaDetail" style="text-align:left;">
-                                            <p:panelGrid  columns="2" rendered="#{not empty ventasOperacionBean.ventaOperacionSeleccionadaDetalle}" columnClasses="label,value">
+                                            <p:panelGrid  columns="2" rendered="#{not empty ventasOperBean.ventaOperacionSeleccionadaDetalle}" columnClasses="label,value">
                                                 <h:outputText class="detailColor" value="ID VENTA:" />
-                                                <h:outputText class="detalle-tamanoLetra" value="#{ventasOperacionBean.ventaOperacionSeleccionadaDetalle.id}" />
+                                                <h:outputText class="detalle-tamanoLetra" value="#{ventasOperBean.ventaOperacionSeleccionadaDetalle.id}" />
 
                                                 <h:outputText class="detailColor" value="CLIENTE:" />
-                                                <h:outputText class="detalle-tamanoLetra" value="#{ventasOperacionBean.ventaOperacionSeleccionadaDetalle.cliente}" />
+                                                <h:outputText class="detalle-tamanoLetra" value="#{ventasOperBean.ventaOperacionSeleccionadaDetalle.cliente}" />
                                                 <br></br>
                                                 <h:outputText class="detailColor" value="MONTO VENTA:" />
                                                 <br></br>
-                                                <p:inputText id="valMonto" value="#{ventasOperacionBean.ventaOperacionSeleccionadaDetalle.montoVenta}" 
-                                                             disabled="#{ventasOperacionBean.blnActivoEdicionValMonto}" styleClass="colorNegrilla margen-texto detalle-tamanoLetra" >
+                                                <p:inputText id="valMonto" value="#{ventasOperBean.ventaOperacionSeleccionadaDetalle.montoVenta}" 
+                                                             disabled="#{ventasOperBean.blnActivoEdicionValMonto}" styleClass="colorNegrilla margen-texto detalle-tamanoLetra" >
                                                     <p:ajax event="keyup"></p:ajax>
                                                 </p:inputText>                                                
-                                                <h:outputText style="display:#{(ventasOperacionBean.blnActivoOneSelected)?'none':'inline'}" class="detailColor" value="Editar:" />
-                                                <p:selectBooleanCheckbox style="display: #{(ventasOperacionBean.blnActivoOneSelected)?'none':'inline'}" id="comboSe" value="#{ventasOperacionBean.blnActivoSwitchEdicion}">
-                                                    <!--<p:ajax update="valMonto elijMoneda btnGuardarValor" listener="# {ventasOperacionBean.cambiarEstadoEdicion}" />-->
-                                                    <p:ajax update="valMonto btnGuardarValor" listener="#{ventasOperacionBean.cambiarEstadoEdicion}" />
+                                                <h:outputText style="display:#{(ventasOperBean.blnActivoOneSelected)?'none':'inline'}" class="detailColor" value="Editar:" />
+                                                <p:selectBooleanCheckbox style="display: #{(ventasOperBean.blnActivoOneSelected)?'none':'inline'}" id="comboSe" value="#{ventasOperBean.blnActivoSwitchEdicion}">
+                                                    <!--<p:ajax update="valMonto elijMoneda btnGuardarValor" listener="# {ventasOperBean.cambiarEstadoEdicion}" />-->
+                                                    <p:ajax update="valMonto btnGuardarValor" listener="#{ventasOperBean.cambiarEstadoEdicion}" />
                                                 </p:selectBooleanCheckbox>
 
-                                                <br style="display:#{(ventasOperacionBean.blnActivoOneSelected)?'none':'inline'}"></br>
-                                                <p:commandButton style="display:#{(ventasOperacionBean.blnActivoOneSelected)?'none':'inline'}" onclick="PF('ventaDialog').hide()" 
+                                                <br style="display:#{(ventasOperBean.blnActivoOneSelected)?'none':'inline'}"></br>
+                                                <p:commandButton style="display:#{(ventasOperBean.blnActivoOneSelected)?'none':'inline'}" onclick="PF('ventaDialog').hide()" 
                                                                 id="btnGuardarValor" update="btnGuardarValor messages ventasOperacionGrid" value="Guardar"
-                                                                disabled="#{ventasOperacionBean.blnActivoEdicion}" actionListener="#{ventasOperacionBean.btnGuardarValorOperacion}">
+                                                                disabled="#{ventasOperBean.blnActivoEdicion}" actionListener="#{ventasOperBean.btnGuardarValorOperacion}">
                                                 </p:commandButton>
                                                 
                                                 <br></br>
@@ -400,7 +400,7 @@
                                                 <h:outputText class="detailColor" value="Bitacora de cambios: " />
                                                 
                                                 <p:scrollPanel style="width:500px;height:500px">
-                                                    <p:accordionPanel class="letraAcordeon" style="font-zise:0.8em" value="#{ventasOperacionBean.listaComentarioxVenta}" var="bitacora">
+                                                    <p:accordionPanel class="letraAcordeon" style="font-zise:0.8em" value="#{ventasOperBean.listaComentarioxVenta}" var="bitacora">
                                                         <p:tab  title="Fecha - #{bitacora.fechaCambio}">
                                                             <h:panelGrid columns="2" cellpadding="10">
                                                                 <h:outputText value="Justificación: &nbsp;&nbsp;" style="font-weight: bold" />
@@ -424,36 +424,36 @@
                                 <p:dialog header="Asignar Ventas a Asesor" widgetVar="ventaDialogAsignar" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                                         
                                     <p:outputPanel id="ventaDetailAsignar" style="text-align:left;">
-                                        <p:panelGrid  columns="2" rendered="#{not empty ventasOperacionBean.listaVentasOperacion}" columnClasses="label,value">
+                                        <p:panelGrid  columns="2" rendered="#{not empty ventasOperBean.listaVentasOperacion}" columnClasses="label,value">
                                     <br></br>
                                     <p:outputLabel style="width: 70%; text-align: left;font-size: 0.8em;"   value="Coordinador" >                                    
                                         <h:selectOneMenu styleClass="btn btn-info tamControl bajar"  style="width:  100%; float: right;font-size: 0.6em;"  id="selectCoordinadorAsignar" 
-                                                         disabled="#{ventasOperacionBean.blnActivoOneSelected}" value="#{ventasOperacionBean.nombreCoordinadorOperSelected}"  requiredMessage="Debe elegir un coordinador" >
-                                            <p:ajax event="change" update="selectAsesorAsignar btnGuardarAsignar" listener="#{ventasOperacionBean.oneCoordinadorOperChange()}"  />
+                                                         disabled="#{ventasOperBean.blnActivoOneSelected}" value="#{ventasOperBean.nombreCoordinadorOperSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="selectAsesorAsignar btnGuardarAsignar" listener="#{ventasOperBean.oneCoordinadorOperChange()}"  />
                                             <f:selectItem itemLabel="(Elige un coordinador)" itemValue="" noSelectionOption="true" />
-                                            <f:selectItems value="#{ventasOperacionBean.listaCoordinadorOperacion}" var="coordi" itemLabel="#{coordi.nombre}" itemValue="#{coordi.nombre}" />
+                                            <f:selectItems value="#{ventasOperBean.listaCoordinadorOperacion}" var="coordi" itemLabel="#{coordi.nombre}" itemValue="#{coordi.nombre}" />
                                         </h:selectOneMenu>                                    
                                     </p:outputLabel>                                        
                                     <br></br>
                                     <p:outputLabel  style="width: 70%; text-align: left; font-size: 0.8em; "   value="Asesor" >
                                         <h:selectOneMenu id="selectAsesorAsignar" styleClass="btn btn-info"  style="width:  100%; float: right; font-size: 0.6em;"   
-                                                         value="#{ventasOperacionBean.nombreAsesorSelected}"  requiredMessage="Debe elegir un coordinador" >
-                                            <p:ajax event="change" update="ventasOperacionGrid"  listener="#{ventasOperacionBean.nombreAsesorSelected()}"  />
+                                                         value="#{ventasOperBean.nombreAsesorSelected}"  requiredMessage="Debe elegir un coordinador" >
+                                            <p:ajax event="change" update="ventasOperacionGrid"  listener="#{ventasOperBean.nombreAsesorSelected()}"  />
                                             <f:selectItem itemLabel="(Elige un asesor)" itemValue="" noSelectionOption="true" />  
-                                            <f:selectItems value="#{ventasOperacionBean.listaAsesorOperacion}" var="ase" itemLabel="#{ase.nombre}" itemValue="#{ase.nombre}" />
+                                            <f:selectItems value="#{ventasOperBean.listaAsesorOperacion}" var="ase" itemLabel="#{ase.nombre}" itemValue="#{ase.nombre}" />
                                         </h:selectOneMenu>
                                     </p:outputLabel>
                                     
                                     <br></br>
                                     <h:outputText class="detailColor" value="COMENTARIOS:" />
                                     <br></br>
-                                    <p:inputText id="idcomentario" value="#{ventasOperacionBean.comentario}" styleClass="colorNegrilla margen-texto detalle-tamanoLetra" >                                                
+                                    <p:inputText id="idcomentario" value="#{ventasOperBean.comentario}" styleClass="colorNegrilla margen-texto detalle-tamanoLetra" >                                                
                                     </p:inputText>
                                     <br></br>
                                         
-                                                <p:commandButton style="display:#{(ventasOperacionBean.blnActivoAsignarSelected)?'none':'inline'}" onclick="PF('ventaDialogAsignar').hide()"
+                                                <p:commandButton style="display:#{(ventasOperBean.blnActivoAsignarSelected)?'none':'inline'}" onclick="PF('ventaDialogAsignar').hide()"
                                                                 id="btnGuardarAsignar" update="btnGuardarAsignar messages ventasOperacionGrid" value="Guardar"
-                                                                disabled="#{ventasOperacionBean.blnActivoAsignarSelected}" actionListener="#{ventasOperacionBean.btnClickAsignarAsesorOperacion}">
+                                                                disabled="#{ventasOperBean.blnActivoAsignarSelected}" actionListener="#{ventasOperBean.btnClickAsignarAsesorOperacion}">
                                                 </p:commandButton>                                        
                                     
                                      </p:panelGrid>

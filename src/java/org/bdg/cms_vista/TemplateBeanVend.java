@@ -7,7 +7,7 @@ package org.bdg.cms_vista;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import org.bdg.base.Constantes;
+import javax.faces.bean.ViewScoped;
 import org.bdg.session.BaseSession;
 
 /**
@@ -16,6 +16,7 @@ import org.bdg.session.BaseSession;
  
  */
 @ManagedBean(name = "templateBeanVend")
+@ViewScoped
 public class TemplateBeanVend extends BaseSession{
     private String inicio;
     private String venta="Ventas";

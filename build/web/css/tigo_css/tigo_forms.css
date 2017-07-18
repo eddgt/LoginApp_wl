@@ -44,7 +44,7 @@ body{
   font-family: 'CronosPro-Lt';
   src: url('../../fonts/CronosPro-Lt.eot');
   src: url('../../fonts/CronosPro-Lt.eot?#iefix') format('embedded-opentype'), 
-       url('../../fonts/CronosPro-Lt.woff2') format('woff2'), 
+       /*url('../../fonts/CronosPro-Lt.woff2') format('woff2'), */
        url('../../fonts/CronosPro-Lt.woff') format('woff'), 
        url('../../fonts/CronosPro-Lt.ttf') format('truetype'), 
        url('../../fonts/CronosPro-Lt.svg#CronosPro-Lt') format('svg');

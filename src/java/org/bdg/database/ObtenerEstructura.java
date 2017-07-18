@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import org.bdg.base.Constantes;
-import org.bdg.cms_buc.Querys_Vendedor;
+import org.bdg.cms_buc.Query_Vendedor;
 import org.bdg.session.BaseSession;
 
 /**
@@ -26,11 +26,11 @@ public class ObtenerEstructura extends BaseSession {
         
         try{            
             org.bdg.cms_conexion.Conexion conec = new org.bdg.cms_conexion.Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
-            String query = Querys_Vendedor.obtenerInformacionAsesor(usuario,nombre);            
+            String query = Query_Vendedor.obtenerInformacionAsesor(usuario,nombre);            
             rs1 = st1.executeQuery(query);
             
             while (rs1.next())

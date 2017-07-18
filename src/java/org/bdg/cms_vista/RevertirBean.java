@@ -12,7 +12,7 @@ import org.bdg.cms_dto.Asesor;
 import org.bdg.cms_dto.Coordinador;
 import org.bdg.cms_dto.DetalleVenta;
 import org.bdg.cms_conexion.Conexion;
-import org.bdg.cms_buc.Querys_C;
+import org.bdg.cms_buc.Query_C;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -150,72 +150,86 @@ public class RevertirBean extends BaseSession {
     }
     
     public void btnRevertirPLANNINGCORD(ActionEvent actionEvent) {  
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        try{              
-            Querys_C query = new Querys_C();
-            query.generarConsultaRevertirPlanningVerificadosCORDPLANNIN(Integer.toString(this.getIdAsesorSelelected()), this.getAtributoSession(Constantes.SS_USUARIO));
-            String generado = query.getConsulta_RevertirPlanningVerificadosCORDPLANNING();
-            CallableStatement cstmt = conex.prepareCall(generado);
-            cstmt.executeQuery();  
-            JsfUtil.addSuccessMessage(Constantes.SS_MSG_SUCCESS_RREVERSION_FINALIZACION);//mensaje success
-        }catch(Exception e){
+        try{  
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            try{
+                Query_C query = new Query_C();
+                query.generarConsultaRevertirPlanningVerificadosCORDPLANNIN(Integer.toString(this.getIdAsesorSelelected()), this.getAtributoSession(Constantes.SS_USUARIO));
+                String generado = query.getConsulta_RevertirPlanningVerificadosCORDPLANNING();
+                CallableStatement cstmt = conex.prepareCall(generado);
+                cstmt.executeQuery();
+                JsfUtil.addSuccessMessage(Constantes.SS_MSG_SUCCESS_RREVERSION_FINALIZACION);//mensaje success
+            }catch(Exception e){
+                
+            }
+            this.listaCoordinador= this.obtenerListadeCoordinador();
+            this.listaAsesor = this.obtenerListadeAsesor(this.getNombreCoordinadorSelected());
+        }catch(SQLException ex){
+            Logger.getLogger(RevertirBean.class.getName()).log(Level.SEVERE, null, ex);
             
         }  
-        this.listaCoordinador= this.obtenerListadeCoordinador();
-        this.listaAsesor = this.obtenerListadeAsesor(this.getNombreCoordinadorSelected());
     }
     
      
     public void btnClickAsignarVentas(ActionEvent actionEvent) {       
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        for(int i=0; i< this.ventasSeleccionadas.size(); i++){
-            DetalleVenta ventaSeleccioanda = this.ventasSeleccionadas.get(i);                     
-            /////////////////           
-            try{                
-                if(this.getIdAsesorSelelected()>0){
-                    Querys_C query = new Querys_C();
-                    query.generar_Consulta_AsignarAsesorVenta(
-                        ventaSeleccioanda.getIdVenta(),this.idAsesorSelelected, "fvillatoro"
-                    );
-                    String queryAsignar = query.getAsignarAsesor_Venta();
-                    CallableStatement cstmt = conex.prepareCall(queryAsignar);
-                    cstmt.executeQuery();   
+        try {       
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            for(int i=0; i< this.ventasSeleccionadas.size(); i++){
+                DetalleVenta ventaSeleccioanda = this.ventasSeleccionadas.get(i);
+                /////////////////
+                try{
+                    if(this.getIdAsesorSelelected()>0){
+                        Query_C query = new Query_C();
+                        query.generar_Consulta_AsignarAsesorVenta(
+                                ventaSeleccioanda.getIdVenta(),this.idAsesorSelelected, "fvillatoro"
+                        );
+                        String queryAsignar = query.getAsignarAsesor_Venta();
+                        CallableStatement cstmt = conex.prepareCall(queryAsignar);   
+                        cstmt.executeQuery();
+                    }
+                    
+                }catch(Exception e){
+                    
                 }
-                                              
-            }catch(Exception e){
-                
-            }            
-        }
-        try {
-            conex.close();
+            }
+            try {
+                conex.close();
+            } catch (SQLException ex) {
+            }
+            this.listaVentas = this.getVentas();
         } catch (SQLException ex) {
+            Logger.getLogger(RevertirBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.listaVentas = this.getVentas();
     }
             
     
     public void btnClickDesasignarVentas(ActionEvent actionEvent) {
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        for(int i=0; i< this.ventasSeleccionadas.size(); i++){
-            DetalleVenta ventaSeleccioanda = this.ventasSeleccionadas.get(i);                     
-            /////////////////           
-            try{                
-                Querys_C query = new Querys_C();
-                query.generar_Consulta_CambioEstado(ventaSeleccioanda.getIdVenta());
-                CallableStatement cstmt = conex.prepareCall(query.getModificar_Estado());
-                cstmt.executeQuery();                                
-                                              
-            }catch(Exception e){
-                
-            }            
-        }
-        int idAsesorSeleccionado = this.getIdAsesorSelelected();
         try {
-            conex.close();
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            for(int i=0; i< this.ventasSeleccionadas.size(); i++){
+                DetalleVenta ventaSeleccioanda = this.ventasSeleccionadas.get(i);
+                /////////////////
+                try{
+                    Query_C query = new Query_C();
+                    query.generar_Consulta_CambioEstado(ventaSeleccioanda.getIdVenta());
+                    CallableStatement cstmt = conex.prepareCall(query.getModificar_Estado());
+                    cstmt.executeQuery();
+                    
+                }catch(Exception e){
+                    
+                }
+            }
+            int idAsesorSeleccionado = this.getIdAsesorSelelected();
+            try {
+                conex.close();
+            } catch (SQLException ex) {
+            }
+            // this.listaVentas = this.getVentasCoordinador(idAsesorSelelected);
         } catch (SQLException ex) {
+            Logger.getLogger(RevertirBean.class.getName()).log(Level.SEVERE, null, ex);
         }
        // this.listaVentas = this.getVentasCoordinador(idAsesorSelelected);
     }
@@ -238,12 +252,12 @@ public class RevertirBean extends BaseSession {
         Connection conex = null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             query.generar_Consulta_Coordinador_An();
                        
             rs1 = st1.executeQuery(query.getConsulta_CoordinadorAntigua());
@@ -270,11 +284,11 @@ public class RevertirBean extends BaseSession {
         Connection conex = null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
-            Querys_C query = new Querys_C();  
+            Query_C query = new Query_C();  
             query.generarConsultaRevisarPlanningVerificadosCORDPLANNIN(nombreCoordinador);
             rs1 = st1.executeQuery(query.getConsulta_RevisarPlanningVerificadosCORDPLANNING());
             

@@ -4,7 +4,6 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       >
-
     <h:head >	
         <meta charset="UTF-8"/>
         <title>Tigo</title>
@@ -15,7 +14,7 @@
         <link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/> 
         <link href="../css/tigo_css/tigo_user.css" rel="stylesheet" type="text/css"/> 
         <link href="../css/tigo_css/tigo_forms.css" rel="stylesheet" type="text/css"/>  
-         <script type="text/javascript" src="../js/calendar_es.js"></script>
+        <script type="text/javascript" src="../js/calendar_es.js"></script>
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>                                    
     </h:head>
     <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false" oncopy="return false" oncut="return false" onpaste="return false" >
@@ -43,23 +42,21 @@
                                otro elemento que se pueda ocultar al minimizar la barra -->
                             <div class="back_navbar container collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav opciones_bar"> 
-                                    <!--<li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1">
-                                        <a title="Ir a inicio" href="cerrarSesion.xhtml"># {templateBean.inicio}</a>
-                                    </li>
-                                    <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1">
-                                        <a title="Venta" href="ventasCoordinador.xhtml"># {templateBean.venta}</a>
-                                    </li>
-                                    <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1">
-                                        <a title="Renovaciones" href="renovacion.xhtml"># {templateBean.renovaciones}</a>
-                                    </li>-->
+                                   
                                     <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1"><a ></a></li>
-                                    
+
                                     <li class="dropdown opcion_bar TamLetraNav margin-top-opcion-menu" style="display:'block'">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
                                            aria-haspopup="true" aria-expanded="false" style="display:#{(templateBean.blnPermitirverOperaciones)?'none':'block'}">Operaciones <span class="caret"></span>
                                         </a>
-                                        <ul class="dropdown-menu">                             
-                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
+                                        <ul class="dropdown-menu">
+                                            
+                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >
+                                                <a title="Mostrar Bitácora" href="bitacoraOperaciones.xhtml" style="display:'block'">Bitacora Ejecución Proceso</a>
+                                            </li>
+
+                                            <li role="separator" class="divider"></li>
+                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >
                                                 <a title="Mostrar Operaciones" href="ventasOperaciones.xhtml" style="display:'block'">Mostrar Operaciones</a>
                                             </li>
 
@@ -67,34 +64,15 @@
                                             <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
                                                 <a title="Ejecutar proceso" href="EjecProcesoOperaciones.xhtml" style="display:'block'">Ejecutar Proceso</a>
                                             </li>
-                                            
+
                                             <li role="separator" class="divider"></li>
                                             <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >
-                                                <a title="Ejecutar proceso" href="ReporteOperaciones.xhtml" style="display:'block'">Reporte por Período</a>
+                                                <a title="Reporte Renovaciones" href="ReporteRenovaciones.xhtml" style="display:'block'">Reportes</a>
                                             </li>
-                                            
                                         </ul>
                                     </li>
-                                    
-                                    <!--<li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 2.7em;" >                         
-                                        <a title="Ir a inicio" href="revertir.xhtml" style="display:# {(templateBean.blnActivoRevertir)?'none':'block'}"># {templateBean.revertir}</a>
-                                    </li>-->
 
-                                    <!--Comentar solicita Kenneth 06122016 11am<li class="dropdown opcion_bar TamLetraNav margin-top-opcion-menu" style="display:# {(templateBean.blnPermitidoAgregar)?'none':'block'}">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Agregar <span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
-                                                <a title="Ventas" href="ventasNuevas.xhtml" style="display:# {(templateBean.blnActivoVentasNuevas)?'none':'block'}"># {templateBean.ventasNuevas}</a>
-                                            </li>
-
-                                            <li role="separator" class="divider"></li>
-                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
-                                                <a title="Ventas" href="renovacionNueva.xhtml" style="display:# {(templateBean.blnActivoRenovacionNuevas)?'none':'block'}"># {templateBean.renovacionNuevas}</a>
-                                            </li>
-                                        </ul>
-                                    </li>-->
-
-                                      <!--morellana-->
+                                    <!--morellana-->
                                     <li class="dropdown opcion_bar TamLetraNav margin-top-opcion-menu" style="display:'block'">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" 
                                            aria-expanded="false" style="display:#{(templateBean.blnPermitirverCatalogos)?'none':'block'}">#{templateBean.lblTextoMenuCatalogos} 
@@ -109,28 +87,27 @@
                                             <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
                                                 <a title="Ventas" href="EstructuraComercial.xhtml" style="display:'block'">#{templateBean.lblTextoMenuCatalogoEstructura}</a>
                                             </li>
-                                            
+
                                             <li role="separator" class="divider"></li>
                                             <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
                                                 <a title="Ventas" href="ProductoGlobal.xhtml" style="display:'block'">#{templateBean.lblTextoMenuCatalogoProductoGlobal}</a>
                                             </li>
-                                             <li role="separator" class="divider"></li>
+                                            <li role="separator" class="divider"></li>
                                             <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
                                                 <a title="Ventas" href="CarteraManual.xhtml" style="display:'block'">#{templateBean.lblTextoMenuCatalogoCarteraManual}</a>
                                             </li>
-                                             
-                                             <li role="separator" class="divider"></li>
+
+                                            <li role="separator" class="divider"></li>
                                             <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
                                                 <a title="Ventas" href="Ventas.xhtml" style="display:'block'">#{templateBean.lblTextoMenuCatalogoVenta}</a>
                                             </li>
-                                            
+
                                         </ul>
-                                    </li>                                     
-                                    
+                                    </li>
+
                                     <!--<li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 2.7em;" >                         
                                         <a title="Ir a inicio" href="Procesos.xhtml" style="display:# {(templateBean.blnActivoProcesos)?'none':'block'}"># {templateBean.procesos}</a>
                                     </li>-->
-
 
                                     <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1"><a title="Cerrar Sesion" href="cerrarSesion.xhtml">Salir</a></li>
                                 </ul>
@@ -138,7 +115,6 @@
 
                         </div>
                     </nav>
-
 
                 </div>
             </ui:insert>
@@ -175,7 +151,6 @@
 
                 </div>
             </div>
-
 
         </h:body>
     </body>

@@ -12,7 +12,7 @@ import org.bdg.cms_dto.Asesor;
 import org.bdg.cms_dto.Coordinador;
 import org.bdg.cms_dto.DetalleVenta;
 import org.bdg.cms_conexion.Conexion;
-import org.bdg.cms_buc.Querys_C;
+import org.bdg.cms_buc.Query_C;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -34,6 +34,8 @@ import javax.faces.event.ActionEvent;
 import org.bdg.session.BaseSession;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
 import org.bdg.utils.JsfUtil;
 
@@ -245,86 +247,94 @@ public class VentasAsignarBean extends BaseSession {
     
      
     public void btnClickAsignarVentas(ActionEvent actionEvent) {       
-        int RegistroSeleccionados = 0;
-        String usuarioLogueado = this.getAtributoSession(Constantes.SS_USUARIO);
-        String Observ = this.getJustificacion();
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        RegistroSeleccionados = this.ventasSeleccionadas.size();
-        
-        if (Observ.equals("") == false){
-            if (Observ.length()>0 && Observ.length()<= 150){
-                for(int i=0; i< this.ventasSeleccionadas.size(); i++){
-                    DetalleVenta ventaSeleccionada = this.ventasSeleccionadas.get(i);                     
-                    /////////////////           
-                    try{                
-                         JsfUtil.addSuccessMessage(Constantes.MSG_SUCCESS_ASIGNA_VENTA);//mensaje success
-                        if(this.getIdAsesorSelelected()>0){
-                            Querys_C query = new Querys_C();
-                            query.generar_Consulta_AsignarAsesorVenta(ventaSeleccionada.getIdVenta(),this.idAsesorSelelected, usuarioLogueado);
-                            String queryAsignar = query.getAsignarAsesor_Venta();
-                            CallableStatement cstmt = conex.prepareCall(queryAsignar);
-                            cstmt.executeQuery();  
-
-                            String Idventa = Integer.toString(ventaSeleccionada.getIdVenta());
-                            query.generar_InsertaBitacoraJustificacion(Idventa, Observ, usuarioLogueado, "VN");
-                            String InsertBitacora = query.getConsulta_InsertaBitacoraJustificacion();
-                            CallableStatement bitacora = conex.prepareCall(InsertBitacora);
-                            bitacora.executeQuery();  
-
+        try {
+            int RegistroSeleccionados = 0;
+            String usuarioLogueado = this.getAtributoSession(Constantes.SS_USUARIO);
+            String Observ = this.getJustificacion();
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            RegistroSeleccionados = this.ventasSeleccionadas.size();
+            
+            if (Observ.equals("") == false){
+                if (Observ.length()>0 && Observ.length()<= 150){
+                    for(int i=0; i< this.ventasSeleccionadas.size(); i++){
+                        DetalleVenta ventaSeleccionada = this.ventasSeleccionadas.get(i);
+                        /////////////////
+                        try{
+                            JsfUtil.addSuccessMessage(Constantes.MSG_SUCCESS_ASIGNA_VENTA);//mensaje success
+                            if(this.getIdAsesorSelelected()>0){
+                                Query_C query = new Query_C();
+                                query.generar_Consulta_AsignarAsesorVenta(ventaSeleccionada.getIdVenta(),this.idAsesorSelelected, usuarioLogueado);
+                                String queryAsignar = query.getAsignarAsesor_Venta();
+                                CallableStatement cstmt = conex.prepareCall(queryAsignar);
+                                cstmt.executeQuery();
+                                
+                                String Idventa = Integer.toString(ventaSeleccionada.getIdVenta());
+                                query.generar_InsertaBitacoraJustificacion(Idventa, Observ, usuarioLogueado, "VN");
+                                String InsertBitacora = query.getConsulta_InsertaBitacoraJustificacion();
+                                CallableStatement bitacora = conex.prepareCall(InsertBitacora);
+                                bitacora.executeQuery();
+                                
+                            }
+                            
+                        }catch(Exception e){
+                            
                         }
-
-                    }catch(Exception e){
-
                     }
-                }
-                try {
+                    try {
                         if(RegistroSeleccionados == 0){
                             JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_SELECCIONVENTA);
                         }else{
-                                if(this.getIdAsesorSelelected() <= 0){
-                                    JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_ASIGNAVENTA);
-                                }
-                                else{
-                                    this.setJustificacion("");
-                                    this.listaVentas = this.getVentas();            
-                                }
+                            if(this.getIdAsesorSelelected() <= 0){
+                                JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_ASIGNAVENTA);
                             }
+                            else{
+                                this.setJustificacion("");
+                                this.listaVentas = this.getVentas();
+                            }
+                        }
                         conex.close();
                     } catch (SQLException ex) {
-                        }
+                    }
+                }else{
+                    JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_ASIGNA_TAMANIO);
+                }
             }else{
-                JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_ASIGNA_TAMANIO);
-            }            
-        }else{
-            JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_ASIGNA);
-
+                JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_ASIGNA);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VentasAsignarBean.class.getName()).log(Level.SEVERE, null, ex);
         }      
     }
             
     
     public void btnClickDesasignarVentas(ActionEvent actionEvent) {
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        for(int i=0; i< this.ventasSeleccionadas.size(); i++){
-            DetalleVenta ventaSeleccioanda = this.ventasSeleccionadas.get(i);                     
-            /////////////////           
-            try{                
-                Querys_C query = new Querys_C();
-                query.generar_Consulta_CambioEstado(ventaSeleccioanda.getIdVenta());
-                CallableStatement cstmt = conex.prepareCall(query.getModificar_Estado());
-                cstmt.executeQuery();                                
-                                              
-            }catch(Exception e){
-                
-            }    
-        }
         try {
-            conex.close();
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            for(int i=0; i< this.ventasSeleccionadas.size(); i++){
+                DetalleVenta ventaSeleccioanda = this.ventasSeleccionadas.get(i);
+                /////////////////
+                try{
+                    Query_C query = new Query_C();
+                    query.generar_Consulta_CambioEstado(ventaSeleccioanda.getIdVenta());
+                    CallableStatement cstmt = conex.prepareCall(query.getModificar_Estado());
+                    cstmt.executeQuery();
+                    
+                }catch(Exception e){
+                    
+                }
+            }
+            try {
+                conex.close();
+            } catch (SQLException ex) {
+            }
+            int idAsesorSeleccionado = this.getIdAsesorSelelected();
+            // this.listaVentas = this.getVentasCoordinador(idAsesorSelelected);
         } catch (SQLException ex) {
+            Logger.getLogger(VentasAsignarBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        int idAsesorSeleccionado = this.getIdAsesorSelelected();
-       // this.listaVentas = this.getVentasCoordinador(idAsesorSelelected);
     }
     
     
@@ -343,12 +353,12 @@ public class VentasAsignarBean extends BaseSession {
         Connection conex = null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             query.generar_Consulta_Coordinador_An();
                        
             rs1 = st1.executeQuery(query.getConsulta_CoordinadorAntigua());
@@ -377,11 +387,11 @@ public class VentasAsignarBean extends BaseSession {
         Connection conex = null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
-            Querys_C query = new Querys_C();  
+            Query_C query = new Query_C();  
             query.generar_Consulta_Vendedores(nombreCoordinador, this.getAtributoSession(Constantes.SS_ROL).equals("COORD"));
             rs1 = st1.executeQuery(query.getConsulta_Vendedores());
             
@@ -410,7 +420,7 @@ public class VentasAsignarBean extends BaseSession {
         Connection conex = null;
         try{                
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             ResultSet rs2 = null;
@@ -443,7 +453,7 @@ public class VentasAsignarBean extends BaseSession {
                 noFiltroInstalacion=null;
             }
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
              
             query.generar_Consulta_VentasXAsignar(codFiltroCliente, nomFiltroCliente, noFiltroTelefono, noFiltroNexo , noFiltroInstalacion);
             query.generarConsultaVerifiqueSiExisteAsignacion(noFiltroTelefono, noFiltroNexo, noFiltroInstalacion);

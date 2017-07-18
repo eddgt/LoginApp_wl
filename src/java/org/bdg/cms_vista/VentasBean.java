@@ -61,7 +61,7 @@ public class VentasBean extends BaseSession {
         Connection conex = null;
         try {
             Conexion conec = new Conexion();
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             StringBuilder query = new StringBuilder();
             query.append("SELECT * FROM TBBO_VENTAS_PARAM");
             query.append(" order by cod_venta");
@@ -146,7 +146,7 @@ public class VentasBean extends BaseSession {
             queryCrear.append(")");
 
             Conexion conec = new Conexion();
-            Connection conex = conec.getConexion();
+            Connection conex = conec.getConexion2();
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             rs1 = st1.executeQuery(queryCrear.toString());
@@ -174,7 +174,7 @@ public class VentasBean extends BaseSession {
             queryCrear.append(",activo='").append(this.venta.getActivo()).append("'");                        
 
             Conexion conec = new Conexion();
-            Connection conex = conec.getConexion();
+            Connection conex = conec.getConexion2();
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             rs1 = st1.executeQuery(queryCrear.toString());
@@ -194,7 +194,7 @@ public class VentasBean extends BaseSession {
             queryCrear.append(" WHERE");
             queryCrear.append(" COD_VENTA=").append(codVenta);
             Conexion conec = new Conexion();
-            Connection conex = conec.getConexion();
+            Connection conex = conec.getConexion2();
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             rs1 = st1.executeQuery(queryCrear.toString());

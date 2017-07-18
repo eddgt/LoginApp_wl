@@ -66,6 +66,7 @@
                         <p:inputText id="periodo" value="#{repOperBean.periodo}" maxlength="6" required="true" requiredMessage="Debe indicar un periodo" 
                                      label="Surname" validatorMessage="Campo Obligatorio" onchange="this.value = this.value.trim()"/>
                         <p:message for="periodo" />
+                        
                             
                         <!--============================================================================-->
                         <!-- BOTONES SUPERIORES -->
@@ -73,7 +74,7 @@
                         <p:row>
                         <p:commandButton styleClass="margen-texto" id="btnAgregar" value="Generar Reporte" ajax="true"  
                                          actionListener="#{repOperBean.crearReporte()}"  update="messages @form"
-                        /> 
+                        />
                                          
                         <p:commandButton id="btnCancelar" value="Cancelar" process="@this" ajax="true"  
                                          actionListener="#{ventasOperacionBean.cancelarOperacion()}" 
@@ -83,7 +84,7 @@
                                            actionListener="#{repOperBean.download()}" disabled="#{repOperBean.blnActivo}"
                         />   
                         
-                        </p:row>         
+                        </p:row>                        
                         
                     </p:panelGrid>
                         

@@ -12,7 +12,7 @@ import org.bdg.cms_dto.Asesor;
 import org.bdg.cms_dto.Coordinador;
 import org.bdg.cms_dto.DetalleVenta;
 import org.bdg.cms_conexion.Conexion;
-import org.bdg.cms_buc.Querys_C;
+import org.bdg.cms_buc.Query_C;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -29,6 +29,8 @@ import java.sql.Types;
 import java.text.DecimalFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -40,7 +42,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.bdg.cms_buc.Query_Editar;
-import org.bdg.cms_buc.Querys_Bitacora;
+import org.bdg.cms_buc.Query_Bitacora;
 import org.bdg.utils.JsfUtil;
 import org.primefaces.event.data.FilterEvent;
 import org.bdg.cms_dto.DetalleBitacora;
@@ -212,12 +214,12 @@ public class VentasCoordinadorBean extends BaseSession {
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_Bitacora query = new Querys_Bitacora();
+            Query_Bitacora query = new Query_Bitacora();
             String querys= query.getConsultaVitacoraxVenta(identificadorVenta);
             rs1 = st1.executeQuery(querys);
             
@@ -588,62 +590,68 @@ public class VentasCoordinadorBean extends BaseSession {
     
      public void btnGuardarValor(ActionEvent actionEvent){
          
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        String errorSQL="";
-        String query = Query_Editar.getQueryEditarMonto();
-        try{                
-           
-            int ventaSelect = ((this.ventaSeleccionadaDetalle.getIdVenta()));
-            String montoOperacion;
-            CallableStatement cstmt = conex.prepareCall(query);         
-            cstmt.registerOutParameter(1,  java.sql.Types.INTEGER);
-            //String idVenta, String numeroOperacion, String modulo, String monto) 
-            if(!this.blnActivoEdicionValCuota){
-                montoOperacion = this.ventaSeleccionadaDetalle.getCuotaBasica();
-                cstmt.setInt(2, ventaSelect);
-                cstmt.setInt(3, 1);
-                cstmt.setString(4, "VENTA");               
-                cstmt.setFloat(5, Float.parseFloat(montoOperacion));  
-                cstmt.setString(6, this.idMoneda);
-            }
+        try{
             
-            if(!this.blnActivoEdicionValEnlace){
-                montoOperacion = this.ventaSeleccionadaDetalle.getValorEnlace();               
-                cstmt.setInt(2, ventaSelect);
-                cstmt.setInt(3, 2);
-                cstmt.setString(4, "VENTA");               
-                cstmt.setFloat(5, Float.parseFloat(montoOperacion));    
-                cstmt.setString(6, this.idMoneda);
-            }
-            
-            cstmt.execute();       
-            int valorRetorno = cstmt.getInt(1);
-            cstmt.close();
-             
-            if(valorRetorno!=0){
-                JsfUtil.addSuccessMessage(Constantes.MSG_SUCCESS_CAMBIARMONTO);
-                this.blnActivoEdicion=true;
-                this.blnActivoSwitchEdicion=false;
-                this.blnActivoEdicionValCuota=true;
-                this.blnActivoEdicionValEnlace=true;
-            }else{
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            String errorSQL="";
+            String query = Query_Editar.getQueryEditarMonto();
+            try{
+                
+                int ventaSelect = ((this.ventaSeleccionadaDetalle.getIdVenta()));
+                String montoOperacion;
+                CallableStatement cstmt = conex.prepareCall(query);
+                cstmt.registerOutParameter(1,  java.sql.Types.INTEGER);
+                //String idVenta, String numeroOperacion, String modulo, String monto)
+                if(!this.blnActivoEdicionValCuota){
+                    montoOperacion = this.ventaSeleccionadaDetalle.getCuotaBasica();
+                    cstmt.setInt(2, ventaSelect);
+                    cstmt.setInt(3, 1);
+                    cstmt.setString(4, "VENTA");
+                    cstmt.setFloat(5, Float.parseFloat(montoOperacion));
+                    cstmt.setString(6, this.idMoneda);
+                }
+                
+                if(!this.blnActivoEdicionValEnlace){
+                    montoOperacion = this.ventaSeleccionadaDetalle.getValorEnlace();
+                    cstmt.setInt(2, ventaSelect);
+                    cstmt.setInt(3, 2);
+                    cstmt.setString(4, "VENTA");
+                    cstmt.setFloat(5, Float.parseFloat(montoOperacion));
+                    cstmt.setString(6, this.idMoneda);
+                }
+                
+                cstmt.execute();
+                int valorRetorno = cstmt.getInt(1);
+                cstmt.close();
+                
+                if(valorRetorno!=0){
+                    JsfUtil.addSuccessMessage(Constantes.MSG_SUCCESS_CAMBIARMONTO);
+                    this.blnActivoEdicion=true;
+                    this.blnActivoSwitchEdicion=false;
+                    this.blnActivoEdicionValCuota=true;
+                    this.blnActivoEdicionValEnlace=true;
+                }else{
+                    JsfUtil.addSuccessMessage("Error al actualizar el monto");
+                }
+                
+            }catch(Exception e){
+                errorSQL = e.toString();
                 JsfUtil.addSuccessMessage("Error al actualizar el monto");
             }
-          
-        }catch(Exception e){
-            errorSQL = e.toString();
-            JsfUtil.addSuccessMessage("Error al actualizar el monto");
-        }            
-        
-        try {
-            conex.close();
-             //mensaje de asignado correctamente
             
-        } catch (SQLException ex) {
+            try {
+                conex.close();
+                //mensaje de asignado correctamente
+                
+            } catch (SQLException ex) {
+                
+            }
+            this.listaVentas = this.getVentasCoordinador(this.idAsesorSelelected);
             
+        }catch(SQLException ex){
+            Logger.getLogger(VentasCoordinadorBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.listaVentas = this.getVentasCoordinador(this.idAsesorSelelected);
         
     }   
      
@@ -700,31 +708,35 @@ public class VentasCoordinadorBean extends BaseSession {
        
        
     public void btnClickDesasignarVentas(ActionEvent actionEvent) {
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        for(int i=0; i< this.ventasSeleccionadas.size(); i++){
-            DetalleVenta ventaSeleccioanda = this.ventasSeleccionadas.get(i);                     
-            /////////////////           
-            try{                
-                Querys_C query = new Querys_C();
-                /*traer la consulta de cambio de estado*/
-                query.generar_Consulta_CambioEstado(ventaSeleccioanda.getIdVenta());
-                CallableStatement cstmt = conex.prepareCall(query.getModificar_Estado());
-                cstmt.executeQuery();                                
-                                              
-            }catch(Exception e){
-                
-            }            
-        }
         try {
-            conex.close();
-             //mensaje de asignado correctamente
-            JsfUtil.addSuccessMessage(Constantes.MSG_SUCCESS_DESASIGNA_VENTA);
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            for(int i=0; i< this.ventasSeleccionadas.size(); i++){
+                DetalleVenta ventaSeleccioanda = this.ventasSeleccionadas.get(i);
+                /////////////////
+                try{
+                    Query_C query = new Query_C();
+                    /*traer la consulta de cambio de estado*/
+                    query.generar_Consulta_CambioEstado(ventaSeleccioanda.getIdVenta());
+                    CallableStatement cstmt = conex.prepareCall(query.getModificar_Estado());
+                    cstmt.executeQuery();
+                    
+                }catch(Exception e){
+                    
+                }
+            }
+            try {
+                conex.close();
+                //mensaje de asignado correctamente
+                JsfUtil.addSuccessMessage(Constantes.MSG_SUCCESS_DESASIGNA_VENTA);
+            } catch (SQLException ex) {
+            }
+            int idAsesorSeleccionado = this.getIdAsesorSelelected();
+            /*refrescar la lista de ventas segun el asesor filtrado*/
+            this.listaVentas = this.getVentasCoordinador(idAsesorSelelected);
         } catch (SQLException ex) {
+            Logger.getLogger(VentasCoordinadorBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        int idAsesorSeleccionado = this.getIdAsesorSelelected();
-        /*refrescar la lista de ventas segun el asesor filtrado*/
-        this.listaVentas = this.getVentasCoordinador(idAsesorSelelected);
     }
      
      
@@ -734,12 +746,12 @@ public class VentasCoordinadorBean extends BaseSession {
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             query.generar_Consulta_Coordinador_An();
                        
             rs1 = st1.executeQuery(query.getConsulta_CoordinadorAntigua());
@@ -768,11 +780,11 @@ public class VentasCoordinadorBean extends BaseSession {
         Connection conex = null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
-            Querys_C query = new Querys_C();  
+            Query_C query = new Query_C();  
             query.generar_Consulta_Vendedores(nombreCoordinador, this.getAtributoSession(Constantes.SS_ROL).equals("COORD"));
             rs1 = st1.executeQuery(query.getConsulta_Vendedores());
             
@@ -800,12 +812,12 @@ public class VentasCoordinadorBean extends BaseSession {
         this.cantidadElementos =0;
         try{                
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             query.generar_Consulta_Parametros(idAsesortoVentas);
             String ql = query.getConsulta_InformacionVentas();
             rs1 = st1.executeQuery(query.getConsulta_InformacionVentas());

@@ -6,14 +6,11 @@
 package org.bdg.session;
 
 import java.io.IOException;
-import java.math.BigInteger;
-import java.util.List;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
@@ -23,8 +20,8 @@ import javax.faces.context.FacesContext;
  * @author UsuarioBDG
  */
 @ManagedBean(name = "cerrarSesion")
-@SessionScoped
-public class CerrarSesion extends BaseSession {
+@ViewScoped
+public class CerrarSesion extends BaseSession implements Serializable {
 
     private String nombre;
     private String correo;
@@ -36,10 +33,11 @@ public class CerrarSesion extends BaseSession {
 
     private String clave;
    
-    @PostConstruct
+   /* @PostConstruct
     public void init() {           
         this.destroy();        
     }
+    */
     /* public void ingresar() {
         try {
 
@@ -96,10 +94,13 @@ public class CerrarSesion extends BaseSession {
     
     public void destroy(){
         try {
-            System.out.println("DESTRUYENDO SESION ......... ");
-            this.destroySession();
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            
             context.redirect(context.getRequestContextPath() + "/");
+            
+            System.out.println("CERRANDO SESION ......... ");
+            this.destroySession();
+            
         } catch (IOException ex) {
             Logger.getLogger(CerrarSesion.class.getName()).log(Level.SEVERE, null, ex);
         }

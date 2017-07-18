@@ -25,7 +25,8 @@ public class Login {
     public String requestLogIn(String usuario, String contrasena){
         Connection conn = null;
         try{
-            conn  = Conexion.getConexion();
+            Conexion cn = new Conexion();
+            conn  = cn.getConexion2();
             Statement stmt;
             ResultSet rset;
             if(conn != null){
@@ -56,7 +57,9 @@ public class Login {
     
     public String requestRol(String usuario){
         try{
-            Connection conn  = Conexion.getConexion();
+            Connection conn = null;
+            Conexion cn = new Conexion();
+            conn  = cn.getConexion2();
             Statement stmt;
             ResultSet rset;
             if(conn != null){

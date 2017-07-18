@@ -57,7 +57,7 @@ public class ProductoGlobalBean extends BaseSession {
         Connection conex = null;
         try {
             Conexion conec = new Conexion();
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             StringBuilder query = new StringBuilder();
             query.append("select * ");
             query.append(" from TBBO_PRODUCTO_GLOBAL pg");
@@ -118,7 +118,7 @@ public class ProductoGlobalBean extends BaseSession {
             queryCrear.append(")");
 
             Conexion conec = new Conexion();
-            Connection conex = conec.getConexion();
+            Connection conex = conec.getConexion2();
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             rs1 = st1.executeQuery(queryCrear.toString());
@@ -143,7 +143,7 @@ public class ProductoGlobalBean extends BaseSession {
             queryCrear.append("  AND PRODUCTO_GLOBAL='").append(this.producto.getProductoglobalOriginal()).append("'");          
 
             Conexion conec = new Conexion();
-            Connection conex = conec.getConexion();
+            Connection conex = conec.getConexion2();
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             rs1 = st1.executeQuery(queryCrear.toString());
@@ -164,7 +164,7 @@ public class ProductoGlobalBean extends BaseSession {
             queryCrear.append("  PRODUCTO_TB ='").append(productoTB).append("'");
             queryCrear.append("  AND PRODUCTO_GLOBAL='").append(productoGlobal).append("'");
             Conexion conec = new Conexion();
-            Connection conex = conec.getConexion();
+            Connection conex = conec.getConexion2();
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             rs1 = st1.executeQuery(queryCrear.toString());

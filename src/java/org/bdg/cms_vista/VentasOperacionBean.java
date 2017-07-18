@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -19,8 +21,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import org.bdg.base.Constantes;
 import org.bdg.cms_buc.Query_Editar;
-import org.bdg.cms_buc.Querys_Bitacora;
-import org.bdg.cms_buc.Querys_C;
+import org.bdg.cms_buc.Query_Bitacora;
+import org.bdg.cms_buc.Query_C;
 import org.bdg.cms_conexion.Conexion;
 import org.bdg.cms_dto.AsesorOperacion;
 import org.bdg.cms_dto.Comentario;
@@ -35,7 +37,7 @@ import org.primefaces.event.data.FilterEvent;
  *
  * @author oulloa
  */
-@ManagedBean(name = "ventasOperacionBean")
+@ManagedBean(name = "ventasOperBean")
 @ViewScoped
 public class VentasOperacionBean extends BaseSession implements Serializable{
     
@@ -1139,12 +1141,12 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         this.cantidadFilas =0;
         try{                
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             query.generar_Consulta_Parametros_Operacion();
             String ql = query.getConsulta_InformacionVentasOperacion();
             //rs1 = st1.executeQuery(query.getConsulta_InformacionVentasOperacion());
@@ -1205,12 +1207,12 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         this.cantidadFilas =0;
         try{                
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             //ResultSet rs = null;
             Statement st = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             query.generar_Consulta_Parametros_Operacion_XAsesor(asesor, periodo);
             //String ql = query.getConsulta_InformacionVentasOperacionXAsesor();
             ResultSet rs = st.executeQuery(query.getConsulta_InformacionVentasOperacionXAsesor());
@@ -1276,12 +1278,12 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_Bitacora query = new Querys_Bitacora();
+            Query_Bitacora query = new Query_Bitacora();
             String querys= query.getConsultaBitacoraComentarioxVenta(idVenta);
             rs1 = st1.executeQuery(querys);
             
@@ -1318,66 +1320,79 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
     /*Borrar asesor de Ventas Operacion Asignadas*/
     public void btnClickBorrarAsesor(ActionEvent actionEvent) {
         
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        for(int i=0; i< this.ventasOperacionSeleccionadas.size(); i++){
-            /*Obtener el ID seleccionado del grid*/
-            DetalleVentaOperacion ventaOperacionSeleccionada = this.ventasOperacionSeleccionadas.get(i);                     
-            /////////////////           
-            try{                
-                Querys_C query = new Querys_C();
-                /*llamar consulta Borrar Asesor y enviarle el id de la venta para borrar*/
-                query.generar_Consulta_BorrarAsesorVentaOperacion(ventaOperacionSeleccionada.getId());
-                CallableStatement cstmt = conex.prepareCall(query.getBorrar_AsesorVentaOperacion());
-                cstmt.executeQuery();                
-                                              
-            }catch(Exception e){
-                
-            }            
-        }
         try {
-            conex.close();
-             //mensaje de borrado correctamente
-            JsfUtil.addSuccessMessage(Constantes.MSG_SUCCESS_BORRA_VENTA_OPERACION);
+            
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            for(int i=0; i< this.ventasOperacionSeleccionadas.size(); i++){
+                /*Obtener el ID seleccionado del grid*/
+                DetalleVentaOperacion ventaOperacionSeleccionada = this.ventasOperacionSeleccionadas.get(i);
+                /////////////////
+                try{
+                    Query_C query = new Query_C();
+                    /*llamar consulta Borrar Asesor y enviarle el id de la venta para borrar*/
+                    query.generar_Consulta_BorrarAsesorVentaOperacion(ventaOperacionSeleccionada.getId());
+                    CallableStatement cstmt = conex.prepareCall(query.getBorrar_AsesorVentaOperacion());
+                    cstmt.executeQuery();
+                    
+                }catch(Exception e){
+                    
+                }
+            }
+            try {
+                conex.close();
+                //mensaje de borrado correctamente
+                JsfUtil.addSuccessMessage(Constantes.MSG_SUCCESS_BORRA_VENTA_OPERACION);
+            } catch (SQLException ex) {
+            }
+            int idSeleccionado = this.getIdSelected();
+            //this.listaVentasOperacion = this.getVentasOperacionXId(idSelected);
+            /*Traer toda la lista y mostrarla en Grid*/
+            System.out.println("Boton Borrar Asesor");
+            this.listaVentasOperacion = this.getVentasOperacion1();
         } catch (SQLException ex) {
+            Logger.getLogger(VentasOperacionBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        int idSeleccionado = this.getIdSelected();
-        //this.listaVentasOperacion = this.getVentasOperacionXId(idSelected);        
-        /*Traer toda la lista y mostrarla en Grid*/
-        System.out.println("Boton Borrar Asesor");
-        this.listaVentasOperacion = this.getVentasOperacion1();
     }  
     
 
     
-    /*ASIGNAR Asesor a Ventas Operacion */
+    /*EJECUTAR PROCESO POR PERIODO*/
     public void btnClickEjecutaProcPeriodo(ActionEvent actionEvent) {
-        
-        String periodo = this.getPeriodo();
-        if(periodo!=null){
-        
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();        
-            
-            try{                
-                Querys_C query = new Querys_C();
-                /*llamar consulta que ejecuta proceso por periodo*/
-                query.generar_Consulta_EjecutaProceso(periodo);
-                CallableStatement cstmt = conex.prepareCall(query.getEjecutar_Proceso());                
-                cstmt.executeQuery();                
-                cstmt.close();
+       try{
+           String periodo = this.getPeriodo();
+            if(periodo!=null){
+                Connection conex2 = null;
+                Conexion conec = new Conexion();
+                conex2 = conec.getConexion2();
+                try{
+                    Query_C query = new Query_C();
+                    /*llamar consulta que ejecuta proceso por periodo*/
+                    String usuarioLogueado = this.getAtributoSession(Constantes.SS_USUARIO);
+                    query.generar_Consulta_EjecutaProceso(periodo, usuarioLogueado);
+                    CallableStatement cstmt = conex2.prepareCall(query.getEjecutar_Proceso());  
+                    System.out.println("Ejecutando: "+query.getEjecutar_Proceso());
+                    cstmt.executeQuery();                
+                    //cstmt.close();
                                               
-            }catch(Exception e){
-                
-            }                
-           
-        try {
-            conex.close();
-             //mensaje de asignado correctamente
-            JsfUtil.addSuccessMessage("Proceso Finalizado Exitosamente!!");
-        } catch (SQLException ex) {
-        }
-    }
+                }catch(Exception e){
+                    e.printStackTrace();
+                    System.out.println("ERROR: "+e.getMessage());
+                }
+                finally{
+                    try {
+                        conex2.close();
+                        //mensaje de asignado correctamente
+                        JsfUtil.addSuccessMessage("Proceso Finalizado Exitosamente!!");
+                    } catch (SQLException ex) {
+                        ex.getMessage();
+                        }
+                }
+            }
+       }
+       catch (Exception ex) {
+           ex.getMessage();
+           }
     }    
     
     public DetalleVentaOperacion getVentaOperacionSeleccionadaDetalle() {
@@ -1396,53 +1411,59 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
     
     public void btnGuardarValorOperacion(ActionEvent actionEvent){
          
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        String errorSQL="";
-        String query = Query_Editar.getQueryEditarMontoOperacion();
-        try{                
-           
-            int ventaSelect = ((this.ventaOperacionSeleccionadaDetalle.getId()));
-            String montoOperacion;
-            CallableStatement cstmt = conex.prepareCall(query);         
-            cstmt.registerOutParameter(1,  java.sql.Types.INTEGER);
-            //String idVenta, String numeroOperacion, String modulo, String monto) 
-            if(!this.blnActivoEdicionValMonto){
-                montoOperacion = this.ventaOperacionSeleccionadaDetalle.getMontoVenta();
-                cstmt.setInt(2, ventaSelect);                             
-                cstmt.setFloat(3, Float.parseFloat(montoOperacion));  
-                
-            }
+        try{
             
-            cstmt.execute();       
-            /*lienas afectadas*/
-            int valorRetorno = cstmt.getInt(1);
-            cstmt.close();
-            /*Si lineas afectadas diferente de 0*/ 
-            if(valorRetorno!=0){
-                /*Dar mensaje de cmabio realizado ok*/
-                JsfUtil.addSuccessMessage(Constantes.MSG_SUCCESS_CAMBIARMONTO);
-                this.blnActivoEdicion=true;
-                this.blnActivoSwitchEdicion=false;
-                this.blnActivoEdicionValMonto=true;
-                //this.blnActivoEdicionValEnlace=true;
-            }else{
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            String errorSQL="";
+            String query = Query_Editar.getQueryEditarMontoOperacion();
+            try{  
+                
+                int ventaSelect = ((this.ventaOperacionSeleccionadaDetalle.getId()));
+                String montoOperacion;
+                CallableStatement cstmt = conex.prepareCall(query);
+                cstmt.registerOutParameter(1,  java.sql.Types.INTEGER);
+                //String idVenta, String numeroOperacion, String modulo, String monto)
+                if(!this.blnActivoEdicionValMonto){
+                    montoOperacion = this.ventaOperacionSeleccionadaDetalle.getMontoVenta();
+                    cstmt.setInt(2, ventaSelect);
+                    cstmt.setFloat(3, Float.parseFloat(montoOperacion));
+                    
+                }
+                
+                cstmt.execute();
+                /*lienas afectadas*/
+                int valorRetorno = cstmt.getInt(1);
+                cstmt.close();
+                /*Si lineas afectadas diferente de 0*/
+                if(valorRetorno!=0){
+                    /*Dar mensaje de cmabio realizado ok*/
+                    JsfUtil.addSuccessMessage(Constantes.MSG_SUCCESS_CAMBIARMONTO);
+                    this.blnActivoEdicion=true;
+                    this.blnActivoSwitchEdicion=false;
+                    this.blnActivoEdicionValMonto=true;
+                    //this.blnActivoEdicionValEnlace=true;
+                }else{
+                    JsfUtil.addSuccessMessage("Error al actualizar el monto");
+                }
+                
+            }catch(Exception e){
+                errorSQL = e.toString();
                 JsfUtil.addSuccessMessage("Error al actualizar el monto");
             }
-          
-        }catch(Exception e){
-            errorSQL = e.toString();
-            JsfUtil.addSuccessMessage("Error al actualizar el monto");
-        }            
-        
-        try {
-            conex.close();
-             //mensaje de asignado correctamente
             
-        } catch (SQLException ex) {
+            try {
+                conex.close();
+                //mensaje de asignado correctamente
+                
+            } catch (SQLException ex) {
+                
+            }
+            this.listaVentasOperacion = this.getVentasOperacionXAsesor(this.nombreAsesorSelected, this.comboPeriodoSelected);
             
+        }catch(SQLException ex){
+            Logger.getLogger(VentasOperacionBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.listaVentasOperacion = this.getVentasOperacionXAsesor(this.nombreAsesorSelected, this.comboPeriodoSelected);
         
     }
     
@@ -1526,12 +1547,12 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             query.generar_Consulta_Coordinador_Oper();
                        
             rs1 = st1.executeQuery(query.getConsulta_CoordinadorOperacion());
@@ -1561,12 +1582,12 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             //query.generar_Consulta_Coordinador_Oper();
             query.generar_Consulta_Asesor_Oper(nombreCoordinadorOperacion);/*Filtrar asesores por coordinador*/
                        
@@ -1595,12 +1616,12 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             //query.generar_Consulta_Coordinador_Oper();
             query.generar_Consulta_Vendedor_Oper(user);/*Filtrar asesores por coordinador*/
                        
@@ -1630,12 +1651,12 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             //query.generar_Consulta_Coordinador_Oper();
             query.generar_Consulta_Combo_Sistema();/*Filtrar asesores por coordinador*/
                        
@@ -1756,7 +1777,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
             queryCrear.append(")");
 
             Conexion conec = new Conexion();
-            Connection conex = conec.getConexion();
+            Connection conex = conec.getConexion2();
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             System.out.println(queryCrear.toString());
@@ -1802,12 +1823,12 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             query.generar_Consulta_Coordinador_Vista(asesor);
                        
             rs1 = st1.executeQuery(query.getConsulta_CoordinadorOperacionVista());
@@ -1838,7 +1859,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
@@ -1846,7 +1867,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
             String miUsuario = this.getAtributoSession(Constantes.SS_USUARIO);
             String miRol = this.getAtributoSession(Constantes.SS_ROL);
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             query.generar_Consulta_Asesor_Vista(miUsuario, miRol);
                        
             rs1 = st1.executeQuery(query.getConsulta_AsesorOperacionVista());
@@ -1876,7 +1897,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
@@ -1908,7 +1929,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
@@ -1940,7 +1961,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
@@ -1972,7 +1993,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
@@ -2004,7 +2025,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
@@ -2037,7 +2058,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
@@ -2069,7 +2090,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
@@ -2101,7 +2122,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
@@ -2135,7 +2156,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
@@ -2169,7 +2190,7 @@ public class VentasOperacionBean extends BaseSession implements Serializable{
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();

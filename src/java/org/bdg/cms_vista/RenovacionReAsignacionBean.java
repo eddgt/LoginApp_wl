@@ -13,7 +13,7 @@ import org.bdg.cms_dto.Coordinador;
 import org.bdg.cms_dto.DetalleVenta;
 import org.bdg.cms_dto.DetalleRenovacion;
 import org.bdg.cms_conexion.Conexion;
-import org.bdg.cms_buc.Querys_C;
+import org.bdg.cms_buc.Query_C;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -337,12 +337,12 @@ public class RenovacionReAsignacionBean extends BaseSession {
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             query.generar_Consulta_Coordinador_An();
                        
             rs1 = st1.executeQuery(query.getConsulta_CoordinadorAntigua());
@@ -371,11 +371,11 @@ public class RenovacionReAsignacionBean extends BaseSession {
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
-            Querys_C query = new Querys_C();  
+            Query_C query = new Query_C();  
             query.generar_Consulta_Vendedores(nombreCoordinador, this.getAtributoSession(Constantes.SS_ROL).equals("COORD"));
             rs1 = st1.executeQuery(query.getConsulta_Vendedores());
             
@@ -402,13 +402,13 @@ public class RenovacionReAsignacionBean extends BaseSession {
             Logger logger = Logger.getLogger(getClass().getName());
             logger.info("Llamando query renovacion con id asesor ventas");
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             System.out.println("conexion exitosasdfa");
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             logger.info(query.generar_Consulta_Renovacion(idAsesorVentas));
             rs1 = st1.executeQuery(query.generar_Consulta_Renovacion(idAsesorVentas));
             logger.info("Se ejecutó el query");
@@ -460,13 +460,13 @@ public class RenovacionReAsignacionBean extends BaseSession {
             Logger logger = Logger.getLogger(getClass().getName());
             logger.info("Llamando query renovacion con id asesor ventas");
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             System.out.println("conexion exitosasdfa");
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             logger.info(query.generar_Consulta_ReAsignaRenovacion(idsRenovaciones));
             rs1 = st1.executeQuery(query.generar_Consulta_ReAsignaRenovacion(idsRenovaciones));
             logger.info("Se ejecutó el query");
@@ -614,65 +614,69 @@ public class RenovacionReAsignacionBean extends BaseSession {
   
     
     public void btnClickReAsignarRenovaciones(ActionEvent actionEvent){
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        String IdAsesorAnterior = this.getIdAsesorAnterior();
-        String idAsesorSeleccionado = Integer.toString(this.getIdAsesorSelelected());
-        String usuarioLogueado = this.getAtributoSession(Constantes.SS_USUARIO);
-
-        int RegistroSeleccionados = 0;
-		String Observ = this.getJustificacion();
-
-        RegistroSeleccionados = this.renovacionesSeleccionadas.size();
-        
-        if (Observ.equals("") == false){
-            if (Observ.length()>0 && Observ.length()<= 150){
-				if (this.renovacionesSeleccionadas.size()> 0) 
-				   {   for(int i=0; i< this.renovacionesSeleccionadas.size(); i++){
-                                            DetalleRenovacion RenovacionSeleccionada = this.renovacionesSeleccionadas.get(i);                     
-                                            /////////////////           
-                                            try{                
-                                                    Querys_C query = new Querys_C();
-                                                    query.generar_Consulta_ReAsignaRenovacion(Integer.parseInt(RenovacionSeleccionada.getIdposventa()), idAsesorAnterior, idAsesorSeleccionado, usuarioLogueado);
-                                                    CallableStatement cstmt = conex.prepareCall(query.getConsulta_ReAsignaRenovacion());
-                                                    cstmt.executeQuery();                                
-
-                                                    String Idventa = RenovacionSeleccionada.getIdposventa();
-                                                    query.generar_InsertaBitacoraJustificacion(Idventa, Observ, usuarioLogueado, "RE");
-                                                    String InsertBitacora = query.getConsulta_InsertaBitacoraJustificacion();
-                                                    CallableStatement bitacora = conex.prepareCall(InsertBitacora);
-                                                    bitacora.executeQuery();                                                          
-                                            }catch(Exception e){
-                                                }            
-                                        }
-                                        try {
-                                                conex.close();
-                                                 //mensaje de asignado correctamente
-                                                JsfUtil.addSuccessMessage(Constantes.MSG_SUCCESS_REASIGNA_VENTA);
-                                            } catch (SQLException ex) {
-                                                }
-                                        //this.listaRenovaciones = this.getRenovacionesCoordinador(this.getIdAsesorSelelected());
-                                                try{ // Redirecciona a la pagina de renovaciones
-                                                    ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-                                                    context.redirect(context.getRequestContextPath() + "/faces/renovacion.xhtml");           
-                                                }catch(Exception e){
-                                                }    
-                                        }
-					 else{
-                                                try {
-                                                        conex.close();
-                                                         //mensaje de asignado correctamente
-                                                        JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_REASIGNACION);
-                                                } catch (SQLException ex) {
-                                                                }
-							   
-                                            }
+        try {
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            String IdAsesorAnterior = this.getIdAsesorAnterior();
+            String idAsesorSeleccionado = Integer.toString(this.getIdAsesorSelelected());
+            String usuarioLogueado = this.getAtributoSession(Constantes.SS_USUARIO);
+            
+            int RegistroSeleccionados = 0;
+            String Observ = this.getJustificacion();
+            
+            RegistroSeleccionados = this.renovacionesSeleccionadas.size();
+            
+            if (Observ.equals("") == false){
+                if (Observ.length()>0 && Observ.length()<= 150){
+                    if (this.renovacionesSeleccionadas.size()> 0)
+                    {   for(int i=0; i< this.renovacionesSeleccionadas.size(); i++){
+                        DetalleRenovacion RenovacionSeleccionada = this.renovacionesSeleccionadas.get(i);
+                        /////////////////
+                        try{
+                            Query_C query = new Query_C();
+                            query.generar_Consulta_ReAsignaRenovacion(Integer.parseInt(RenovacionSeleccionada.getIdposventa()), idAsesorAnterior, idAsesorSeleccionado, usuarioLogueado);
+                            CallableStatement cstmt = conex.prepareCall(query.getConsulta_ReAsignaRenovacion());
+                            cstmt.executeQuery();
+                            
+                            String Idventa = RenovacionSeleccionada.getIdposventa();
+                            query.generar_InsertaBitacoraJustificacion(Idventa, Observ, usuarioLogueado, "RE");
+                            String InsertBitacora = query.getConsulta_InsertaBitacoraJustificacion();
+                            CallableStatement bitacora = conex.prepareCall(InsertBitacora);
+                            bitacora.executeQuery();
+                        }catch(Exception e){
+                        }
+                    }
+                    try {
+                        conex.close();
+                        //mensaje de asignado correctamente
+                        JsfUtil.addSuccessMessage(Constantes.MSG_SUCCESS_REASIGNA_VENTA);
+                    } catch (SQLException ex) {
+                    }
+                    //this.listaRenovaciones = this.getRenovacionesCoordinador(this.getIdAsesorSelelected());
+                    try{ // Redirecciona a la pagina de renovaciones
+                        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+                        context.redirect(context.getRequestContextPath() + "/faces/renovacion.xhtml");
+                    }catch(Exception e){
+                    }
+                    }
+                    else{
+                        try {
+                            conex.close();
+                            //mensaje de asignado correctamente
+                            JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_REASIGNACION);
+                        } catch (SQLException ex) {
+                        }
+                        
+                    }
+                }else{
+                    JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_ASIGNA_TAMANIO);
+                }
             }else{
-                JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_ASIGNA_TAMANIO);
-            }            
-        }else{
-            JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_ASIGNA);
-		}	
+                JsfUtil.addSuccessMessage(Constantes.MSG_ERROR_ASIGNA);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RenovacionReAsignacionBean.class.getName()).log(Level.SEVERE, null, ex);
+        }	
      }         
    
     public void btnClickRegresar(ActionEvent actionEvent){

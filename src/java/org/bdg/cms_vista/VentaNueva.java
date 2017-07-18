@@ -10,7 +10,7 @@ import javax.faces.bean.ViewScoped;
 import org.bdg.cms_dto.Asesor;
 import org.bdg.cms_dto.Coordinador;
 import org.bdg.cms_conexion.Conexion;
-import org.bdg.cms_buc.Querys_C;
+import org.bdg.cms_buc.Query_C;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -161,11 +161,11 @@ public class VentaNueva extends BaseSession {
         Connection conex = null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
-            Querys_C query = new Querys_C();  
+            Query_C query = new Query_C();  
             query.generar_Consulta_Vendedores(nombreCoordinador, this.getAtributoSession(Constantes.SS_ROL).equals("COORD"));
             rs1 = st1.executeQuery(query.getConsulta_Vendedores());
             
@@ -199,12 +199,12 @@ public class VentaNueva extends BaseSession {
         Connection conex=null;
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             /////////////////
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             
-            Querys_C query = new Querys_C();
+            Query_C query = new Query_C();
             query.generar_Consulta_Coordinador_An();
                        
             rs1 = st1.executeQuery(query.getConsulta_CoordinadorAntigua());
@@ -649,9 +649,9 @@ public class VentaNueva extends BaseSession {
         
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();                        
+            conex = conec.getConexion2();                        
             Statement st1 = conex.createStatement();            
-            String qury = Querys_C.getConsulta_Agencias();
+            String qury = Query_C.getConsulta_Agencias();
             rs1 = st1.executeQuery(qury);
             
             while (rs1.next())
@@ -680,7 +680,7 @@ public class VentaNueva extends BaseSession {
         
         try{
             Conexion conec = new Conexion();                
-            conex = conec.getConexion();                        
+            conex = conec.getConexion2();                        
             Statement st1 = conex.createStatement();
             AgregarQuery_C query = new AgregarQuery_C();
             String qury = query.generarQueryTipoVenta();
@@ -756,7 +756,7 @@ public class VentaNueva extends BaseSession {
            if(bandera){
                
                 Conexion conec = new Conexion();                
-                Connection conex = conec.getConexion();
+                Connection conex = conec.getConexion2();
                 String queryAsignar = "{CALL comisiongt.tb_cargaajusteventas_portalweb(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
                 CallableStatement cstmt = conex.prepareCall(queryAsignar);
                 

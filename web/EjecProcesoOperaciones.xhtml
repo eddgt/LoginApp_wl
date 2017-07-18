@@ -60,19 +60,30 @@
                 </div>     
                 <p:panel id="panel" header="" style="margin-bottom:10px;" >
                     
-                    <h:panelGrid columns="3" cellpadding="5">
+                    <h:panelGrid columns="7" cellpadding="5">
                         <p:outputLabel for="periodo" value="Indique Periodo a Ejecutar: (MMAAAA) " />
-                        <p:inputText id="periodo" value="#{ventasOperacionBean.periodo}" maxlength="6" required="true" label="Surname" validatorMessage="Campo Obligatorio" onchange="this.value = this.value.trim()"/>
+                        <p:inputText id="periodo" value="#{repOperBean.periodo}" maxlength="6" required="true" 
+                                     label="Surname" validatorMessage="Campo Obligatorio" onchange="this.value = this.value.trim()"/>
                         <p:message for="periodo" />
+                        
+                        <p:outputLabel for="tasa" value="Tasa de cambio:  " />
+                        <p:inputText id="tasa" value="#{repOperBean.tasaCambio}" maxlength="7" requiredMessage="Debe indicar Tasa de cambio" 
+                                     label="Surname" validatorMessage="Campo Obligatorio" onchange="this.value = this.value.trim()" disabled="#{repOperBean.blnTasa}"/>
+                        <p:commandButton styleClass="margen-texto" id="btnConsultaTasa" value="Ver Tasa Cambio" ajax="true"  
+                                         actionListener="#{repOperBean.consultaTasa()}"  update="tasa messages @form" 
+                        /> 
+                        <p:commandButton styleClass="margen-texto" id="btnActualizaTasa" value="Actualizar Tasa" ajax="true"  
+                                         actionListener="#{repOperBean.actualizaTasa()}"  update="tasa messages @form" 
+                        /> 
                        
 
                     </h:panelGrid>
                     <br></br><p:commandButton styleClass="margen-texto" id="btnAgregar" value="Ejecutar"  
-                                              actionListener="#{ventasOperacionBean.btnClickEjecutaProcPeriodo}"  update="messages @form"
+                                              actionListener="#{repOperBean.btnClickEjecutaProcPeriodo}"  update="messages @form"
                                               /> 
                     
                     <p:commandButton id="btnCancelar" value="Cancelar" process="@this"   
-                                     actionListener="#{ventasOperacionBean.cancelarOperacion()}" 
+                                     actionListener="#{ventasOperBean.cancelarOperacion()}" 
                                      />
                 </p:panel>                                
             </div>

@@ -55,7 +55,7 @@ public void executeReport(){
    
    Connection conex = null;
    Conexion conec = new Conexion();                
-   conex = conec.getConexion();
+   conex = conec.getConexion2();
    
    PreparedStatement pstmt = conex.prepareStatement("SELECT cod_cliente columna1, sistema columna2, cliente_mic columna3, fecha columna4 FROM tbbo_operaciones WHERE rownum<11");
    ResultSet rs = pstmt.executeQuery();

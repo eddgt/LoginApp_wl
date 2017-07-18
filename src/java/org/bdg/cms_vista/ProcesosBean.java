@@ -12,7 +12,7 @@ import org.bdg.cms_dto.Asesor;
 import org.bdg.cms_dto.Coordinador;
 import org.bdg.cms_dto.DetalleVenta;
 import org.bdg.cms_conexion.Conexion;
-import org.bdg.cms_buc.Querys_C;
+import org.bdg.cms_buc.Query_C;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -70,36 +70,45 @@ public class ProcesosBean extends BaseSession {
     
     
     public void btnClickEjecutarAjusteVentas(ActionEvent actionEvent) {       
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        try{                
-            Querys_C query = new Querys_C();
-            query.generar_Consulta_AjusteVentas_TigoSpace();
-            CallableStatement cstmt = conex.prepareCall(query.getConsulta_CargaAjusteVentas());
-            cstmt.executeQuery();
-            conex.close();
-        }catch(Exception e){
-            JsfUtil.addSuccessMessage(Constantes.SS_MSG_ERROR_AJUSTEVENTAS);
+        try{       
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            try{
+                Query_C query = new Query_C();
+                query.generar_Consulta_AjusteVentas_TigoSpace();
+                CallableStatement cstmt = conex.prepareCall(query.getConsulta_CargaAjusteVentas());
+                cstmt.executeQuery();
+                conex.close();
+            }catch(Exception e){
+                JsfUtil.addSuccessMessage(Constantes.SS_MSG_ERROR_AJUSTEVENTAS);
+            }
+            JsfUtil.addSuccessMessage(Constantes.SS_MSG_SUCCESS_AJUSTEVENTAS);
+        }catch(SQLException ex){
+            Logger.getLogger(ProcesosBean.class.getName()).log(Level.SEVERE, null, ex);
         }            
-        JsfUtil.addSuccessMessage(Constantes.SS_MSG_SUCCESS_AJUSTEVENTAS);
     }
     
     public void btnClickEjecutarCargaPreliminar(ActionEvent actionEvent) {       
-        Conexion conec = new Conexion();                
-        Connection conex = conec.getConexion();
-        try{                
-            Querys_C query = new Querys_C();
-            query.generar_Consulta_CargaPreliminarVN();
-            CallableStatement cstmt = conex.prepareCall(query.getConsulta_CargaPreliminarVN());
-            cstmt.executeQuery();
-            query.generar_Consulta_CargaDataPreliminar();
-            cstmt = conex.prepareCall(query.getConsulta_CargaDataPreliminar());
-            cstmt.executeQuery();
-            conex.close();
-        }catch(Exception e){
-            JsfUtil.addSuccessMessage(Constantes.SS_MSG_ERROR_DATAPRELIMINAR);
+        try{       
+            Conexion conec = new Conexion();
+            Connection conex = conec.getConexion2();
+            try{
+                Query_C query = new Query_C();
+                query.generar_Consulta_CargaPreliminarVN();
+                CallableStatement cstmt = conex.prepareCall(query.getConsulta_CargaPreliminarVN());
+                cstmt.executeQuery();
+                query.generar_Consulta_CargaDataPreliminar();
+                cstmt = conex.prepareCall(query.getConsulta_CargaDataPreliminar());
+                cstmt.executeQuery();
+                conex.close();
+            }catch(Exception e){
+                JsfUtil.addSuccessMessage(Constantes.SS_MSG_ERROR_DATAPRELIMINAR);
+            }
+            JsfUtil.addSuccessMessage(Constantes.SS_MSG_SUCCESS_DATAPRELIMINAR);
+            
+        }catch(SQLException ex){
+            Logger.getLogger(ProcesosBean.class.getName()).log(Level.SEVERE, null, ex);
         }            
-        JsfUtil.addSuccessMessage(Constantes.SS_MSG_SUCCESS_DATAPRELIMINAR);
        
     }
 }

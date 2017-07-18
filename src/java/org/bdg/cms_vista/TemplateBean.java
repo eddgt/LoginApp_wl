@@ -4,22 +4,26 @@
  * and open the template in the editor.
  */
 package org.bdg.cms_vista;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import org.bdg.base.Constantes;
-import org.bdg.database.Login;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.bdg.session.BaseSession;
-import org.bdg.utils.JsfUtil;
+import org.bdg.session.CerrarSesion;
 
 /**
  *
  * @author jarevalo
  */
 @ManagedBean(name = "templateBean")
-public class TemplateBean extends BaseSession{
+@ViewScoped
+public class TemplateBean extends BaseSession  implements Serializable{
     private String inicio;
     private String venta;
     private String renovaciones;
@@ -186,6 +190,7 @@ public class TemplateBean extends BaseSession{
     
     @PostConstruct
     public void init() {
+        
         String usuarioLogueado = this.getAtributoSession(Constantes.SS_USUARIO);
         String rolUsuarioLogueado = this.getAtributoSession(Constantes.SS_ROL);
         
@@ -213,16 +218,47 @@ public class TemplateBean extends BaseSession{
                 //this.lblTextoMenuCatalogos = lblTextoMenuCatalogos;
             } 
             else {
-                this.setBlnPermitirverCatalogos(true);
-                this.setBlnPermitirverOperaciones(true);
-                /*this.lblTextoMenuCatalogos = null;
-                this.lblTextoMenuCatalogoCarteraManual = null;
-                this.lblTextoMenuCatalogoPersona = null;
-                this.lblTextoMenuCatalogoProductoGlobal = null;
-                this.lblTextoMenuCatalogoVenta = null;
-                this.lblTextoMenuCatalogoEstructura = null;*/
+                try {
+                    CerrarSesion ses = new CerrarSesion();
+                    ses.destroy();
+                    //ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+                    //context.redirect(context.getRequestContextPath() + "/");
+                    this.setBlnPermitirverCatalogos(true);
+                    this.setBlnPermitirverOperaciones(true);
+                    
+                    
+                    /*this.lblTextoMenuCatalogos = null;
+                    this.lblTextoMenuCatalogoCarteraManual = null;
+                    this.lblTextoMenuCatalogoPersona = null;
+                    this.lblTextoMenuCatalogoProductoGlobal = null;
+                    this.lblTextoMenuCatalogoVenta = null;
+                    this.lblTextoMenuCatalogoEstructura = null;*/
+                } catch (Exception ex) {
+                    Logger.getLogger(TemplateBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
-        }       
+                }
+        }
+        else {//else if user is null 
+                try {
+                    //CerrarSesion ses = new CerrarSesion();
+                    //ses.destroy();
+                    ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+                    context.redirect(context.getRequestContextPath() + "/");
+                    this.setBlnPermitirverCatalogos(true);
+                    this.setBlnPermitirverOperaciones(true);
+                    
+                    
+                    /*this.lblTextoMenuCatalogos = null;
+                    this.lblTextoMenuCatalogoCarteraManual = null;
+                    this.lblTextoMenuCatalogoPersona = null;
+                    this.lblTextoMenuCatalogoProductoGlobal = null;
+                    this.lblTextoMenuCatalogoVenta = null;
+                    this.lblTextoMenuCatalogoEstructura = null;*/
+                } catch (IOException ex) {
+                    Logger.getLogger(TemplateBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
+        System.out.println("Finaliza TemplateBean");
     }
     
     public Boolean getBlnActivoRevertir() {

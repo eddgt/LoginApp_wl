@@ -60,7 +60,7 @@ public class CarteraManualBean extends BaseSession {
         Connection conex = null;
         try {
             Conexion conec = new Conexion();
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
             StringBuilder query = new StringBuilder();
             query.append("SELECT * FROM TBBO_CARTERA_MANUAL");
             query.append(" order by id");
@@ -157,7 +157,7 @@ public class CarteraManualBean extends BaseSession {
             queryCrear.append(" WHERE id=").append(this.cartera.getId());
 
             Conexion conec = new Conexion();
-            Connection conex = conec.getConexion();
+            Connection conex = conec.getConexion2();
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             rs1 = st1.executeQuery(queryCrear.toString());
@@ -178,7 +178,7 @@ public class CarteraManualBean extends BaseSession {
             queryCrear.append(" ID=").append(id);
 
             Conexion conec = new Conexion();
-            Connection conex = conec.getConexion();
+            Connection conex = conec.getConexion2();
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             rs1 = st1.executeQuery(queryCrear.toString());

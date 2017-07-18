@@ -92,7 +92,7 @@ public class PersonasBean extends BaseSession {
         Connection conex = null;
         try {
             Conexion conec = new Conexion();
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
 
             StringBuilder query = new StringBuilder();
             query.append("select p.idpersona AS COD_CMS, p.numdocumento as Cod_WEBSOX, p.nompersona, p.idestado, p.obspersona");
@@ -131,7 +131,7 @@ public class PersonasBean extends BaseSession {
         Connection conex = null;
         try {
             Conexion conec = new Conexion();
-            conex = conec.getConexion();
+            conex = conec.getConexion2();
 
             StringBuilder query = new StringBuilder();
             query.append("select p.idpersona AS COD_CMS, p.nompersona, p.idestado");
@@ -186,7 +186,7 @@ public class PersonasBean extends BaseSession {
             queryCrear.append(")");
 
             Conexion conec = new Conexion();
-            Connection conex = conec.getConexion();
+            Connection conex = conec.getConexion2();
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             rs1 = st1.executeQuery(queryCrear.toString());
@@ -208,7 +208,7 @@ public class PersonasBean extends BaseSession {
             queryCrear.append(", OBSPERSONA = NVL('").append(this.usuario).append("',OBSPERSONA)");
             queryCrear.append(" WHERE  PER.IDPERSONA =").append(this.idPersona);            
             Conexion conec = new Conexion();
-            Connection conex = conec.getConexion();
+            Connection conex = conec.getConexion2();
             ResultSet rs1 = null;
             Statement st1 = conex.createStatement();
             rs1 = st1.executeQuery(queryCrear.toString());          

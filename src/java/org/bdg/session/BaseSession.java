@@ -8,9 +8,9 @@ package org.bdg.session;
 
 
 import java.io.IOException;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-
 
 public class BaseSession {
      
@@ -42,27 +42,42 @@ public class BaseSession {
 
     public String getAtributoSession(String name) {
         try {
-            return (String) ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).getAttribute(name);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            //System.out.println(fc);
+            ExternalContext ec = fc.getExternalContext();
+            //System.out.println(ec);
+            HttpSession hs = (HttpSession) ec.getSession(false);
+            //System.out.println(hs);
+            fc.responseComplete();
+            return (String) hs.getAttribute(name);
         } catch (Exception ex) {
-            System.out.println("Error Agregando atributo a la Sesión" + ex.getMessage());
+            //ex.printStackTrace();
+            System.out.println("-String- Error Agregando atributo a la Sesión" + ex.getMessage());
             return null;
         }
     }
 
     public Object getAtributoSessionObject(String name) {
         try {
-            return  ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).getAttribute(name);
+            //return  ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).getAttribute(name);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            //System.out.println(fc);
+            ExternalContext ec = fc.getExternalContext();
+            //System.out.println(ec);
+            HttpSession hs = (HttpSession) ec.getSession(false);
+            //System.out.println(hs);
+            return hs.getAttribute(name);
         } catch (Exception ex) {
-            System.out.println("Error Agregando atributo a la Sesión" + ex.getMessage());
+            System.out.println("-Object- Error Agregando atributo a la Sesión" + ex.getMessage());
             return null;
         }
     }
 
     public void setAbributoSession(String name, String value) {
         try {
-            ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).setAttribute(name, value);
+            ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).setAttribute(name, value);            
         } catch (Exception ex) {
-            System.out.println("Error Cargando atributo a la Sesión" + ex.getMessage());
+            System.out.println("-void set- Error Cargando atributo a la Sesión" + ex.getMessage());
         }
     }
 
@@ -70,7 +85,7 @@ public class BaseSession {
         try {
             ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).setAttribute(name, value);
         } catch (Exception ex) {
-            System.out.println("Error Cargando atributo a la Sesión" + ex.getMessage());
+            System.out.println("-void set- obj Error Cargando atributo a la Sesión" + ex.getMessage());
         }
     }
 
@@ -78,7 +93,7 @@ public class BaseSession {
         try {
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         } catch (Exception ex) {
-            System.out.println("Error Finalizando Sesión" + ex.getMessage());
+            System.out.println("Error Finalizando Sesión" );//+ ex.getMessage());
         }
     }
 
@@ -91,17 +106,14 @@ public class BaseSession {
         }
     }
 
-    public void validarSesion(String usuario) {
+    public void validarSesion(String usuario) throws IOException {
+        
         String aux_usuario = usuario != null ? usuario : "";
         if (aux_usuario.length() == 0) {
-            this.redireccionar("index.xhtml");
-            return;
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect(context.getRequestContextPath() + "/");
+            //return;
         }
     }
-
-     
-
-
-
-
+    
 }
