@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "Service1", targetNamespace = "http://tigobusiness.tigo.com.gt/", wsdlLocation = "https://172.16.5.19/wsSecurity/wsClaves.asmx?wsdl")
+@WebServiceClient(name = "Service1", targetNamespace = "http://tigobusiness.tigo.com.gt/", wsdlLocation = "https://tigobusiness.tigo.com.gt/wsSecurity/wsClaves.asmx?wsdl")
 public class Service1
     extends Service
 {
@@ -30,7 +30,7 @@ public class Service1
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("https://172.16.5.19/wsSecurity/wsClaves.asmx?wsdl");
+            url = new URL("https://tigobusiness.tigo.com.gt/wsSecurity/wsClaves.asmx?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

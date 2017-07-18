@@ -12,39 +12,11 @@ body{
     -webkit-touch-callout: none;
 }
 
-.icono-lupa{
-    background-image: url(../../img/icono-lupa-mv.png) !important;
-    background-size: 100% !important;
-    color: transparent !important;
-    background-color: transparent !important;
-    height: 30px;
-    width: 30px;
-    border-color: white;
-}
-
-.letraAcordeon{
-   font-size: .3em !important;
-}
-
-.ui-growl-item-container {
-    background:#125B8F  !important ;
-    
-}
-
-.detailColor{
-    color:black;
-    font-size:.7em;
-}
-
-.detalle-tamanoLetra{
-    font-size:.7em;
-}
-
 @font-face {
   font-family: 'CronosPro-Lt';
   src: url('../../fonts/CronosPro-Lt.eot');
   src: url('../../fonts/CronosPro-Lt.eot?#iefix') format('embedded-opentype'), 
-       /*url('../../fonts/CronosPro-Lt.woff2') format('woff2'), */
+       url('../../fonts/CronosPro-Lt.woff2') format('woff2'), 
        url('../../fonts/CronosPro-Lt.woff') format('woff'), 
        url('../../fonts/CronosPro-Lt.ttf') format('truetype'), 
        url('../../fonts/CronosPro-Lt.svg#CronosPro-Lt') format('svg');
@@ -67,6 +39,17 @@ body{
 
 
 
+.ui-fileupload-choose span.ui-button-text:before{
+    color: #fff;
+    content: "\1f4ce";
+    font-size: 14px;
+}
+
+.ui-button-icon-only span.ui-button-text:before{
+    color: #fff;
+    content: "\1f4ce";
+    
+}
 
 .margen-grande-enviarformulario{
     margin-top: 3px;
@@ -85,7 +68,7 @@ body{
     padding-bottom:35px;
 }
 
-@media (min-width: 561px) and (max-width:767px){
+@media (min-width: 550px) and (max-width:760px){
     .margen-grande-enviarformulario span.ui-button-text {
         padding-bottom: 18px !important;
     }
@@ -97,11 +80,6 @@ body{
     }
 }
 
-.imgExel{
-    width: 2em;
-    height: 2em;
-    margin-left: 90%;
-}
 
     
     
@@ -1231,7 +1209,7 @@ span.ui-outputlabel-rfi{
     }
     
     .fondoLlenar {
-        background:url(../../img/movil-form.png)  ;
+        //background:url(../../img/movil-form.png)  ;
         background-size:100% 100%;
         height: auto;
         max-width: 100%;
@@ -1414,33 +1392,4 @@ span.ui-outputlabel-rfi{
         }
         
         
- .mCalendario .ui-icon-calendar{
-   display:block !important;
-   background-color:white !important;
-    
-}       
-
-
-.ui-fileupload-choose span.ui-button-text:before{
-    color: #fff;
-    content:"\e109";     
-    font-size: 14px;
-}
-
-.ui-datepicker-trigger.ui-button-icon-only .ui-button-text {
-    color: #fff !important;
-    content:"\e109" !important;
-}
-
-
-.ui-datepicker-trigger  span.ui-button-text:after{
-    color: #fff;
-    content:"\e109";  
-    background:green !important;
-}
-
-
-
-.icono-lupa > span{
-    display:none !important;
-}
+        

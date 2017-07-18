@@ -144,7 +144,7 @@ public class UsuarioBean extends BaseSession implements Serializable{
                     resetValues();
                     System.out.println("Naf Conn2 closed");
                         }else{
-                            JsfUtil.addErrorMessage("NAF Password debe contener 8 caracteres, Mayusculas y Signo especial");
+                            JsfUtil.addErrorMessage("NAF Password debe contener 8 caracteres, Mayúsculas y Signo especial");
                             conn1.close();
                             stmt1.close();
                             rset.close();
@@ -238,7 +238,7 @@ public class UsuarioBean extends BaseSession implements Serializable{
                     resetValues();
                         }
                         else{
-                            JsfUtil.addErrorMessage("AMSYS Password debe contener 8 caracteres, Mayusculas y Signo especial"); 
+                            JsfUtil.addErrorMessage("AMSYS Password debe contener 8 caracteres, Mayúsculas y Signo especial"); 
                             conn1.close();
                             stmt1.close();
                             rset.close();
@@ -317,7 +317,7 @@ public class UsuarioBean extends BaseSession implements Serializable{
                             ma.Send(usuarioLogueado+"@tigo.com.gt","NAVEGA+", usuarioModif, contrasena, usuarioLogueado);
                         }
                         else{
-                            JsfUtil.addErrorMessage("NAVEGA+ Password debe contener 8 caracteres, Mayusculas y Signo especial");
+                            JsfUtil.addErrorMessage("NAVEGA+ Password debe contener 8 caracteres, Mayúsculas y Signo especial");
                             conn1.close();
                             stmt1.close();
                             rset.close();
@@ -375,9 +375,9 @@ public class UsuarioBean extends BaseSession implements Serializable{
                                             service1Soap.cambioClave(Constantes.WSERVICE_USR, Constantes.WSERVICE_PWD, usuarioModif, contrasena);
                                             
                                             //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Navega - Se modifico: "+usuarioModif+" exitosamente!"));
-                                            JsfUtil.addSuccessMessage("Navega+ Se modifico: "+usuarioModif+" exitosamente, IMPORTANTE: Notificar nuevo passowrd: "+contrasena);
+                                            JsfUtil.addSuccessMessage("Se ha desbloqueado el usuario: "+usuarioModif+" y deberá ingresar al sistema con credenciales de dominio por ser usuario de tipo LDAP");
                                             
-                                            JsfUtil.addErrorMessage("Usuario bloqueado, favor usar credencial de Dominio y contraseña "+contrasena+" para ingresar a Navega+");
+                                            //JsfUtil.addErrorMessage("Favor usar credenciales de Dominio para ingresar a Navega+");
                                             
                                             /*
                                             String package=" begin APP_PR_PKG.send_Mail_Html("'"+usuarioLogueado+"'",'AppNoReply@tigo.com.gt','Notificacion_credenciales','',  '<!DOCTYPE html>  <html>  <head><title>Notificacion Modificacion de Credenciales</title></head><body><br></br><p><a>Se ha desbloqueado el usuario: xxxxx '' Password de acceso para la plataforma: plataforma  para el usuario:<b>user_updated</b> </a></p>                  <p><a><font color=\"blue\">Nuevo password: <b> passw_xx </b></font></a></p> <p><a><font color=\"blue\">Usuario que aplica los cambios: <b> user_tier2 </b></font></a></p></body> </html>','mail.tigo.com.gt',25); end";
@@ -401,7 +401,7 @@ public class UsuarioBean extends BaseSession implements Serializable{
                                             */
                                 }
                                         else{
-                                            JsfUtil.addErrorMessage("NAVEGA+ Password debe contener 8 caracteres, Mayusculas y Signo especial");
+                                            JsfUtil.addErrorMessage("NAVEGA+ Password debe contener 8 caracteres, Mayúsculas y Signo especial");
                                             conn1.close();
                                             stmt1.close();
                                             rset.close();

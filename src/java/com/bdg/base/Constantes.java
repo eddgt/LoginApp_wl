@@ -75,7 +75,7 @@ public class Constantes {
     public final static String DB_HOST_TEST = "172.22.11.79:1521";
     public final static String DB_SID_TEST = "XE";
     public final static String DB_USER_TEST = "TEST";
-    public final static String DB_PASS_TEST = "";//Revisar encripcion u ofuscación???
+    public final static String DB_PASS_TEST = "Tigodb2016#";//Revisar encripcion u ofuscación???
     public final static String DB_SCHEMA_NAME_TEST = "TEST";
     public final static String DB_ORACLE_PACKAGE_TEST = "TEST_PKG";
     public final static String DB_FUNCTION_ROL_USUARIO_TEST = "FNC_VERIFICA_PERFIL";
@@ -109,8 +109,12 @@ public class Constantes {
      */
     public final static String WSERVICE_USR = "pruebas";
     public final static String WSERVICE_PWD = "pruebas";
-    public final static String WSERVICE_LINK_DEV = "https://172.16.5.19/wsSecurity/wsClaves.asmx?wsdl";
-    public final static String WSERVICE_LINK_PRO = "https://172.16.5.19/wsSecurity/wsClaves.asmx?wsdl";
+    //public final static String WLAPP_LINK = "t3://172.24.240.20:8080/ResetService/";
+    //public final static String WLAPP_LINK = "t3://172.30.100.36:7020/ResetService/";//nodo balanceador 1
+    //public final static String WLAPP_LINK = "t3://172.30.100.37:7020/ResetService/";//nodo balanceador 2
+    public final static String WLAPP_LINK = "t3://172.22.11.79:7001/ResetService/";//ip localhost pc
+    public final static String WSERVICE_LINK = "https://172.16.5.19/wsSecurity/wsClaves.asmx?wsdl";//this only for reference not used in the functionality
+    
 
     /**
      * Constantes de valores en sesión

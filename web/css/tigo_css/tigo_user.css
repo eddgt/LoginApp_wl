@@ -37,7 +37,8 @@
 }
 /*Fondo*/
 .fondo {
-    background:url(../../img/fondoTigo.jpg)  no-repeat center center fixed;
+    //background:url(../../img/fondoTigo.jpg)  no-repeat center center fixed;
+    background:url(../../img/fondoReporta.png)  no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -50,7 +51,7 @@
 
 body
 {
-    background:url('../../img/fondoTigo.jpg')  no-repeat  center fixed;
+    background:url(../../img/fondoReporta.png) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -68,8 +69,8 @@ body
 
 /* Página Inicial Imagen y Titulo */
 .imgTituloTigo{
-    height: 150px;
-    width:400px;
+    height: 140px;
+    width:350px;
     margin-left: 5em;
 }
 
@@ -151,8 +152,8 @@ html, body{
     }
 
     .color-menu{
-        background-color: white;
-        width: 130%;
+        background-color: graytext;
+        width: 150%;
         border: 10px;
     }
 }
@@ -296,7 +297,7 @@ html, body{
          margin-left: -50%;
      }
     .img-tigo-login{
-        margin-left: -2em;
+        margin-left: 2em;
     }
     
     .tam-columna{
@@ -610,7 +611,7 @@ html, body{
     }
     
     .menuEstatico{
-        top: 5%;
+        top: 10%;
     }
     
     .contactanos_img1{    
@@ -774,7 +775,7 @@ html, body{
 
   
     .TamLetraNav{
-      font-size: 10px !important;
+      font-size: 8px !important;
     }
   
   /*Ajustar Imagenes Reporta*/
@@ -977,7 +978,7 @@ html, body{
     }
    
     .tam-separacion{
-        padding:0;
+        padding:5px;
         margin-top:-20px;
         padding-right:5px;
         padding-left:5px;
@@ -996,7 +997,7 @@ html, body{
 }
 
 .margin-top-opcion-menu{
-    margin-top: 1%;
+    margin-top: 3%;
 }
 
 @media (min-width: 1200px) {
@@ -1020,7 +1021,7 @@ html, body{
     }
     
     .img-tigo-footer{
-      margin-top: 10px; 
+      margin-top: 18px; 
       padding-bottom: 4px ;
    }
    
@@ -1038,7 +1039,7 @@ html, body{
     }
 
     .tam-separacion{
-        margin-top:-25px;
+        margin-top:-20px;
         padding-right:12px;
         padding-left:12px;
         
@@ -1232,7 +1233,7 @@ html, body {
 
 /** Redondea el Login FORM **/
 .redondear-login{
-    border-radius:20px;
+    border-radius:17px;
 }
 
 
@@ -1501,5 +1502,12 @@ label.bcm_titulo{
     text-decoration: none;
 
 }
-
+/*
+.ui-dialog{
+    
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -100px;
+  }*/
 /*Todo va bien*/

@@ -23,8 +23,8 @@ public class Login {
             //conn  = Conexion.getConexion();            
             //conn  = Conexion.getConexionAmsys();
             //conn  = Conexion.getConexionLocal();//old method 11/10/16
-            //conn = DataSource.getConexionDSLocal();//new method 12/10/16
-            conn = DataSource.getConexionDSAmsys();//new method 12/10/16
+            conn = DataSource.getConexionDSLocal();//new method 12/10/16
+            //conn = DataSource.getConexionDSAmsys();//new method 12/10/16
             
             Statement stmt;
             ResultSet rset;

@@ -172,7 +172,7 @@ public class Mail {
                 //define my pkg Produccion
                 //String pkgProc = Constantes.DB_SCHEMA_NAME_AMSYS_PRO+"."+Constantes.DB_ORACLE_PACKAGE_AMSYS_PRO + "." + Constantes.DB_PROCESS_MAIL_AMSYS_PRO;
                                 
-                String query = ("CALL APP_PR_PKG.send_Mail_Html('"+mUsrTo+"',  'AppNoReply@tigo.com.gt','Notificacion_credenciales','',  '<!DOCTYPE html>  <html>  <head><title>Notificacion Modificacion de Credenciales</title></head><body><br></br><p><a>Se ha desbloqueado el usuario: "+mUsrAffected+" Password de acceso para la plataforma: "+mPlat+"  </b> </a></p><p><a><font color=\"blue\">Nuevo password: <b> "+mUpw+" </b></font></a></p> <p><a><font color=\"blue\">Usuario que aplica los cambios: <b> "+mUsrApp+" </b></font></a></p></body> </html>','mail.tigo.com.gt',25)");
+                String query = ("CALL APP_PR_PKG.send_Mail_Html('"+mUsrTo+"',  'AppNoReply@tigo.com.gt','Notificacion_credenciales','',  '<!DOCTYPE html>  <html>  <head><title>Notificacion Modificacion de Credenciales</title></head><body><br></br><p><a>Se ha desbloqueado el usuario: <font color=\"blue\"> "+mUsrAffected+" </font>y deberá ingresar al sistema con credenciales de dominio por ser usuario de tipo LDAP</b> </a></p> </body> </html>','mail.tigo.com.gt',25)");
                 
                 //System.out.println("PKG query: "+query);
                 System.out.println("PKG query executing ");

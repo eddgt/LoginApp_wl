@@ -2,8 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      >
+      xmlns:h="http://java.sun.com/jsf/html"          
+      xmlns:p="http://primefaces.org/ui">
+    
     <h:head >	
         <meta charset="UTF-8"/>
         <title>Tigo</title>
@@ -12,146 +13,84 @@
         <meta name="keywords" content="" />
         <link href="../css/bootstrap.min.css" rel="stylesheet"/>
         <link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/> 
-        <link href="../css/tigo_css/tigo_user.css" rel="stylesheet" type="text/css"/> 
-        <link href="../css/tigo_css/tigo_forms.css" rel="stylesheet" type="text/css"/>  
-        <script type="text/javascript" src="../js/calendar_es.js"></script>
-        <script type="text/javascript" src="../js/bootstrap.min.js"></script>                                    
-    </h:head>
-    <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false" oncopy="return false" oncut="return false" onpaste="return false" >
-        <h:body class="col-xs-12 fondo">        
-            <ui:insert name="top">
-                <!--Menu -->
-                <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
-                <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
-
-                <div  class="container menuEstatico" >
-                    <a href="../../../../../Downloads/web.xml"></a>
-                    <nav class="barra_navegacion navbar navbar-default" role="navigation"  >
-                        <div class="container-fluid">
-                            <!-- El logotipo y el icono que despliega el menú se agrupan
-                                para mostrarlos mejor en los dispositivos móviles -->
-                            <div class="navbar-header">
-                                <button type="button" class="bar_btn navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                                    <span class="sr-only">Desplegar Navegación</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
-                            </div>
-                            <!-- Agrupar los enlaces de navegación, los formularios y cualquier
-                               otro elemento que se pueda ocultar al minimizar la barra -->
-                            <div class="back_navbar container collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                <ul class="nav navbar-nav opciones_bar"> 
-                                   
-                                    <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1"><a ></a></li>
-
-                                    <li class="dropdown opcion_bar TamLetraNav margin-top-opcion-menu" style="display:'block'">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-                                           aria-haspopup="true" aria-expanded="false" style="display:#{(templateBean.blnPermitirverOperaciones)?'none':'block'}">Operaciones <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            
-                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >
-                                                <a title="Mostrar Bitácora" href="bitacoraOperaciones.xhtml" style="display:'block'">Bitacora Ejecución Proceso</a>
-                                            </li>
-
-                                            <li role="separator" class="divider"></li>
-                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >
-                                                <a title="Mostrar Operaciones" href="ventasOperaciones.xhtml" style="display:'block'">Mostrar Operaciones</a>
-                                            </li>
-
-                                            <li role="separator" class="divider"></li>
-                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
-                                                <a title="Ejecutar proceso" href="EjecProcesoOperaciones.xhtml" style="display:'block'">Ejecutar Proceso</a>
-                                            </li>
-
-                                            <li role="separator" class="divider"></li>
-                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >
-                                                <a title="Reporte Renovaciones" href="ReporteRenovaciones.xhtml" style="display:'block'">Reportes</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                    <!--morellana-->
-                                    <li class="dropdown opcion_bar TamLetraNav margin-top-opcion-menu" style="display:'block'">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" 
-                                           aria-expanded="false" style="display:#{(templateBean.blnPermitirverCatalogos)?'none':'block'}">#{templateBean.lblTextoMenuCatalogos} 
-                                            <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu">                             
-                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
-                                                <a title="Ventas" href="personas.xhtml" style="display:'block'">#{templateBean.lblTextoMenuCatalogoPersona}</a>
-                                            </li>
-
-                                            <li role="separator" class="divider"></li>
-                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
-                                                <a title="Ventas" href="EstructuraComercial.xhtml" style="display:'block'">#{templateBean.lblTextoMenuCatalogoEstructura}</a>
-                                            </li>
-
-                                            <li role="separator" class="divider"></li>
-                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
-                                                <a title="Ventas" href="ProductoGlobal.xhtml" style="display:'block'">#{templateBean.lblTextoMenuCatalogoProductoGlobal}</a>
-                                            </li>
-                                            <li role="separator" class="divider"></li>
-                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
-                                                <a title="Ventas" href="CarteraManual.xhtml" style="display:'block'">#{templateBean.lblTextoMenuCatalogoCarteraManual}</a>
-                                            </li>
-
-                                            <li role="separator" class="divider"></li>
-                                            <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 0em;" >                         
-                                                <a title="Ventas" href="Ventas.xhtml" style="display:'block'">#{templateBean.lblTextoMenuCatalogoVenta}</a>
-                                            </li>
-
-                                        </ul>
-                                    </li>
-
-                                    <!--<li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1" style="margin-left: 2.7em;" >                         
-                                        <a title="Ir a inicio" href="Procesos.xhtml" style="display:# {(templateBean.blnActivoProcesos)?'none':'block'}"># {templateBean.procesos}</a>
-                                    </li>-->
-
-                                    <li class="opcion_bar TamLetraNav margin-top-opcion-menu" id="menu1"><a title="Cerrar Sesion" href="cerrarSesion.xhtml">Salir</a></li>
-                                </ul>
-                            </div>
-
-                        </div>
-                    </nav>
-
+        <link href="../css/tigo_css/tigo_user.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/tigo_css/tigo_forms.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap.min.js"></script><!-- VERSION 3.3.7-->
+        <script type="text/javascript" src="../js/bootbox.min.js"></script>
+        <script type="text/javascript" src="../js/scripts.js"></script>
+    </h:head>    
+    <body oncontextmenu="return false" onselectstart="return false" oncopy="return false" oncut="return false" onpaste="return false" >
+    <h:body class="col-xs-12 fondo" >        
+        <ui:insert name="top">
+        <!--Menu -->
+            <div  class="container menuEstatico" >            
+            <nav class="navbar navbar-default" role="navigation"  >
+                <div class="container-fluid">
+                  <!-- El logotipo y el icono que despliega el menú se agrupan
+                      para mostrarlos mejor en los dispositivos móviles -->
+                  <div class="navbar-header">
+                    <button type="button" class="bar_btn navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                      <span class="sr-only">Desplegar Navegación</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                  </div>
+                   <!-- Agrupar los enlaces de navegación, los formularios y cualquier
+                      otro elemento que se pueda ocultar al minimizar la barra -->
+                  <div class="back_navbar container collapse navbar-collapse" id="bs-example-navbar-collapse-1">                  
+                      <ul class="nav  nav-pills"><br></br>
+                        <li class="opcion_bar margin-top-opcion-menu" id="menu2"><a title="       "></a></li>
+                        <li class="opcion_bar margin-top-opcion-menu" id="menu3"><a title="Cambiar Navega+" href="resetNavega.xhtml" >Contraseña Navega Plus</a></li>
+                        <li class="opcion_bar margin-top-opcion-menu" id="menu3"><a title="Cambiar NAF" href="resetNAF.xhtml">Contraseña NAF</a></li>
+                        <li class="opcion_bar margin-top-opcion-menu" id="menu2"><a title="Cambiar Amsys" href="resetAmsys.xhtml">Contraseña AMSYS</a></li>
+                        <li class="opcion_bar margin-top-opcion-menu" id="menu2"><a title="           "></a></li>
+                        <li class="opcion_bar margin-top-opcion-menu" id="menu2"><a title="Cerrar Sesión" href="cerrarSesion.xhtml">Cerrar Sesion</a></li>
+                    </ul>                      
+                   </div>
                 </div>
-            </ui:insert>
-            <div id="contenido"  > 
-                <div  class="col-xs-12" ><br></br><br></br><br></br><br></br></div>
-                <div  class="col-xs-12" >
-                </div>
-                <div class="one" >
-                    <div  id="content" >
-                        <div class="modal  bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-sm">
-                                <div class="modal-content">
-                                    <div class="modal-header" style="border-color: transparent"><h4 class="texto-usuario" style="text-align: center"><i class="fa fa-lock"></i></h4></div>
-                                    <div class="modal-body" style="border-color: transparent; text-align: center" ><i class="titulo_reclamoComunidades fa fa-question-circle"></i> Estas seguro de querer salir?</div>
-                                    <div class="modal-footer" style="border-color: transparent">
-                                        <div class="row">
-                                            <div class="col-xs-6">
-                                                <a href="cerrarSesion.xhtml"   class="btnAmarillo-mensaje-logout-si btn center-block quitarCuadro titulo_reclamoComunidades">Sí</a>
-                                            </div>
-                                            <div class="col-xs-6">
-                                                <a  data-dismiss="modal" class="btnAmarillo-mensaje-logout-no btn center-block quitarCuadro titulo_reclamoComunidades">No</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <ui:insert name="content"></ui:insert>
-                    </div>
-                    <div  id="bottom" >
-
-                        <ui:insert name="bottom"></ui:insert>
-                    </div>
-
-                </div>
+              </nav>                
             </div>
-
-        </h:body>
-    </body>
+        </ui:insert>
+        
+        <div id="contenido"  > 
+            <div  class="col-xs-12" ><br></br><br></br><br></br><br></br></div>
+            <div  class="col-xs-12" >
+            </div>
+            <div class="one" >
+                <div  id="content" >
+                <div class="modal  bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                        <div class="modal-header" style="border-color: transparent"><h4 class="texto-usuario" style="text-align: center"><i class="fa fa-lock"></i></h4></div>
+                        <div class="modal-body" style="border-color: transparent; text-align: center" ><i class="fa fa-question-circle"></i> Estas seguro de querer salir?</div>
+                        <div class="modal-footer" style="border-color: transparent">
+                            <div class="row">
+                                
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                    <ui:insert name="content"></ui:insert>
+                    <h4>
+                        <p:outputLabel style="margin-left: 10%; margin-top: 2%">Bienvenido: #{templateBean.getAtributoSession('usuario')}</p:outputLabel>
+                    </h4>
+                </div>                
+                <div  id="bottom" >
+                    <!--<br></br>
+                    <br></br>
+                    <h4 class="back_navbar container collapse navbar-collapse">
+                        <br></br>
+                        <p:outputLabel style="margin-left: 8em; width: 15em; ">Bienvenido: # {templateBean.getAtributoSession('usuario')}</p:outputLabel>
+                    </h4>-->
+                    <!--Forms-->
+                    <ui:insert name="bottom"></ui:insert>
+                </div>               
+            </div>
+        </div>
+        
+    </h:body>
+</body>
 </html>
